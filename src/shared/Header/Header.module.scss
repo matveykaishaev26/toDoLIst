@@ -1,0 +1,21 @@
+@import "../../styles/variables.scss";
+
+.appHeader {
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  justify-content: space-between;
+  .sidebarToggle,
+  .changeTheme {
+    cursor: pointer;
+    padding: 5px;
+    border-radius: $main-border-radius
+  }
+
+  .sidebarToggle:hover {
+    background-color: $main-hover-color;
+  }
+  .changeTheme:hover {
+    background-color: $main-hover-color;
+  }
+}

@@ -1,0 +1,42 @@
+@import "../../styles/variables.scss";
+
+.todayTasks {
+  .dayName {
+    font-size: 24px;
+    font-weight: $bold-font;
+    margin-bottom: 5px;
+  }
+  .tasksCount {
+    font-size: 14px;
+    font-weight: $light-font;
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    .tasksIcon {
+      margin-right: 5px;
+    }
+  }
+  .addTask {
+    padding-top: 10px;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid rgb(218, 218, 218);
+    color: rgb(131, 131, 131);
+    font-size: 15px;
+    font-weight: 400;
+    cursor: pointer;
+
+    .addTaskIcon {
+      margin-right: 5px;
+      color: $main-dark-color;
+      border-radius: 10px;
+    }
+  }
+  .addTask:hover {
+    color: $main-dark-color;
+    .addTaskIcon {
+      background-color: $main-dark-color;
+      color: white;
+    }
+  }
+}

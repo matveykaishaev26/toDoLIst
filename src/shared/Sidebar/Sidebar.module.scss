@@ -1,0 +1,94 @@
+@import "../../styles/variables.scss";
+
+.sidebar {
+  box-sizing: border-box;
+  width: 250px;
+  background-color: $pale-pramary-color;
+  height: 100vh;
+  padding: 10px;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  transition: $main-transition;
+}
+.borderAction {
+  border: 1px solid black;
+  position: absolute;
+  height: 100vh;
+  transition: transform 0.3s ease; /* Плавный переход для transform */
+  left: 0; /* Начальная позиция слева */
+  transform: translateX(0); /* Исходное положение */
+  box-sizing: border-box; /* Учитывает границы и паддинг внутри элемента */
+}
+
+.close {
+  margin-left: -250px;
+}
+
+.open {
+  margin-left: 0px;
+}
+.sidebarTop {
+  margin-bottom: 20px;
+
+  .profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .profileContainer {
+      width: 100px; // Можно изменить на нужный размер
+      height: 100px; // Можно изменить на нужный размер
+      border-radius: 50%; // Делает контейнер круглым
+      overflow: hidden; // Скрывает все, что выходит за пределы контейнера
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f0f0f0; // Цвет фона контейнера (опционально)
+    }
+
+    .profileImage {
+      width: 100%; // Делает изображение по ширине контейнера
+      height: 100%; // Делает изображение по высоте контейнера
+      object-fit: cover; // Сохраняет пропорции изображения и обрезает его, чтобы заполнить контейнер
+      border-radius: 50%; // Округляет изображение, чтобы оно было круглым
+    }
+    .profileName {
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 24px;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.sidebar:hover {
+}
+.sidebarTabs {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarTab {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  line-height: 16px;
+  padding: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  .icon {
+    font-size: 24px;
+    color: rgb(44, 44, 44);
+    margin-right: 10px;
+  }
+
+  &:hover {
+    background-color: $pale-pramary-color-hover;
+  }
+}
+
+.sidebarTab.active {
+  background-color: $pale-pramary-color-active;
+}
