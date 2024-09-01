@@ -5,17 +5,20 @@
   padding: 10px;
   align-items: center;
   justify-content: space-between;
+
   .sidebarToggle,
   .changeTheme {
+    font-size: 34px;
+
     cursor: pointer;
     padding: 5px;
-    border-radius: $main-border-radius
+    border-radius: $main-border-radius;
   }
 
   .sidebarToggle:hover {
-    background-color: $main-hover-color;
+    background-color: $main-color-hover;
   }
   .changeTheme:hover {
-    background-color: $main-hover-color;
+    background-color: $main-color-hover;
   }
 }

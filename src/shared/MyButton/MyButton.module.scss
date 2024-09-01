@@ -1,0 +1,23 @@
+@import "../../styles/variables.scss";
+.myButton {
+  background-color: $main-color;
+  border: 1px solid $grey-dark-color;
+  box-sizing: border-box;
+  border-radius: 4px;
+  color: $black-font-color;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px 10px 5px 10px;
+
+  &:hover {
+    background-color: $grey-dark-color-hover;
+  }
+  &.blue {
+    background-color: $blue-color;
+    border: none;
+    color: white;
+    &:hover {
+      background-color: $blue-color-hover;
+    }
+  }
+}

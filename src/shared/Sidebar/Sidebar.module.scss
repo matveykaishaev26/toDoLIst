@@ -1,28 +1,28 @@
 @import "../../styles/variables.scss";
-
+@import "../../styles/taskTypesColors.scss";
 .sidebar {
   box-sizing: border-box;
-  width: 250px;
-  background-color: $pale-pramary-color;
+  width: 300px;
+  background-color: $main-color;
   height: 100vh;
   padding: 10px;
   z-index: 1;
   top: 0;
   left: 0;
   transition: $main-transition;
+  border-right: 1px solid $main-color-border;
 }
-.borderAction {
-  border: 1px solid black;
-  position: absolute;
+.sidebarContainer {
+  box-sizing: border-box;
+  width: 250px;
   height: 100vh;
-  transition: transform 0.3s ease; /* Плавный переход для transform */
-  left: 0; /* Начальная позиция слева */
-  transform: translateX(0); /* Исходное положение */
-  box-sizing: border-box; /* Учитывает границы и паддинг внутри элемента */
+  top: 0;
+  left: 0;
+  transition: $main-transition;
 }
 
 .close {
-  margin-left: -250px;
+  margin-left: -300px;
 }
 
 .open {
@@ -44,7 +44,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #f0f0f0; // Цвет фона контейнера (опционально)
     }
 
     .profileImage {
@@ -62,33 +61,29 @@
   }
 }
 
-.sidebar:hover {
-}
-.sidebarTabs {
-  display: flex;
-  flex-direction: column;
-}
-
 .sidebarTab {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 16px;
   padding: 5px;
   border-radius: 4px;
+  color: $black-font-color;
+
   cursor: pointer;
 
   .icon {
     font-size: 24px;
-    color: rgb(44, 44, 44);
+    color: $black-font-color;
     margin-right: 10px;
   }
 
   &:hover {
-    background-color: $pale-pramary-color-hover;
+    background-color: $main-color-hover;
   }
 }
 
 .sidebarTab.active {
-  background-color: $pale-pramary-color-active;
+  background-color: $main-color-active;
 }

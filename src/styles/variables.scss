@@ -1,18 +1,25 @@
 
-//color
-$pale-pramary-color: #eef9ff;
-$pale-pramary-color-active: #b9e4fc;
-$pale-pramary-color-hover: #e0f2fc;
-$main-hover-color: #f2efed;
-$main-dark-color: rgba(46, 150, 255, 0.605);
-
 //transitions
 $main-transition: all 0.3s ease;
-
 
 //radius
 $main-border-radius: 4px;
 
-//font
-$bold-font: 700;
-$light-font: 300;
+
+$main-color: #ffffff;
+$main-color-hover: #efefef;
+$main-color-active: #439eff;
+$main-color-border: #dedede;
+
+$grey-color: rgb(152, 152, 152);
+$grey-color-hover: rgb(57, 57, 57);
+
+$grey-dark-color: rgb(222, 222, 222);
+$grey-dark-color-hover: rgb(237, 237, 237);
+
+
+$black-font-color: #181818;
+$grey-font-color: rgb(152, 152, 152);
+
+$blue-color: #439eff;
+$blue-color-hover: #2d92fe;

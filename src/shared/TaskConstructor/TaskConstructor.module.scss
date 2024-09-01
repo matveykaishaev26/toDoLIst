@@ -1,0 +1,127 @@
+@import "../../styles/variables.scss";
+
+.taskConstructor {
+  border: 1px solid #ccc; /* Цвет и толщина рамки */
+  border-radius: 4px;
+
+  .taskConstructorTop {
+    border-bottom: 1px solid #ccc;
+
+    padding: 10px;
+
+    .taskName {
+      resize: none;
+
+      border: none;
+      margin-bottom: 5px;
+      font-weight: 700;
+      width: 100%; /* Ширина на 100% от родительского элемента */
+      font-size: 14px; /* Размер текста */
+      line-height: 1.5; /* Высота строки */
+      border-radius: 4px; /* Округленные углы */
+      color: #333; /* Цвет текста */
+      transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Плавный переход для рамки и тени */
+      box-sizing: border-box; /* Учитывает padding и border в ширину и высоту */
+      overflow-y: auto; /* Добавляет прокрутку при переполнении */
+      background-origin: padding-box;
+      &:focus {
+        border-color: #5dabff; /* Цвет рамки при фокусе */
+        outline: none; /* Убирает стандартный outline */
+      }
+    }
+
+    .taskDescription {
+      resize: none;
+      margin-bottom: 10px;
+      width: 100%; /* Ширина на 100% от родительского элемента */
+      font-size: 14px; /* Размер текста */
+      line-height: 1.5; /* Высота строки */
+      border-radius: 4px; /* Округленные углы */
+      border: none;
+      color: #333; /* Цвет текста */
+      transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Плавный переход для рамки и тени */
+      box-sizing: border-box; /* Учитывает padding и border в ширину и высоту */
+      overflow-y: auto; /* Добавляет прокрутку при переполнении */
+    }
+
+    .taskOptions {
+      display: flex;
+      .optionContainer {
+        position: relative;
+      }
+      
+      .taskOptionBtn {
+        color: #6c6c6c;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 14px;
+        border: 1px solid #e1e1e1; /* Цвет и толщина рамки */
+        padding: 2px 5px 2px 5px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 5px;
+        position: relative;
+
+        &:hover {
+          background-color: rgb(241, 241, 241);
+        }
+        .taskOptionIcon {
+          margin-right: 2px;
+        }
+        .taskConstructor:last-child {
+          margin-right: 0px;
+        }
+      }
+    }
+  }
+  .taskConstructorBottom {
+    padding: 10px;
+    .btnActionContainer {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      .addBtn {
+        padding: 10px;
+        background-color: #a0daf8;
+        border-radius: 4px;
+        color: rgb(255, 255, 255);
+        cursor: pointer;
+      }
+      .cancelBtn {
+        padding: 10px;
+        color: grey;
+        margin-right: 5px;
+        cursor: pointer;
+      }
+      .cancelBtn:hover {
+        background-color: rgb(230, 230, 230);
+      }
+      .addBtn:hover {
+        background-color: rgb(133, 204, 239);
+      }
+    }
+  }
+}
+
+.taskDescription:focus {
+  border-color: #5dabff; /* Цвет рамки при фокусе */
+  outline: none; /* Убирает стандартный outline */
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #ccc; /* Полупрозрачный цвет */
+  border-radius: 10px; /* Скругляем углы для минимализма */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(103, 103, 103, 0.5);
+}

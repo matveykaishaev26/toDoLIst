@@ -1,0 +1,58 @@
+@import "../../../styles/variables.scss";
+.sidebarMid {
+  border-bottom: 1px solid $main-color-border;
+  border-top: 1px solid $main-color-border;
+  padding: 15px 5px 15px 5px;
+  margin-top: 50px;
+
+  .sidebarTasksTab {
+    color: $grey-font-color;
+    position: relative;
+    font-size: 14px;
+    padding: 8px;
+    justify-content: space-between;
+    display: flex;
+    border-radius: 4px;
+    align-items: center;
+
+    .sidebarTasksTabIcon {
+      font-size: 10px;
+      color: $main-color;
+      margin-right: 10px;
+      transform: rotate(-90deg);
+      cursor: pointer;
+      &.active {
+        transform: rotate(0deg);
+      }
+    }
+
+    .sidebarTasksListPlus {
+      font-size: 18px;
+      color: $main-color;
+      cursor: pointer;
+    }
+  }
+  .sidebarTasksTab:hover {
+    background-color: $main-color-hover;
+    .sidebarTasksTabIcon,
+    .sidebarTasksListPlus {
+      color: $grey-color;
+    }
+
+    .sidebarTasksListPlus:hover {
+      color: $grey-color-hover;
+    }
+    .sidebarTasksTabIcon:hover {
+      color: $grey-color-hover;
+    }
+  }
+
+  .sidebarFolderContainer {
+  }
+
+  .sidebarTasksList {
+    .sidebarTasksListContainer {
+      padding-left: 25px;
+    }
+  }
+}

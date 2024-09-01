@@ -1,50 +1,56 @@
 import s from "./Sidebar.module.scss";
-import { NavLink } from "react-router-dom";
-import { typeSidebarTabs } from "../../App";
-import profileImage from "../../assets/images/profile.jpg";
+import { typeSidebarTab } from "../../App";
+import SidebarTab from "./SidebarTab";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import SidebarMid from "./SidebarMid/SidebarMid";
+import { useState } from "react";
+import ModalCreateTask from "../Modal/ModalCreateTask/ModalCreateTask";
+import MyPortal from "../MyPortal/MyPortal";
+import SidebarTop from "./SidebarTop";
+import { useEffect } from "react";
+import { typeFolder, typeTask } from "../../types/types";
 type Props = {
-  sidebarTabs: typeSidebarTabs[];
+  sidebarTabs: typeSidebarTab[];
 };
 
 export default function Sidebar({ sidebarTabs }: Props) {
+
+
   const isSidebarOpen = useSelector((state: RootState) => state.sidebar.isOpen);
+  // const [isTasksListOpen, setTasksListOpen] = useState<boolean>(false);
+  // const [tasks, setTasks] = useState<typeTask[]>([]);
+  // const [folders, setFolders] = useState<typeFolder[]>([]);
+
+  const [isCreateListModalOpen, setIsCreateListModalOpen] =
+    useState<boolean>(false);
+
+  const toggleCreateListModal = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    setIsCreateListModalOpen((prev) => !prev);
+  };
+
+  const toggleListModalOpen = () => {
+    setIsCreateListModalOpen((prev) => !prev);
+  };
+  const toggleTasksList = () => {
+    setTasksListOpen((prev) => !prev);
+  };
 
   return (
-    <div className={s.sidebarContainer}>
-      <div
-        className={
-          isSidebarOpen ? `${s.sidebar} ${s.open}` : `${s.sidebar} ${s.close}`
-        }
-      >
-        <div className={s.sidebarTop}>
-          <div className={s.profile}>
-            <div className={s.profileContainer}>
-              <img
-                src={profileImage}
-                alt="Profile"
-                className={s.profileImage}
-              />
-            </div>
-            <div className={s.profileName}>Tyler</div>
-          </div>
-        </div>
-        <div className={s.sidebarTabs}>
-          {sidebarTabs.map((tab) => (
-            <NavLink
-              to={tab.link}
-              className={({ isActive }) =>
-                isActive ? `${s.sidebarTab} ${s.active}` : s.sidebarTab
-              }
-            >
-              <tab.icon size={24} className={s.icon} />
-
-              {tab.value}
-            </NavLink>
-          ))}
-        </div>
+    <div
+      className={
+        isSidebarOpen ? `${s.sidebar} ${s.open}` : `${s.sidebar} ${s.close}`
+      }
+    >
+      <SidebarTop />
+      <div className={s.sidebarTabs}>
+        {sidebarTabs.map((tab) => (
+          <SidebarTab tab={tab} />
+        ))}
       </div>
+      <SidebarMid />
+      
     </div>
   );
 }

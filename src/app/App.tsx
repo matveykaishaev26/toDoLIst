@@ -2,24 +2,19 @@ import React from "react";
 import { TodayList } from "../pages/TodayTasks/TodayTasks";
 import Sidebar from "../shared/Sidebar/Sidebar";
 import { Routes, Route } from "react-router-dom";
-import {
-  CiStickyNote,
-  CiCalendarDate,
-  CiBoxList,
-  CiViewTable,
-} from "react-icons/ci"; // Импортируем иконки
+import { CiStickyNote, CiCalendarDate, CiBoxList } from "react-icons/ci"; // Импортируем иконки
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import s from "./App.module.scss";
 import Header from "../shared/Header/Header";
-export type typeSidebarTabs = {
+export type typeSidebarTab = {
   value: string;
   icon: React.ComponentType;
   link: string;
 };
 
 function App() {
-  const sidebarTabs: typeSidebarTabs[] = [
+  const sidebarTabs: typeSidebarTab[] = [
     {
       value: "Входящие",
       icon: CiStickyNote,
@@ -35,11 +30,6 @@ function App() {
       icon: CiBoxList,
       link: "/all_tasks",
     },
-    {
-      value: "Фильтры и метки",
-      icon: CiViewTable,
-      link: "/filters",
-    },
   ];
 
   const isSidebarOpen = useSelector((state: RootState) => state.sidebar.isOpen);
@@ -53,7 +43,7 @@ function App() {
           className={`${s.appContent} ${
             isSidebarOpen ? s.contentOpen : s.contentClose
           }`}
-          >
+        >
           <Routes>
             {sidebarTabs.map((tab) => (
               <Route path={tab.link} element={<TodayList />} key={tab.value} />

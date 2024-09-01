@@ -1,0 +1,100 @@
+.modalCreateTask {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+
+  .btnContainer {
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+    width: 100%;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: rgb(55, 55, 55);
+  }
+
+  .modalCreateTaskTitle {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  .modalCreateTaskInput {
+    margin-bottom: 30px;
+  }
+  .dropdownWrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: rgb(55, 55, 55);
+  }
+  .colorWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 14px;
+    color: rgb(55, 55, 55);
+    margin-bottom: 10px;
+
+    .colors {
+      display: flex; /* Сделать контейнер цветов flex-контейнером */
+      gap: 10px;
+
+      .color {
+        display: flex;
+        width: 20px; /* Увеличить размер цветовых кругов */
+        height: 20px;
+
+        border-radius: 50%;
+        background-color: rgb(230, 234, 73);
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+      .colorActive {
+        width: 14px; /* Увеличить размер цветовых кругов */
+        height: 14px;
+        border: 2px solid rgb(255, 255, 255);
+        border-radius: 50%;
+      }
+
+      .red {
+        background-color: rgb(255, 97, 97);
+      }
+      .orange {
+        background-color: rgb(255, 172, 56);
+      }
+      .yellow {
+        background-color: rgb(255, 211, 36);
+      }
+      .salad {
+        background-color: rgb(230, 234, 73);
+      }
+      .green {
+        background-color: rgb(8, 201, 79);
+      }
+      .blue {
+        background-color: rgb(76, 161, 255);
+      }
+      .purple {
+        background-color: rgb(110, 117, 244);
+      }
+      .white {
+        background-color: rgb(255, 255, 255);
+        border: 1px solid rgb(227, 227, 227);
+        .colorActive {
+          width: 12px; /* Увеличить размер цветовых кругов */
+          height: 12px;
+          border: 2px solid rgb(210, 210, 210);
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+}

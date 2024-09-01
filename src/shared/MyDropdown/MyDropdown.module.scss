@@ -1,0 +1,56 @@
+/* Dropdown.scss */
+
+.dropdown {
+  position: relative;
+  width: 200px;
+  font-family: Arial, sans-serif;
+  user-select: none;
+
+  .dropdownControl {
+    background-color: #ffffff;
+    border: 1px solid rgb(222, 222, 222);
+    border-radius: 4px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    &.open {
+      border-color: #007bff; // Цвет границы при открытом состоянии
+    }
+  }
+
+  .dropdownArrow {
+    margin-left: 10px;
+    font-size: 10px;
+    color: rgb(216, 216, 216);
+    transform: rotate(deg);
+  }
+
+  .dropdownArrow.open {
+    transform: rotate(180deg);
+  }
+
+  .dropdownMenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 3px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+
+  .dropdownOption {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
+}

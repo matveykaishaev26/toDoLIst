@@ -1,0 +1,39 @@
+.taskOptionMenu {
+    position: absolute;
+    top: 101%; /* Меню будет располагаться под кнопкой */
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    white-space: nowrap; // Запрет на перенос текста
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Скрыть элементы меню, если они выходят за границы */
+    .taskOptionMenuItem {
+      font-size: 14px;
+      color: #2c2c2c;
+      padding: 4px 8px;
+      display: flex;
+      align-items: center;
+
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      .taskOptionMenuIcon {
+        margin-right: 5px;
+        color: #6c6c6c;
+      }
+      .taskOptionMenuIconRed {
+        color: rgb(234, 67, 67);
+      }
+      .taskOptionMenuIconGreen {
+        color: rgb(64, 152, 64);
+      }
+      .taskOptionMenuIconOrange {
+        color: Orange;
+      }
+    }
+    .taskOptionMenuItem:hover {
+      background-color: rgb(241, 241, 241);
+    }
+  }

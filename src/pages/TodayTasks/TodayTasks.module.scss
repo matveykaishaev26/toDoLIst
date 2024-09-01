@@ -3,12 +3,12 @@
 .todayTasks {
   .dayName {
     font-size: 24px;
-    font-weight: $bold-font;
+    font-weight: 700;
     margin-bottom: 5px;
   }
   .tasksCount {
     font-size: 14px;
-    font-weight: $light-font;
+    font-weight: 300;
     display: flex;
     align-items: center;
     margin-bottom: 30px;
@@ -28,14 +28,11 @@
 
     .addTaskIcon {
       margin-right: 5px;
-      color: $main-dark-color;
       border-radius: 10px;
     }
   }
   .addTask:hover {
-    color: $main-dark-color;
     .addTaskIcon {
-      background-color: $main-dark-color;
       color: white;
     }
   }

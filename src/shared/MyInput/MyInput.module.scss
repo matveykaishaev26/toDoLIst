@@ -1,0 +1,20 @@
+@import "../../styles/variables.scss";
+
+.myInput {
+  border: 1px solid $grey-dark-color;
+  border-radius: 4px; /* Закругление углов */
+  width: 100%; /* Ширина по умолчанию - 100% родительского контейнера */
+  padding: 5px; /* Внутренние отступы */
+  font-size: 14px; /* Размер шрифта */
+  color: rgb(22, 22, 22); /* Цвет текста */
+  background-color: $main-color; /* Цвет фона */
+  box-sizing: border-box; /* Учет границы и внутреннего отступа в ширине и высоте */
+
+  outline: none;
+
+  &:focus {
+    border-color: $blue-color; /* Цвет границы при фокусе */
+  }
+  &:hover {
+  }
+}
