@@ -2,7 +2,7 @@ import s from "./Sidebar.module.scss";
 import { typeSidebarTab } from "../../App";
 import SidebarTab from "./SidebarTab";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "../../store/store";
 import SidebarMid from "./SidebarMid/SidebarMid";
 import { useState } from "react";
 import ModalCreateTask from "../Modal/ModalCreateTask/ModalCreateTask";

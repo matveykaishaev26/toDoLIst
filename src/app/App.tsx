@@ -3,11 +3,10 @@ import { TodayList } from "../pages/TodayTasks/TodayTasks";
 import Sidebar from "../shared/Sidebar/Sidebar";
 import { Routes, Route } from "react-router-dom";
 import { CiStickyNote, CiCalendarDate, CiBoxList } from "react-icons/ci"; // Импортируем иконки
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import s from "./App.module.scss";
 import Header from "../shared/Header/Header";
 
-import { getTask, createTask } from "../service/appwrite";
 export type typeSidebarTab = {
   value: string;
   icon: React.ComponentType;
@@ -32,22 +31,6 @@ function App() {
       link: "/all_tasks",
     },
   ];
-
-
-  const [tasks, setTasks] = useState<any[]>([]);
-
-  useEffect(() => {
-    const fetchTasks = async () => {
-        try {
-            // Например, получить задачу с определенным ID
-            const task = await getTask('example_task_id');
-            setTasks([task]); // Используйте реальные данные
-        } catch (error) {
-            console.error('Error fetching tasks:', error);
-        }
-    };
-    fetchTasks();
-}, []);
 
   const toggleSidebarOpen = () => {
     setIsSidebarOpen((prev) => !prev);
@@ -79,3 +62,31 @@ function App() {
 }
 
 export default App;
+
+// import React, { useEffect, useState } from "react";
+// import { Client, Databases, Query } from "appwrite";
+
+// import {getAllFolders} from "../service/folderService";
+
+// const DocumentList = () => {
+//   const [documents, setDocuments] = useState([]);
+
+//   useEffect(() => {
+//     const fetchDocuments = async () => {
+//       const docs = await getAllFolders();
+//       setDocuments(docs);
+//     };
+
+//     fetchDocuments();
+//   }, []);
+
+//   return (
+//     <div>
+//       <h1>Документы</h1>
+//       <ul>
+//       </ul>
+//     </div>
+//   );
+// };
+
+// export default DocumentList;

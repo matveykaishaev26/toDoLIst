@@ -12,6 +12,7 @@ import { typeFolderWithTasks } from "../../../types/types";
 import { typeDropdownState } from "../../../types/types";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
 import SidebarFolderList from "../SidebarMid/SidebarFolderList/SidebarFolderList";
+import { useGetAllFoldersQuery } from "../../../service/folderService";
 const SidebarMid: React.FC = () => {
   const [isTasksListOpen, setTasksListOpen] = useState<boolean>(false);
   const [isCreateListModalOpen, setIsCreateListModalOpen] =
@@ -23,12 +24,14 @@ const SidebarMid: React.FC = () => {
     error: tasksError,
   } = useFetch<typeTask[]>("http://localhost:5000/task");
 
-  const {
-    data: folders,
-    loading: foldersLoading,
-    error: foldersError,
-  } = useFetch<typeFolder[]>("http://localhost:5000/folder");
+  // const {
+  //   data: folders,
+  //   loading: foldersLoading,
+  //   error: foldersError,
+  // } = useFetch<typeFolder[]>("http://localhost:5000/folder");
   const [dropdownState, setDropdownState] = useState<typeDropdownState>({});
+
+  const { data: folders, error, isLoading } = useGetAllFoldersQuery();
 
   useEffect(() => {
     if (folders && tasks) {
