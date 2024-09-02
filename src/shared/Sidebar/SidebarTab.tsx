@@ -16,7 +16,7 @@ const SidebarTab = ({ tab }: Props) => {
         isActive ? `${s.sidebarTab} ${s.active}` : s.sidebarTab
       }
     >
-      <tab.icon size={24} className={s.icon} />
+      <tab.icon className={s.icon} />
       {tab.value}
     </NavLink>
   );

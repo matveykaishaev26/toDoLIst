@@ -6,6 +6,14 @@ export type typeTask = {
   folder_id: number | null;
 };
 
+export type typeSubtask = {
+  id: number;
+  title: string;
+  completed: boolean;
+  priority: number;
+  task_id: number;
+};
+
 export type typeFolder = {
   id: number;
   title: string;

@@ -4,35 +4,42 @@
       "id": 1,
       "title": "Task 1",
       "completed": false,
-      "color": "Red",
+      "color": "red",
       "folder_id": null
     },
     {
       "id": 2,
       "title": "Task 2",
       "completed": false,
-      "color": "Red",
+      "color": "red",
       "folder_id": "1"
     },
     {
       "id": 3,
       "title": "Task 3",
       "completed": false,
-      "color": "Blue",
+      "color": "salad",
       "folder_id": "2"
     },
     {
       "id": 4,
       "title": "Task 4",
       "completed": false,
-      "color": "Blue",
+      "color": "blue",
       "folder_id": "2"
     },
     {
       "id": 5,
       "title": "Task 5",
       "completed": false,
-      "color": "Blue",
+      "color": "blue",
+      "folder_id": null
+    },
+    {
+      "id": 6,
+      "title": "Task 6",
+      "completed": false,
+      "color": "green",
       "folder_id": null
     }
   ],

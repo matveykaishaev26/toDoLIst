@@ -7,6 +7,7 @@ import "react-dropdown/style.css";
 import MyButton from "../../MyButton/MyButton";
 import { typeOption } from "../../../types/types";
 import { useEffect, useState } from "react";
+import c from "../../../styles/taskTypesColors.module.scss";
 type Props = {
   onClose?: () => void;
 };
@@ -69,7 +70,7 @@ const ModalCreateTask = ({ onClose }: Props) => {
             {colors.map((color) => (
               <div
                 onClick={() => setActiveColor(color.color)}
-                className={`${s.color} ${s[color.color]}`}
+                className={`${s.color} ${c[color.color]}`}
               >
                 {activeColor === color.color ? (
                   <div className={s.colorActive}></div>

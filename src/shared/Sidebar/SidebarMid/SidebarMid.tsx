@@ -4,12 +4,13 @@ import { FaChevronDown } from "react-icons/fa";
 import { GoPlus } from "react-icons/go";
 import { typeTask, typeFolder } from "../../../types/types";
 import SidebarMidTask from "./SidebarMidTask/SidebarMidTask";
-import SidebarMidFolder from "./SidebarMidFolder/SidebarMidFolder";
+
 import ModalCreateTask from "../../Modal/ModalCreateTask/ModalCreateTask";
 import MyPortal from "../../MyPortal/MyPortal";
 import useFetch from "../../../hooks/useFetch";
 import { typeFolderWithTasks } from "../../../types/types";
 import { typeDropdownState } from "../../../types/types";
+import { MdOutlineCreateNewFolder } from "react-icons/md";
 import SidebarFolderList from "../SidebarMid/SidebarFolderList/SidebarFolderList";
 const SidebarMid: React.FC = () => {
   const [isTasksListOpen, setTasksListOpen] = useState<boolean>(false);
@@ -31,24 +32,17 @@ const SidebarMid: React.FC = () => {
 
   useEffect(() => {
     if (folders && tasks) {
-      setDropdownState(
-        folderWithTasks.map((item) => ({
-          [item.folder.id]: false,
-        }))
-      );
-
-      console.log(dropdownState[0]);
+      const obj = folderWithTasks.reduce((acc, item, index) => {
+        acc[index] = false;
+        return acc;
+      }, {} as typeDropdownState);
+      setDropdownState(obj);
     }
   }, [folders, tasks]);
 
   const toggleDropdown = (index: number) => {
     setDropdownState((prev) =>
-      prev.map((item, i) => {
-        if (i === index) {
-          return { [index]: !item[index] };
-        }
-        return item;
-      })
+      prev[index] ? { ...prev, [index]: false } : { ...prev, [index]: true }
     );
   };
 
@@ -89,28 +83,17 @@ const SidebarMid: React.FC = () => {
             />
             Список
           </div>
-          <GoPlus
-            onClick={toggleCreateListModal}
-            className={s.sidebarTasksListPlus}
-          />
+          <div className={s.sidebarTasksWrapper}>
+            <MdOutlineCreateNewFolder className={s.sidebarTasksListPlus} />
+            <GoPlus
+              onClick={toggleCreateListModal}
+              className={s.sidebarTasksListPlus}
+            />
+          </div>
         </div>
         {isTasksListOpen && tasks.length > 0 && folders.length > 0 && (
           <div className={s.sidebarTasksList}>
             {folderWithTasks.map((item) => (
-              // <>
-              //   <SidebarMidFolder
-              //     onClick={() => toggleDropdown(item.folder.id)}
-              //     key={item.folder.id}
-              //     folder={item.folder}
-              //   />
-              //   {item.tasks.length > 0 && (
-              //     <div className={s.sidebarTasksListContainer}>
-              //       {item.tasks.map((task: typeTask) => (
-              //         <SidebarMidTask key={task.id} task={task} />
-              //       ))}
-              //     </div>
-              //   )}
-              // </>
               <SidebarFolderList
                 folderWithTasks={item}
                 isOpen={dropdownState[item.folder.id]}

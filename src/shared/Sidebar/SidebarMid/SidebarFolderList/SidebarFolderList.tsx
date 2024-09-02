@@ -18,6 +18,7 @@ export default function SidebarFolderList({
   return (
     <div className={s.sidebarFolderTasks}>
       <SidebarMidFolder
+        isOpen={isOpen}
         key={folderWithTasks.folder.id}
         folder={folderWithTasks.folder}
         onClick={() => onOpenFolder(folderWithTasks.folder.id)}

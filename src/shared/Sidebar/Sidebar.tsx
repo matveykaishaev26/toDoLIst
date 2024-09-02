@@ -12,16 +12,13 @@ import { useEffect } from "react";
 import { typeFolder, typeTask } from "../../types/types";
 type Props = {
   sidebarTabs: typeSidebarTab[];
+  isSidebarOpen: boolean;
 };
 
-export default function Sidebar({ sidebarTabs }: Props) {
-
-
-  const isSidebarOpen = useSelector((state: RootState) => state.sidebar.isOpen);
-  // const [isTasksListOpen, setTasksListOpen] = useState<boolean>(false);
-  // const [tasks, setTasks] = useState<typeTask[]>([]);
-  // const [folders, setFolders] = useState<typeFolder[]>([]);
-
+export default function Sidebar({
+  sidebarTabs,
+  isSidebarOpen,
+}: Props) {
   const [isCreateListModalOpen, setIsCreateListModalOpen] =
     useState<boolean>(false);
 
@@ -50,7 +47,6 @@ export default function Sidebar({ sidebarTabs }: Props) {
         ))}
       </div>
       <SidebarMid />
-      
     </div>
   );
 }

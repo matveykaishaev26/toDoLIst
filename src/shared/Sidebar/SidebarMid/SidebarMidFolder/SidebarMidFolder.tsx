@@ -3,12 +3,14 @@ import { SlOptions } from "react-icons/sl";
 import { typeFolder } from "../../../../types/types";
 import s from "./SidebarMidFolder.module.scss";
 import { FaRegFolder } from "react-icons/fa";
+import { FaRegFolderOpen } from "react-icons/fa";
 type Props = {
   folder: typeFolder;
   onClick: (id: number) => void;
+  isOpen: boolean;
 };
 
-const SidebarMidFolder = ({ folder, onClick }: Props) => {
+const SidebarMidFolder = ({ folder, onClick, isOpen }: Props) => {
   return (
     <div
       onClick={() => onClick(folder.id)}
@@ -16,7 +18,11 @@ const SidebarMidFolder = ({ folder, onClick }: Props) => {
       key={folder.id}
     >
       <div className={s.sidebarTasksWrapper}>
-        <FaRegFolder className={s.sidebarTasksListIcon} />
+        {isOpen ? (
+          <FaRegFolderOpen className={s.sidebarTasksListIcon} />
+        ) : (
+          <FaRegFolder className={s.sidebarTasksListIcon} />
+        )}
         {folder.title}
       </div>
       <div className={s.taskColor}></div>
