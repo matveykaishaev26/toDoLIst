@@ -18,31 +18,43 @@
 //   }
 // };
 
-import { createApi } from "@reduxjs/toolkit/query/react";
+import { createApi, BaseQueryFn } from "@reduxjs/toolkit/query/react";
 import { databases } from "./appwrite";
 import { typeFolder } from "../types/types";
 const databaseId = "TODOLIST";
 const collectionId = "66d5604b0013a393d925";
 
-const baseQuery = async () => {
+const appwriteBaseQuery: BaseQueryFn<
+  { url: string; method: string; data?: any },
+  unknown,
+  unknown
+> = async ({ url, method, data }) => {
   try {
-    const response = await databases.listDocuments(databaseId, collectionId);
-    return { data: response.documents };
+    let result;
+    switch (method) {
+      case "GET":
+        result = await databases.listDocuments(databaseId, url);
+        console.log(result.documents);
+        return { data: result.documents };
+      default:
+        throw new Error(`Метод ${method} не поддерживается`);
+    }
   } catch (err: any) {
-    return { error: err.message };
+    return { error: { status: "CUSTOM_ERROR", error: err.message } };
   }
 };
 
 export const folderApi = createApi({
   reducerPath: "api",
-  baseQuery: baseQuery,
+  baseQuery: appwriteBaseQuery,
   endpoints: (builder) => ({
     getAllFolders: builder.query<typeFolder[], void>({
-        query: () => ({}),
-        
+      query: () => ({
+        url: collectionId,
+        method: "GET",
+      }),
     }),
   }),
 });
 
-type FolderApi = typeof folderApi;
-export const { useGetAllFoldersQuery } = folderApi as FolderApi;
+export const { useGetAllFoldersQuery } = folderApi;
