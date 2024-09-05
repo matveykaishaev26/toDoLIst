@@ -1,13 +1,25 @@
 @import "../../styles/variables.scss";
 .myButton {
-  background-color: $main-color;
-  border: 1px solid $grey-dark-color;
-  box-sizing: border-box;
-  border-radius: 4px;
-  color: $black-font-color;
+  box-shadow: none;
+  border-radius: 6px;
+  border-style: solid;
+  border-width: 0;
+  min-width: 100px;
   cursor: pointer;
-  font-size: 16px;
-  padding: 5px 10px 5px 10px;
+  font-weight: 500;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  outline: 0;
+  display: inline-block;
+  font-size: 14px;
+  color: #575757;
+  background-color: white;
+  border: 1px solid #c4c4c4;
+  transition: background-color 0.2s ease;
+  padding: 6px 16px;
+  height: 40px;
+  width: 100%;
 
   &:hover {
     background-color: $grey-dark-color-hover;
@@ -20,4 +32,8 @@
       background-color: $blue-color-hover;
     }
   }
+}
+.myButton:disabled {
+  opacity: 0.6;
+  cursor: default;
 }

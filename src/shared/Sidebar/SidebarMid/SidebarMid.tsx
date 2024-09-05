@@ -12,17 +12,19 @@ import { typeFolderWithTasks } from "../../../types/types";
 import { typeDropdownState } from "../../../types/types";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
 import SidebarFolderList from "../SidebarMid/SidebarFolderList/SidebarFolderList";
-import { useGetAllFoldersQuery } from "../../../service/folderService";
+
+import { useGetAllFoldersQuery } from "../../../store/api/folderApi";
 const SidebarMid: React.FC = () => {
   const [isTasksListOpen, setTasksListOpen] = useState<boolean>(false);
   const [isCreateListModalOpen, setIsCreateListModalOpen] =
     useState<boolean>(false);
 
-  const {
-    data: tasks,
-    loading: tasksLoading,
-    error: tasksError,
-  } = useFetch<typeTask[]>("http://localhost:5000/task");
+  const { data: allFolders } = useGetAllFoldersQuery();
+  // const {
+  //   data: tasks,
+  //   loading: tasksLoading,
+  //   error: tasksError,
+  // } = useFetch<typeTask[]>("http://localhost:5000/task");
 
   // const {
   //   data: folders,
@@ -31,17 +33,15 @@ const SidebarMid: React.FC = () => {
   // } = useFetch<typeFolder[]>("http://localhost:5000/folder");
   const [dropdownState, setDropdownState] = useState<typeDropdownState>({});
 
-  const { data: folders, error, isLoading } = useGetAllFoldersQuery();
-
-  useEffect(() => {
-    if (folders && tasks) {
-      const obj = folderWithTasks.reduce((acc, item, index) => {
-        acc[index] = false;
-        return acc;
-      }, {} as typeDropdownState);
-      setDropdownState(obj);
-    }
-  }, [folders, tasks]);
+  // useEffect(() => {
+  //   if (folders && tasks) {
+  //     const obj = folderWithTasks.reduce((acc, item, index) => {
+  //       acc[index] = false;
+  //       return acc;
+  //     }, {} as typeDropdownState);
+  //     setDropdownState(obj);
+  //   }
+  // }, [folders, tasks]);
 
   const toggleDropdown = (index: number) => {
     setDropdownState((prev) =>
@@ -58,21 +58,21 @@ const SidebarMid: React.FC = () => {
     setTasksListOpen((prev) => !prev);
   };
 
-  if (!tasks) return <div>No tasks available</div>;
+  // if (!tasks) return <div>No tasks available</div>;
 
-  if (!folders) return <div>No folders available</div>;
+  // if (!folders) return <div>No folders available</div>;
 
-  const folderWithTasks: typeFolderWithTasks[] = folders.map(
-    (folder: typeFolder) => {
-      return {
-        folder: folder,
-        tasks: tasks.filter((task: typeTask) => task.folder_id === folder.id),
-      };
-    }
-  );
-  const remainingTasks: typeTask[] = tasks.filter(
-    (task: typeTask) => task.folder_id === null
-  );
+  // const folderWithTasks: typeFolderWithTasks[] = folders.map(
+  //   (folder: typeFolder) => {
+  //     return {
+  //       folder: folder,
+  //       tasks: tasks.filter((task: typeTask) => task.folder_id === folder.id),
+  //     };
+  //   }
+  // );
+  // const remainingTasks: typeTask[] = tasks.filter(
+  //   (task: typeTask) => task.folder_id === null
+  // );
 
   return (
     <div className={s.sidebarMid}>
@@ -94,7 +94,7 @@ const SidebarMid: React.FC = () => {
             />
           </div>
         </div>
-        {isTasksListOpen && tasks.length > 0 && folders.length > 0 && (
+        {/* {isTasksListOpen && tasks.length > 0 && folders.length > 0 && (
           <div className={s.sidebarTasksList}>
             {folderWithTasks.map((item) => (
               <SidebarFolderList
@@ -112,7 +112,7 @@ const SidebarMid: React.FC = () => {
               </>
             )}
           </div>
-        )}
+        )} */}
       </div>
       {isCreateListModalOpen && (
         <MyPortal>

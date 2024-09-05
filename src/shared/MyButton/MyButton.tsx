@@ -3,10 +3,11 @@ import s from "./MyButton.module.scss";
 
 type ButtonColor = "white" | "blue" | "tertiary"; // Пример возможных значений
 type Props = {
-  children?: string;
+  children?: string | JSX.Element | JSX.Element[];
   className?: string;
   color?: ButtonColor;
   onClick?: () => void;
+  disabled?: boolean;
 };
 
 export default function MyButton({
@@ -14,13 +15,14 @@ export default function MyButton({
   className = " ",
   onClick,
   color,
+  disabled,
 }: Props) {
   const colorClass = color && s[color];
-  console.log(color);
 
   return (
     <button
       onClick={onClick}
+      disabled={disabled}
       className={`${s.myButton} ${colorClass} ${className}`}
     >
       {children}

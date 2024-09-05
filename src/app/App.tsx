@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { TodayList } from "../pages/TodayTasks/TodayTasks";
 import Sidebar from "../shared/Sidebar/Sidebar";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { CiStickyNote, CiCalendarDate, CiBoxList } from "react-icons/ci"; // Импортируем иконки
 import { useState } from "react";
 import s from "./App.module.scss";
 import Header from "../shared/Header/Header";
-
+import Authorization from "../pages/Authorization/Authorization";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 export type typeSidebarTab = {
   value: string;
   icon: React.ComponentType;
@@ -37,11 +39,19 @@ function App() {
   };
 
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
+  const { token } = useSelector((state: RootState) => state.user);
+  const navigate = useNavigate();
 
-  console.log(isSidebarOpen);
-
-  return (
-    <div className={s.app}>
+  useEffect(() => {
+    if (token) {
+      navigate("/home");
+    } else {
+      navigate("/signup");
+    }
+  }, [token, navigate]);
+  const mainContent = (
+    <>
+      {" "}
       <Sidebar isSidebarOpen={isSidebarOpen} sidebarTabs={sidebarTabs} />
       <div className={s.appContentContainer}>
         <Header toggleSidebarOpen={toggleSidebarOpen}></Header>
@@ -51,42 +61,25 @@ function App() {
           }`}
         >
           <Routes>
+            <Route path="/signup" element={<Authorization />} />;
             {sidebarTabs.map((tab) => (
               <Route path={tab.link} element={<TodayList />} key={tab.value} />
             ))}
           </Routes>
         </div>
       </div>
-    </div>
+    </>
+  );
+  return (
+    <>
+      <div className={s.app}>
+        <Routes>
+          <Route path="/signup" element={<Authorization />} />
+          <Route path="/home" element={mainContent} />
+        </Routes>
+      </div>
+    </>
   );
 }
 
 export default App;
-
-// import React, { useEffect, useState } from "react";
-// import { Client, Databases, Query } from "appwrite";
-
-// import {getAllFolders} from "../service/folderService";
-
-// const DocumentList = () => {
-//   const [documents, setDocuments] = useState([]);
-
-//   useEffect(() => {
-//     const fetchDocuments = async () => {
-//       const docs = await getAllFolders();
-//       setDocuments(docs);
-//     };
-
-//     fetchDocuments();
-//   }, []);
-
-//   return (
-//     <div>
-//       <h1>Документы</h1>
-//       <ul>
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default DocumentList;

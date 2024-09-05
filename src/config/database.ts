@@ -1,0 +1,6 @@
+export const DATABASE_ID = "TODOLIST";
+export const COLLECTIONS = {
+  FOLDERS: "66d5604b0013a393d925",
+  TASKS: "66d5625f002bf63b0e0a",
+  COLORS: "66d5638b003b6d434341",
+};

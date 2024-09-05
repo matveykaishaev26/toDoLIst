@@ -43,7 +43,7 @@ export default function Sidebar({
       <SidebarTop />
       <div className={s.sidebarTabs}>
         {sidebarTabs.map((tab) => (
-          <SidebarTab tab={tab} />
+          <SidebarTab key={tab} tab={tab} />
         ))}
       </div>
       <SidebarMid />
