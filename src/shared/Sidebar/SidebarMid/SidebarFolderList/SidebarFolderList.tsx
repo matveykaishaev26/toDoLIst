@@ -21,7 +21,7 @@ export default function SidebarFolderList({
         isOpen={isOpen}
         key={folderWithTasks.folder.id}
         folder={folderWithTasks.folder}
-        onClick={() => onOpenFolder(folderWithTasks.folder.id)}
+        onOpenFolder={onOpenFolder}
       />
       {folderWithTasks.tasks.length > 0 && isOpen && (
         <div className={s.sidebarTasksListContainer}>

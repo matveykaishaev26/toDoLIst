@@ -1,0 +1,48 @@
+@import "../../styles/variables.scss";
+
+.mainSidebar {
+  box-sizing: border-box;
+  width: 50px;
+  height: 100vh;
+  padding: 10px 0 10px 0;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(237, 237, 237);
+  align-items: center;
+  z-index: 99999;
+  transition: $main-transition;
+  border-right: 1px solid $main-color-border;
+
+  .profilePicture {
+    height: 35px; // Размер контейнера изображения
+    width: 35px; // Размер контейнера изображения
+    overflow: hidden; // Скрывает все, что выходит за пределы контейнера
+    display: flex;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    border-radius: 4px;
+    margin-bottom: 30px;
+    cursor: pointer;
+  }
+  .mainTab {
+    color: rgb(142, 142, 142);
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+
+  .mainTabs {
+    display: flex;
+    justify-content: space-between;
+    .mainTabsWrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      
+    }
+  }
+}

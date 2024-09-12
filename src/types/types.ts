@@ -1,3 +1,10 @@
+export type typeSidebarTab = {
+  value?: string;
+  icon: React.ComponentType<{ className: string }>;
+  link: string;
+  key?: number | string;
+};
+
 export type typeTask = {
   id: number;
   title: string;
@@ -44,5 +51,3 @@ export type typeUser = {
   name: string;
   email: string;
 };
-
-

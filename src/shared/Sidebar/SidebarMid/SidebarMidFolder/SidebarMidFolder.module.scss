@@ -8,6 +8,7 @@
   display: flex;
   border-radius: 4px;
   align-items: center;
+  cursor: pointer;
   .sidebarTasksWrapper {
     display: flex;
     align-items: center;
@@ -19,12 +20,13 @@
     margin-right: 10px;
   }
   .sidebarTasksListIcon {
-    color: $black-font-color;
-    margin-right: 10px;
-    font-size: 15px;
+    color: rgb(101, 101, 101);
+    margin-right: 8px;
+    font-size: 16px;
   }
   .sidebarTasksOptions {
     color: $main-color;
+    font-size: 12px;
   }
 }
 .sidebarTasksFolder:hover {

@@ -4,20 +4,30 @@ type Props = {
   placeholder: string;
   className?: string;
   type?: string;
-  value?: string
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
-  disabled?: boolean
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
+  autoComplete?: string;
 };
 
-function MyInput({ placeholder, className , type = 'text', value, onChange, disabled}: Props) {
+function MyInput({
+  placeholder,
+  className,
+  type = "text",
+  value,
+  onChange,
+  disabled,
+  autoComplete,
+}: Props) {
   return (
     <input
       className={`${s.myInput} ${className ? className : ""}`}
       type={type}
-      value = {value}
+      value={value}
       placeholder={placeholder}
       onChange={onChange}
       disabled={disabled}
+      autoComplete={autoComplete}
     />
   );
 }

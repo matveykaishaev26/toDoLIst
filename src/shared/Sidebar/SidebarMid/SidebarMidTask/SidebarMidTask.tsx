@@ -1,5 +1,4 @@
-import React from "react";
-import { CiMenuBurger } from "react-icons/ci";
+import { LuMenu } from "react-icons/lu";
 import { SlOptions } from "react-icons/sl";
 import { typeTask } from "../../../../types/types";
 import s from "./SidebarMidTask.module.scss";
@@ -10,12 +9,12 @@ type Props = {
 
 const SidebarMidTask = ({ task }: Props) => {
   return (
-    <div className={s.sidebarTasksListItem} key={task.id}>
-      <div className={s.sidebarTasksWrapper}>
-        <CiMenuBurger className={s.sidebarTasksListIcon} />
-        {task.title}
+    <div className={s.task} key={task.id}>
+      <div className={s.iconWrapper}>
+        <LuMenu className={s.burgerIcon} />
+        <div className={s.taskTitle}>{task.title} </div>
       </div>
-      <div className={s.sidebarTasksWrapper}>
+      <div className={s.iconWrapper}>
         <div className={`${s.taskColor} ${c[task.color]}`}></div>
         <SlOptions className={s.sidebarTasksOptions} />
       </div>
@@ -24,4 +23,3 @@ const SidebarMidTask = ({ task }: Props) => {
 };
 
 export default SidebarMidTask;
-

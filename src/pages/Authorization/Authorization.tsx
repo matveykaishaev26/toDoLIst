@@ -44,6 +44,7 @@ const Authorization = () => {
         <MyInput
           type="email"
           placeholder="Почта"
+          autoComplete="on"
           value={email}
           className={isLoading ? `${s.authInput}:disabled` : s.authInput}
           onChange={(e) => setEmail(e.target.value)}
@@ -54,7 +55,8 @@ const Authorization = () => {
           type="password"
           placeholder="Пароль: 6-32 символа"
           value={password}
-          className={s.authInput}
+          autoComplete="on"
+          className={isLoading ? `${s.authInput}:disabled` : s.authInput}
           disabled={isLoading}
           onChange={(e) => setPassword(e.target.value)}
         />

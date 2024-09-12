@@ -1,19 +1,19 @@
 import React from "react";
 import { SlOptions } from "react-icons/sl";
 import { typeFolder } from "../../../../types/types";
-import s from "./SidebarMidFolder.module.scss";
+import s from "./SidebarMidFolder.module.scss"
 import { FaRegFolder } from "react-icons/fa";
 import { FaRegFolderOpen } from "react-icons/fa";
 type Props = {
   folder: typeFolder;
-  onClick: (id: number) => void;
-  isOpen: boolean;
+  onOpenFolder: (id: number) => void;
+  isOpen?: boolean;
 };
 
-const SidebarMidFolder = ({ folder, onClick, isOpen }: Props) => {
+const SidebarMidFolder = ({ folder,  onOpenFolder, isOpen }: Props) => {
   return (
-    <div
-      onClick={() => onClick(folder.id)}
+    <div  
+      onClick={() => onOpenFolder(folder.id)}
       className={s.sidebarTasksFolder}
       key={folder.id}
     >

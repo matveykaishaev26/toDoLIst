@@ -3,22 +3,27 @@
   border-bottom: 1px solid $main-color-border;
   border-top: 1px solid $main-color-border;
   padding: 15px 5px 15px 5px;
-  margin-top: 50px;
+  margin: 10px 0 10px 0%;  
 
-  .sidebarTasksTab {
+  .sidebarListBtn {
+    cursor: pointer;
     color: $grey-font-color;
     position: relative;
-    font-size: 14px;
+    font-size: 12px;
     padding: 8px;
     justify-content: space-between;
     display: flex;
     border-radius: 4px;
     align-items: center;
+    .sidebarIconWrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-    .sidebarTasksTabIcon {
+    .dropdownIcon {
       font-size: 10px;
       color: $main-color;
-      margin-right: 10px;
       transform: rotate(-90deg);
       cursor: pointer;
       &.active {
@@ -26,28 +31,25 @@
       }
     }
 
-    .sidebarTasksListPlus {
+    .plusIcon {
       font-size: 18px;
       color: $main-color;
       cursor: pointer;
     }
   }
-  .sidebarTasksTab:hover {
+  .sidebarListBtn:hover {
     background-color: $main-color-hover;
-    .sidebarTasksTabIcon,
-    .sidebarTasksListPlus {
+    .dropdownIcon,
+    .plusIcon {
       color: $grey-color;
     }
 
-    .sidebarTasksListPlus:hover {
+    .plusIcon:hover {
       color: $grey-color-hover;
     }
-    .sidebarTasksTabIcon:hover {
+    .dropdownIcon:hover {
       color: $grey-color-hover;
     }
-  }
-
-  .sidebarFolderContainer {
   }
 
   .sidebarTasksList {

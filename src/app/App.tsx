@@ -9,13 +9,37 @@ import Header from "../shared/Header/Header";
 import Authorization from "../pages/Authorization/Authorization";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
-export type typeSidebarTab = {
-  value: string;
-  icon: React.ComponentType;
-  link: string;
-};
-
+import { CiBookmarkCheck } from "react-icons/ci";
+import { CiTrash } from "react-icons/ci";
+import { typeSidebarTab } from "../types/types";
+import MainSidebar from "../shared/MainSidebar/MainSidebar";
+import { BsCalendarDateFill } from "react-icons/bs";
+import { IoSearch } from "react-icons/io5";
+import { BsBookmarkCheckFill } from "react-icons/bs";
+import { IoIosSync } from "react-icons/io";
 function App() {
+  const mainSidebarTabs: typeSidebarTab[] = [
+    {
+      value: "Задача",
+      icon: BsBookmarkCheckFill,
+      link: "/",
+    },
+    {
+      value: "Календарное представлнение",
+      icon: BsCalendarDateFill,
+      link: "/",
+    },
+    {
+      value: "Поиск",
+      icon: IoSearch,
+      link: "/",
+    },
+    {
+      value: "Синхронизация",
+      icon: IoIosSync,
+      link: "/",
+    },
+  ];
   const sidebarTabs: typeSidebarTab[] = [
     {
       value: "Входящие",
@@ -31,6 +55,16 @@ function App() {
       value: "Все задачи",
       icon: CiBoxList,
       link: "/all_tasks",
+    },
+    {
+      value: "Выполнено",
+      icon: CiBookmarkCheck,
+      link: "/completed",
+    },
+    {
+      value: "Корзина",
+      icon: CiTrash,
+      link: "/trash",
     },
   ];
 
@@ -51,7 +85,7 @@ function App() {
   }, [token, navigate]);
   const mainContent = (
     <>
-      {" "}
+      <MainSidebar tabs={mainSidebarTabs} />
       <Sidebar isSidebarOpen={isSidebarOpen} sidebarTabs={sidebarTabs} />
       <div className={s.appContentContainer}>
         <Header toggleSidebarOpen={toggleSidebarOpen}></Header>
@@ -63,7 +97,7 @@ function App() {
           <Routes>
             <Route path="/signup" element={<Authorization />} />;
             {sidebarTabs.map((tab) => (
-              <Route path={tab.link} element={<TodayList />} key={tab.value} />
+              <Route path={tab.link} element={<TodayList />} key={tab.link} />
             ))}
           </Routes>
         </div>

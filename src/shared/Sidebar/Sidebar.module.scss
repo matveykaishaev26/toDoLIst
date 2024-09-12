@@ -64,7 +64,7 @@
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 16px;
   padding: 5px;
   border-radius: 4px;
@@ -73,9 +73,9 @@
   cursor: pointer;
 
   .icon {
-    font-size: 24px;
+    font-size: 20px;
     color: $black-font-color;
-    margin-right: 10px;
+    margin-right: 8px;
   }
 
   &:hover {
