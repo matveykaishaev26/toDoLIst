@@ -1,7 +1,7 @@
 export type typeSidebarTab = {
   value?: string;
   icon: React.ComponentType<{ className: string }>;
-  link: string;
+  link?: string;
   key?: number | string;
 };
 

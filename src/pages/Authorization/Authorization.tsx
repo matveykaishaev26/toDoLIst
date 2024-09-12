@@ -3,7 +3,6 @@ import { useLoginMutation } from "../../store/api/userApi";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../store/userSlice";
 import { typeUser } from "../../types/types";
-import { typeLogin } from "../../types/types";
 import s from "./Authorization.module.scss";
 import MyInput from "../../shared/MyInput/MyInput";
 import MyButton from "../../shared/MyButton/MyButton";
@@ -16,7 +15,7 @@ const Authorization = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e?: React.MouseEvent) => {
     e.preventDefault();
     try {
       const result = await login({ email, password }).unwrap();
@@ -28,7 +27,7 @@ const Authorization = () => {
             email: result.email,
           } as typeUser)
         );
-        navigate("/home");
+        navigate("/quests/today");
       }
 
       // Успешный вход
@@ -63,7 +62,7 @@ const Authorization = () => {
 
         <MyButton
           disabled={isLoading}
-          onClick={(e) => handleLogin(e)}
+          onClick={(e?: React.MouseEvent) => handleLogin(e)}
           color={"blue"}
         >
           {isLoading ? "Вход..." : "Вход"}

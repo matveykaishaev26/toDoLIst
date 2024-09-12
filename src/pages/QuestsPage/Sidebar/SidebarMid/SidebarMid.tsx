@@ -2,17 +2,17 @@ import React, { useState, useEffect } from "react";
 import s from "./SidebarMid.module.scss";
 import { FaChevronDown } from "react-icons/fa";
 import { GoPlus } from "react-icons/go";
-import { typeTask, typeFolderWithTasks } from "../../../types/types";
+import { typeTask, typeFolderWithTasks } from "../../../../types/types";
 
-import ModalCreateTask from "../../Modal/ModalCreateTask/ModalCreateTask";
-import MyPortal from "../../MyPortal/MyPortal";
-import { typeDropdownState } from "../../../types/types";
+import ModalCreateTask from "../../../../shared/Modal/ModalCreateTask/ModalCreateTask";
+import MyPortal from "../../../../shared/MyPortal/MyPortal";
+import { typeDropdownState } from "../../../../types/types";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
 import SidebarFolderList from "../SidebarMid/SidebarFolderList/SidebarFolderList";
-import { useGetAllTasksQuery } from "../../../store/api/taskApi";
-import { useGetAllFoldersQuery } from "../../../store/api/folderApi";
+import { useGetAllTasksQuery } from "../../../../store/api/taskApi";
+import { useGetAllFoldersQuery } from "../../../../store/api/folderApi";
 import SidebarMidTask from "./SidebarMidTask/SidebarMidTask";
-import SkeletonList from "../../Skeleton/SkeletonList/SkeletonList";
+import SkeletonList from "./SkeletonList/SkeletonList";
 
 const SidebarMid: React.FC = () => {
   const [isTasksListOpen, setTasksListOpen] = useState<boolean>(true);
@@ -20,9 +20,8 @@ const SidebarMid: React.FC = () => {
     useState<boolean>(false);
   const [foldersWithTasks, setFoldersWithTasks] = useState<
     typeFolderWithTasks[]
-    >([]);
-    const [dropdownState, setDropdownState] = useState<typeDropdownState>([]);
-  
+  >([]);
+  const [dropdownState, setDropdownState] = useState<typeDropdownState>([]);
 
   const [remainingTasks, setRemainingTasks] = useState<typeTask[]>([]);
   const {
@@ -38,7 +37,10 @@ const SidebarMid: React.FC = () => {
 
   useEffect(() => {
     if (allFolders && allTasks) {
-      const dropdownsState: typeDropdownState = allFolders.reduce((acc, item) => ({ ...acc, [item.id]: false }), {});
+      const dropdownsState: typeDropdownState = allFolders.reduce(
+        (acc, item) => ({ ...acc, [item.id]: false }),
+        {}
+      );
       setDropdownState(dropdownsState);
       const foldersWithTasksResult = allFolders.map((item) => ({
         folder: item,
@@ -55,7 +57,6 @@ const SidebarMid: React.FC = () => {
       prev[index] ? { ...prev, [index]: false } : { ...prev, [index]: true }
     );
   };
-
 
   const toggleCreateListModal = (event: React.MouseEvent) => {
     event.stopPropagation();

@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React from "react";
 import s from "./MyButton.module.scss";
 
 type ButtonColor = "white" | "blue" | "tertiary"; // Пример возможных значений
@@ -6,7 +6,7 @@ type Props = {
   children?: string | JSX.Element | JSX.Element[];
   className?: string;
   color?: ButtonColor;
-  onClick?: () => void;
+  onClick?: (e?: React.MouseEvent) => void;
   disabled?: boolean;
 };
 

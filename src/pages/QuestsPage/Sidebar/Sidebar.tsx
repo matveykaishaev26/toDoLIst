@@ -1,5 +1,5 @@
 import s from "./Sidebar.module.scss";
-import { typeSidebarTab } from "../../types/types";
+import { typeSidebarTab } from "../../../types/types";
 import SidebarTab from "./SidebarTab";
 import SidebarMid from "./SidebarMid/SidebarMid";
 

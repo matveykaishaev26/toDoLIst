@@ -1,15 +1,7 @@
 .app {
   display: flex;
-}
 
-.appContentContainer {
-  flex-grow: 1;
-  padding: 20px;
-  .appContent {
-    display: block;
-    margin: 0 auto 0 auto;
-    width: 700px;
-    padding: 10px;
+  .appContentContainer {
+    flex-grow: 1;
   }
-
 }

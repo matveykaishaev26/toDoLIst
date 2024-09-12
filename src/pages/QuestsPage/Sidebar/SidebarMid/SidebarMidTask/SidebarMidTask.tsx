@@ -1,8 +1,8 @@
 import { LuMenu } from "react-icons/lu";
 import { SlOptions } from "react-icons/sl";
-import { typeTask } from "../../../../types/types";
+import { typeTask } from "../../../../../types/types";
 import s from "./SidebarMidTask.module.scss";
-import c from "../../../../styles/taskTypesColors.module.scss";
+import c from "../../../../../styles/taskTypesColors.module.scss";
 type Props = {
   task: typeTask;
 };

@@ -1,0 +1,16 @@
+.quests {
+    display: flex;
+  }
+  
+  .questsContentContainer {
+    flex-grow: 1;
+    padding: 20px;
+    .questsContent {
+      display: block;
+      margin: 0 auto 0 auto;
+      width: 700px;
+      padding: 10px;
+    }
+  
+  }
+  
