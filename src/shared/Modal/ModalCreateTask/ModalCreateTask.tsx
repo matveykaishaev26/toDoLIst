@@ -51,6 +51,9 @@ const colors: color[] = [
   {
     color: "purple",
   },
+  {
+    color: "salad",
+  },
 ];
 
 const ModalCreateTask = ({ onClose }: Props) => {
@@ -70,14 +73,12 @@ const ModalCreateTask = ({ onClose }: Props) => {
             {colors.map((color) => (
               <div
                 onClick={() => setActiveColor(color.color)}
-                className={`${s.color} ${c[color.color]}`}
-              >
-                {activeColor === color.color ? (
-                  <div className={s.colorActive}></div>
-                ) : (
-                  ""
-                )}
-              </div>
+                className={
+                  activeColor === color.color
+                    ? `${s.color} ${c[color.color]} ${c.active}`
+                    : `${s.color} ${c[color.color]}`
+                }
+              ></div>
             ))}
           </div>
         </div>

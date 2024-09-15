@@ -5,7 +5,7 @@ import Header from "./Header/Header";
 import { useState } from "react";
 import s from "./QuestsPage.module.scss";
 import { Routes, Route } from "react-router-dom";
-type Props = {};
+import MyInput from "../../shared/MyInput/MyInput";
 import {
   CiStickyNote,
   CiCalendarDate,
@@ -43,7 +43,7 @@ const sidebarTabs: typeSidebarTab[] = [
   },
 ];
 
-const QuestsPage = (props: Props) => {
+const QuestsPage = () => {
   const toggleSidebarOpen = () => {
     setIsSidebarOpen((prev) => !prev);
   };
@@ -54,11 +54,13 @@ const QuestsPage = (props: Props) => {
       <Sidebar isSidebarOpen={isSidebarOpen} sidebarTabs={sidebarTabs} />
       <div className={s.questsContentContainer}>
         <Header toggleSidebarOpen={toggleSidebarOpen}></Header>
+
         <div
           className={`${s.questsContent} ${
             isSidebarOpen ? s.contentOpen : s.contentClose
           }`}
         >
+          <MyInput placeholder="Добавить задачу" className={ s.subtaskInput} />
           <Routes>
             {sidebarTabs.map((tab) => (
               <Route

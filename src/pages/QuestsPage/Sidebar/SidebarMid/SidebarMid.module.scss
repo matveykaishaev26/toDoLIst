@@ -1,14 +1,14 @@
 @import "../../../../styles/variables.scss";
 
 .sidebarMid {
-  border-bottom: 1px solid $main-color-border;
-  border-top: 1px solid $main-color-border;
+  border-bottom: 1px solid var(--color-border-main);
+  border-top: 1px solid var(--color-border-main);
   padding: 15px 5px 15px 5px;
-  margin: 10px 0 10px 0%;  
-
+  margin: 10px 0 10px 0%;
+  user-select: none;
   .sidebarListBtn {
     cursor: pointer;
-    color: $grey-font-color;
+    color: var(--color-font-light);
     position: relative;
     font-size: 12px;
     padding: 8px;
@@ -24,7 +24,7 @@
 
     .dropdownIcon {
       font-size: 10px;
-      color: $main-color;
+      color: var(--color-main);
       transform: rotate(-90deg);
       cursor: pointer;
       &.active {
@@ -34,22 +34,22 @@
 
     .plusIcon {
       font-size: 18px;
-      color: $main-color;
+      color: var(--color-main);
       cursor: pointer;
     }
   }
   .sidebarListBtn:hover {
-    background-color: $main-color-hover;
+    background-color: var(--color-hover-main);
     .dropdownIcon,
     .plusIcon {
-      color: $grey-color;
+      color: var(--color-font-light);
     }
 
     .plusIcon:hover {
-      color: $grey-color-hover;
+      color: var(--color-font-hover-light);
     }
     .dropdownIcon:hover {
-      color: $grey-color-hover;
+      color: var(--color-font-hover-light);
     }
   }
 

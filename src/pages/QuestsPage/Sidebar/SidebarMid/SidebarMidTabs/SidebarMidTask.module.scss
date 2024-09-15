@@ -1,0 +1,62 @@
+@import "../../../../../styles/variables.scss";
+
+.tab {
+  color: var(--color-font-main);
+  font-size: 14px;
+  padding: 8px;
+  font-weight: 400;
+  justify-content: space-between;
+  display: flex;
+  background-color: var(--color-main);
+  cursor: pointer;
+  border-radius: 4px;
+  align-items: center;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  .iconWrapper {
+    display: flex;
+    align-items: center;
+    line-height: 20px;
+    line-height: normal;
+
+  }
+  .taskColor {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+  .taskTitle {
+    flex-grow: 1; /* Позволяет этому блоку занимать оставшееся пространство */
+    white-space: nowrap; /* Предотвращает перенос текста */
+    overflow: hidden; /* Скрывает текст при недостатке места */
+    text-overflow: ellipsis; /* Добавляет многоточие при переполнении */
+    margin-right: 10px;
+  }
+
+  .tabIcon {
+    line-height: normal;
+    margin-right: 8px;
+    font-size: 16px;
+
+    color: var(--color-font-main);
+  }
+  .sidebarTasksOptions {
+    color: var(--color-main);
+    font-size: 14px;
+    
+  }
+}
+.tab:hover {
+  background-color: var(--color-hover-main);
+  .sidebarTasksOptions {
+    color: var(--color-font-light);
+    cursor: pointer;
+  }
+  .sidebarTasksOptions:hover {
+    color: var(--color-font-hover-light);
+  }
+}
+
+

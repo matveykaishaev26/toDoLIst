@@ -1,22 +1,32 @@
-//transitions
-$main-transition: all 0.3s ease;
 
-//radius
-$main-border-radius: 4px;
 
-$main-color: #ffffff;
-$main-color-hover: #efefef;
-$main-color-active: #439eff;
-$main-color-border: #dedede;
+///////////////////////////////////////////////////////////////////////
+$color-blue: #439eff;
+$color-hover-blue: #1485fe;
 
-$grey-color: rgb(152, 152, 152);
-$grey-color-hover: rgb(57, 57, 57);
+$transition-duration: 0.1s;
+$transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 
-$grey-dark-color: rgb(222, 222, 222);
-$grey-dark-color-hover: rgb(237, 237, 237);
 
-$black-font-color: #2a2929;
-$grey-font-color: rgb(152, 152, 152);
+html[data-theme="light"] {
+  --color-main: #ffffff;
+  --color-border-main: #dddddd;
+  --color-font-main: rgb(57, 57, 57);
+  --color-font-light: rgb(129, 129, 129);
+  --color-font-hover-light: rgb(85, 85, 85);
+  --color-sidebar: rgb(240, 240, 240);
+  --color-hover-main: #f1f1f1;
+  --color-active-main: #ededed;
+}
 
-$blue-color: #439eff;
-$blue-color-hover: #2d92fe;
+html[data-theme="dark"] {
+  --color-main: #1e1e1e;
+  --color-border-main: #818181;
+  --color-font-main: rgb(231, 231, 231);
+  --color-font-light: rgb(187, 187, 187);
+  --color-font-hover-light: rgb(238, 238, 238);
+  --color-sidebar: rgb(39, 39, 39);
+
+  --color-hover-main: #303030;
+  --color-active-main: #363636;
+}

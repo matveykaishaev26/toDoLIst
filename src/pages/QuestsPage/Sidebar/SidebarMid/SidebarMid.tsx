@@ -8,12 +8,11 @@ import ModalCreateTask from "../../../../shared/Modal/ModalCreateTask/ModalCreat
 import MyPortal from "../../../../shared/MyPortal/MyPortal";
 import { typeDropdownState } from "../../../../types/types";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
-import SidebarFolderList from "../SidebarMid/SidebarFolderList/SidebarFolderList";
+import SidebarFolderList from "./SidebarFolderList/SidebarFolderList";
 import { useGetAllTasksQuery } from "../../../../store/api/taskApi";
 import { useGetAllFoldersQuery } from "../../../../store/api/folderApi";
-import SidebarMidTask from "./SidebarMidTask/SidebarMidTask";
+import SidebarMidTask from "./SidebarMidTabs/SidebarMidTask";
 import SkeletonList from "./SkeletonList/SkeletonList";
-
 const SidebarMid: React.FC = () => {
   const [isTasksListOpen, setTasksListOpen] = useState<boolean>(true);
   const [isCreateListModalOpen, setIsCreateListModalOpen] =
@@ -115,8 +114,9 @@ const SidebarMid: React.FC = () => {
                   <SidebarMidTask key={task.id} task={task} />
                 ))}
               </>
-            )}
-          </div>
+              )}
+            </div>
+            
         )
       )}
 

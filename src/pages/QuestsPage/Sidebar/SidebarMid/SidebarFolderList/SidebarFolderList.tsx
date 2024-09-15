@@ -1,7 +1,7 @@
 import React from "react";
 import { typeFolderWithTasks } from "../../../../../types/types"
-import SidebarMidFolder from "../SidebarMidFolder/SidebarMidFolder";
-import SidebarMidTask from "../SidebarMidTask/SidebarMidTask";
+import SidebarMidFolder from "../SidebarMidTabs/SidebarMidFolder";
+import SidebarMidTask from "../SidebarMidTabs/SidebarMidTask";
 import { typeTask } from "../../../../../types/types"
 import s from "./SidebarFolderList.module.scss";
 type Props = {

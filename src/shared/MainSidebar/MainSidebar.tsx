@@ -16,13 +16,14 @@ export default function MainSidebar({ tabs }: Props) {
         <div className={s.mainTabsWrapper}>
           {tabs.slice(0, tabs.length / 2).map((item) => (
             <NavLink
+              
               key={item.value} // переместим key на корневой элемент
               to={item.link}
               className={({ isActive }) =>
                 isActive ? `${s.mainTab} ${s.active}` : s.mainTab
               }
             >
-              <item.icon key={item.value} />
+              <item.icon />
             </NavLink>
           ))}
         </div>

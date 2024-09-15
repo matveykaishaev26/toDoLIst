@@ -16,6 +16,13 @@ import QuestsPage from "../pages/QuestsPage/QuestsPage";
 import PrivateRoute from "../utils/router/privateRoute";
 
 function App() {
+
+  React.useEffect(() => {
+    if (!document.documentElement.hasAttribute('data-theme')) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  }, []);
+  
   const mainSidebarTabs: typeSidebarTab[] = [
     {
       value: "Задачи",

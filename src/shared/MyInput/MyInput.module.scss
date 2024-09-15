@@ -7,11 +7,13 @@
   height: 40px;
   box-sizing: border-box;
   border-radius: 6px;
-
+  background-color: var(--color-main);
+  color: var(--color-font-main);
+  border: 1px solid var(--color-border-main);
   outline: none;
 
   &:focus {
-    border-color: $blue-color; /* Цвет границы при фокусе */
+    border-color: $color-blue; /* Цвет границы при фокусе */
   }
   &:hover {
   }

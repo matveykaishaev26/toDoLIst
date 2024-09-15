@@ -5,17 +5,16 @@
   padding-top: 100px; /* Location of the box */
   left: 0;
   top: 0;
-  width: 100%; /* Full width */ 
+  width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
 /* Modal Content */
 .modalContent {
   border-radius: 10px;
-  background-color: $main-color;
+  background-color: var(--color-main);
   padding: 20px;
   width: 20%;
   position: fixed; /* Абсолютное позиционирование относительно окна */
@@ -30,14 +29,15 @@
   margin-bottom: 10px;
 }
 .close {
-  color: $grey-color;
+  color: var(--color-font-light);
   font-size: 18px;
   cursor: pointer;
 }
 
 .close:hover,
 .close:focus {
-  color: $grey-color-hover;
+  color: var(--color-font-hover-light);
+
   text-decoration: none;
   cursor: pointer;
 }

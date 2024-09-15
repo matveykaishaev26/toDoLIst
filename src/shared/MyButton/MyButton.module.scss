@@ -13,23 +13,23 @@
   outline: 0;
   display: inline-block;
   font-size: 14px;
-  color: #575757;
-  background-color: white;
-  border: 1px solid #c4c4c4;
+  color: var(--color-font-main);
+  background-color: var(--color-main);
+  border: 1px solid var(--color-border-main);
   transition: background-color 0.2s ease;
   padding: 6px 16px;
   height: 40px;
   width: 100%;
 
   &:hover {
-    background-color: $grey-dark-color-hover;
+    background-color: var(--color-hover-main);
   }
   &.blue {
-    background-color: $blue-color;
+    background-color: $color-blue;
     border: none;
     color: white;
     &:hover {
-      background-color: $blue-color-hover;
+      background-color: $color-hover-blue;
     }
   }
 }

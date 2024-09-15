@@ -2,23 +2,22 @@
 
 .appHeader {
   display: flex;
-  padding: 10px;
   align-items: center;
   justify-content: space-between;
-
+  
   .sidebarToggle,
   .changeTheme {
     font-size: 34px;
-
+    color: var(--color-font-main);
     cursor: pointer;
     padding: 5px;
-    border-radius: $main-border-radius;
+    border-radius: 4px;
   }
 
   .sidebarToggle:hover {
-    background-color: $main-color-hover;
+    background-color: var(--color-hover-main);
   }
   .changeTheme:hover {
-    background-color: $main-color-hover;
+    background-color: var(--color-hover-main);
   }
 }

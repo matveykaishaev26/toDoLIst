@@ -17,7 +17,7 @@ const SidebarTab = ({ tab }: Props) => {
       }
     >
       <tab.icon className={s.icon} />
-      {tab.value}
+      <div className={s.tabText}>{tab.value}</div>
     </NavLink>
   );
 };

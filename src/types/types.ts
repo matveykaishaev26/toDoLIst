@@ -51,3 +51,8 @@ export type typeUser = {
   name: string;
   email: string;
 };
+
+
+export type typeTheme = {
+  isDarkMode: boolean;
+}

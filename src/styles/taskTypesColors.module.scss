@@ -1,25 +1,61 @@
 .red {
   background-color: rgb(255, 97, 97);
 }
+
+.red.active {
+  box-shadow: 0px 0px 0px 4px rgb(255, 174, 174);
+}
 .orange {
   background-color: rgb(255, 172, 56);
+}
+.orange.active {
+  box-shadow: 0px 0px 0px 4px rgb(255, 228, 191);
 }
 .yellow {
   background-color: rgb(255, 211, 36);
 }
+.yellow.active {
+  box-shadow: 0px 0px 0px 4px rgb(255, 237, 165);
+}
+
 .salad {
   background-color: rgb(230, 234, 73);
+}
+.salad.active {
+  box-shadow: 0px 0px 0px 4px rgb(254, 255, 171);
 }
 .green {
   background-color: rgb(8, 201, 79);
 }
+
+.green.active {
+  box-shadow: 0px 0px 0px 4px rgb(185, 255, 211);
+}
 .blue {
   background-color: rgb(76, 161, 255);
+}
+
+
+.blue.active {
+  box-shadow: 0px 0px 0px 4px rgb(176, 213, 255);
+  
 }
 .purple {
   background-color: rgb(110, 117, 244);
 }
+
+
+.purple.active {
+  box-shadow: 0px 0px 0px 4px rgb(200, 203, 255);
+
+}
 .white {
   background-color: rgb(255, 255, 255);
   border: 1px solid rgb(227, 227, 227);
+}
+
+
+.white.active {
+  box-shadow: 0px 0px 0px 4px rgb(196, 196, 196);
+
 }
