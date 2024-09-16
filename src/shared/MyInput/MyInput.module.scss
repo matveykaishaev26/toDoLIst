@@ -3,15 +3,14 @@
 .myInput {
   border: 1px solid rgba(25, 25, 25, 0.1);
   font-size: 14px;
-  padding: 9px;
-  height: 40px;
+  padding: 10px;
   box-sizing: border-box;
-  border-radius: 6px;
+  border-radius: 4px;
   background-color: var(--color-main);
   color: var(--color-font-main);
   border: 1px solid var(--color-border-main);
   outline: none;
-
+  // height: 30px;
   &:focus {
     border-color: $color-blue; /* Цвет границы при фокусе */
   }

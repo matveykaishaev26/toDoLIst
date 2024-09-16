@@ -9,3 +9,30 @@
     flex-grow: 1;
   }
 }
+/* Основные стили для скроллбара */
+::-webkit-scrollbar {
+  width: 6px;  /* Ширина скроллбара */
+  height: 6px; /* Высота скроллбара для горизонтальных элементов */
+}
+
+/* Полоса прокрутки */
+::-webkit-scrollbar-track {
+  background: transparent; /* Прозрачная полоса */
+}
+
+/* Ползунок скроллбара */
+::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 100, 100, 0.5); /* Полупрозрачный цвет */
+  border-radius: 10px; /* Закругленные края */
+}
+
+/* Ползунок скроллбара при наведении */
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 100, 100, 0.8); /* Темнее при наведении */
+}
+
+/* Для Firefox */
+* {
+  scrollbar-width: thin; /* Узкий скроллбар */
+  scrollbar-color: var(--color-hover-main) transparent; /* Цвет ползунка и трека */
+}

@@ -1,22 +1,21 @@
 import React, { useState, useRef, useEffect } from "react";
 import s from "./MyDropdown.module.scss";
-
-type Option = {
-  value: string;
-  label: string;
-};
+import { typeOption as Option } from "../../types/types";
 
 type Props = {
   options: Option[];
   placeholder?: string;
+  setSelectedOption: React.Dispatch<React.SetStateAction<Option | null>>;
+  selectedOption: Option | null;
 };
 
 export default function Dropdown({
   options,
   placeholder = "Select an option",
+  setSelectedOption,
+  selectedOption,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
@@ -46,7 +45,9 @@ export default function Dropdown({
         }
         onClick={toggleDropdown}
       >
-        <span>{selectedOption ? selectedOption.label : placeholder}</span>
+        <span className={s.dropdownValue}>
+          {selectedOption ? selectedOption.label : placeholder}
+        </span>
         <div className={`${s.dropdownArrow} ${isOpen ? s.open : ""}`}>▼</div>
       </div>
       {isOpen && (
@@ -54,7 +55,11 @@ export default function Dropdown({
           {options.map((option) => (
             <div
               key={option.value}
-              className={s.dropdownOption}
+              className={
+                selectedOption?.label === option.label
+                  ? `${s.dropdownOption} ${s.active}`
+                  : s.dropdownOption
+              }
               onClick={() => handleOptionClick(option)}
             >
               {option.label}

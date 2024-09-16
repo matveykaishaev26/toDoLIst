@@ -3,6 +3,7 @@ import { typeFolder } from "../../types/types";
 import { DATABASE_ID } from "../../config/database";
 import { COLLECTIONS } from "../../config/database.ts";
 import { databases } from "./appwrite";
+import { ID } from "./appwrite";
 export const folderApi = api.injectEndpoints({
   endpoints: (build) => ({
     getAllFolders: build.query<typeFolder[], void>({
@@ -24,6 +25,21 @@ export const folderApi = api.injectEndpoints({
         }
       },
     }),
+    // createFolder: build.mutation<void, typeFolder>({
+    //   queryFn: async (folder: typeFolder) => {
+    //     try {
+    //       const promise = databases.createDocument(
+    //         "<DATABASE_ID>",
+    //         "[COLLECTION_ID]",
+    //         ID.unique(),
+    //         {
+    //           title: folder.title,
+
+    //         }
+    //       );
+    //     } catch (err) {}
+    //   },
+    // }),
   }),
 });
 

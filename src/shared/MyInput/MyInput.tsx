@@ -7,7 +7,7 @@ type Props = {
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
-  autoComplete?: string;
+  autoComplete?: string;  
 };
 
 function MyInput({

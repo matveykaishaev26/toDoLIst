@@ -28,6 +28,19 @@ const SidebarMid: React.FC = () => {
     error: foldersError,
     data: allFolders,
   } = useGetAllFoldersQuery();
+
+  
+
+  const foldersOptions: typeOption[] = [
+    { value: null, label: "Нет" },
+    ...(allFolders
+      ? allFolders.map((folder) => ({
+          value: folder.id,
+          label: folder.title,
+        }))
+      : []),
+  ];
+
   const {
     isLoading: tasksIsLoading,
     error: tasksError,
@@ -114,15 +127,15 @@ const SidebarMid: React.FC = () => {
                   <SidebarMidTask key={task.id} task={task} />
                 ))}
               </>
-              )}
-            </div>
-            
+            )}
+          </div>
         )
       )}
 
       {isCreateListModalOpen && (
         <MyPortal>
           <ModalCreateTask
+            allFolders={foldersOptions}
             onClose={() => setIsCreateListModalOpen((prev) => !prev)}
           />
         </MyPortal>

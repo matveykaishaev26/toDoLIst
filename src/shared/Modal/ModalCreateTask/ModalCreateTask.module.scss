@@ -25,6 +25,7 @@
   }
   .modalCreateTaskInput {
     margin-bottom: 30px;
+    font-size: 14px;
     width: 100%;
   }
   .dropdownWrapper {
@@ -35,7 +36,6 @@
     margin-bottom: 10px;
     font-size: 14px;
     color: var(--color-font-light);
-
   }
   .colorWrapper {
     display: flex;
@@ -44,7 +44,7 @@
     width: 100%;
     font-size: 14px;
     color: var(--color-font-light);
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 
     .colors {
       display: flex; /* Сделать контейнер цветов flex-контейнером */

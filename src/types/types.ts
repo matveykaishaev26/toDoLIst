@@ -6,11 +6,11 @@ export type typeSidebarTab = {
 };
 
 export type typeTask = {
-  id: number;
+  id?: number;
   title: string;
-  completed: boolean;
+  isCompleted: boolean;
   color: string;
-  folder_id: number | null;
+  folder_id: string | null;
 };
 
 export type typeSubtask = {
@@ -22,7 +22,7 @@ export type typeSubtask = {
 };
 
 export type typeFolder = {
-  id: number;
+  id: number | null;
   title: string;
 };
 

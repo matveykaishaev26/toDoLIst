@@ -1,4 +1,3 @@
-import React from "react";
 import Modal from "../Modal";
 import s from "./ModalCreateTask.module.scss";
 import MyInput from "../../MyInput/MyInput";
@@ -6,27 +5,18 @@ import MyDropdown from "../../MyDropdown/MyDropdown";
 import "react-dropdown/style.css";
 import MyButton from "../../MyButton/MyButton";
 import { typeOption } from "../../../types/types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import c from "../../../styles/taskTypesColors.module.scss";
+import { useCreateTaskMutation } from "../../../store/api/taskApi";
+import { useGetAllTasksQuery } from "../../../store/api/taskApi";
 type Props = {
   onClose?: () => void;
+  allFolders: typeOption[];
 };
 
 type color = {
   color: string;
 };
-
-const taskTypes: typeOption[] = [
-  { value: "0", label: "Список задач" },
-  { value: "1", label: "Список примечаний" },
-];
-const options: typeOption[] = [
-  { value: "0", label: "Без папки" },
-
-  { value: "1", label: "1" },
-  { value: "2", label: "2" },
-  { value: "3", label: "3" },
-];
 
 const colors: color[] = [
   {
@@ -56,17 +46,38 @@ const colors: color[] = [
   },
 ];
 
-const ModalCreateTask = ({ onClose }: Props) => {
-  const [activeColor, setActiveColor] = useState<string>("");
+const ModalCreateTask = ({ onClose, allFolders }: Props) => {
+  const [activeColor, setActiveColor] = useState<string>("white");
   const [taskName, setTaskName] = useState<string>("");
-  const [folder, setFolder] = useState<string>("");
-  const [type, setType] = useState<string>("");
+  const [folder, setFolder] = useState<typeOption>(allFolders[0]);
+  const [createTask, { isLoading, error }] = useCreateTaskMutation();
+  const { data: allTasks, refetch: refetchTasks } = useGetAllTasksQuery();
+  const handleCreateTask = async () => {
+    try {
+      await createTask({
+        title: taskName,
+        isCompleted: false,
+        color: activeColor,
+        folder_id: folder.value,
+      });
+      onClose();
+    }
+    catch (error) {
+      console.log(error);
+    }
+    
+    refetchTasks();
+  };
 
   return (
     <Modal onClose={onClose}>
       <div className={s.modalCreateTask}>
         <div className={s.modalCreateTaskTitle}>Создать список</div>
-        <MyInput className={s.modalCreateTaskInput} placeholder="Название" />
+        <MyInput
+          onChange={(e) => setTaskName(e.target.value)}
+          className={s.modalCreateTaskInput}
+          placeholder="Название"
+        />
         <div className={s.colorWrapper}>
           Цвет
           <div className={s.colors}>
@@ -86,20 +97,23 @@ const ModalCreateTask = ({ onClose }: Props) => {
         <div className={s.dropdownWrapper}>
           Папка
           <div className={s.dropdown}>
-            <MyDropdown placeholder={"Папка"} options={options} />{" "}
-          </div>
-        </div>
-
-        <div className={s.dropdownWrapper}>
-          Тип
-          <div className={s.dropdown}>
-            <MyDropdown placeholder={"Тип"} options={taskTypes} />{" "}
+            <MyDropdown
+              selectedOption={folder}
+              setSelectedOption={setFolder}
+              placeholder={"Папка"}
+              options={allFolders}
+            />{" "}
           </div>
         </div>
 
         <div className={s.btnContainer}>
-          <MyButton children={"Отмена"} />
-          <MyButton color={"blue"} children={"Добавить"} />
+          <MyButton disabled= {isLoading ? true : false}onClick={onClose} children={"Отмена"} />
+          <MyButton
+            disabled= {isLoading ? true : false}
+            onClick={handleCreateTask}
+            color={"blue"}
+            children={"Добавить"}
+          />
         </div>
       </div>
     </Modal>

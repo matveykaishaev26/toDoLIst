@@ -38,6 +38,11 @@
       cursor: pointer;
     }
   }
+
+  .sidebarTasksList { 
+    max-height: 600px;
+    overflow-y: auto;
+  }
   .sidebarListBtn:hover {
     background-color: var(--color-hover-main);
     .dropdownIcon,
