@@ -12,15 +12,17 @@
   border-radius: 4px;
   align-items: center;
   box-sizing: border-box;
-  overflow: hidden;
+  position: relative;
+  overflow-x: visible;
+  white-space: nowrap;
 
   .iconWrapper {
     display: flex;
     align-items: center;
     line-height: 20px;
     line-height: normal;
-
   }
+
   .taskColor {
     width: 8px;
     height: 8px;
@@ -33,6 +35,7 @@
     overflow: hidden; /* Скрывает текст при недостатке места */
     text-overflow: ellipsis; /* Добавляет многоточие при переполнении */
     margin-right: 10px;
+    max-width: 450px;
   }
 
   .tabIcon {
@@ -45,11 +48,11 @@
   .sidebarTasksOptions {
     color: var(--color-main);
     font-size: 14px;
-    
   }
 }
 .tab:hover {
   background-color: var(--color-hover-main);
+
   .sidebarTasksOptions {
     color: var(--color-font-light);
     cursor: pointer;
@@ -58,5 +61,3 @@
     color: var(--color-font-hover-light);
   }
 }
-
-

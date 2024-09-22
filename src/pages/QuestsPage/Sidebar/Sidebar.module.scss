@@ -2,21 +2,26 @@
 
 .sidebar {
   box-sizing: border-box;
-  min-width: 470px; /* Минимальная ширина сайдбара */
-  max-width: 670px;
-  background: var( --color-main);
+  background: var(--color-main);
   height: 100vh;
   padding: 20px 10px 20px 10px;
   z-index: 1;
   top: 0;
   left: 0;
-  border-right: 1px solid  var( --color-border-main);
+  border-right: 1px solid var(--color-border-main);
   position: relative;
+  z-index: 0;
+  overflow: visible;
+
+  max-width: 650px;
+  min-width: 450px;
 }
 .sidebar.resizing {
   pointer-events: none; /* Отключаем все взаимодействия */
   cursor: ew-resize; /* Устанавливаем курсор изменения размера */
+ 
 }
+
 
 .resizer {
   width: 4px; /* Ширина зоны для перетаскивания */
@@ -47,7 +52,7 @@
   line-height: 16px;
   padding: 10px;
   border-radius: 4px;
-  color: var( --color-font-main);
+  color: var(--color-font-main);
   white-space: nowrap;
   overflow: hidden;
   cursor: pointer;
@@ -62,7 +67,7 @@
 
   .icon {
     font-size: 22px;
-    color: var( --color-font-main);
+    color: var(--color-font-main);
     margin-right: 8px;
   }
 

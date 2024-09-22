@@ -16,13 +16,15 @@ export const taskApi = api.injectEndpoints({
           const tasks: typeTask[] = response.documents.map((document: any) => ({
             id: document.$id,
             title: document.title,
-            completed: document.completed,
+            isCompleted: document.completed,
             color: document.color,
             folder_id: document.folder_id,
           }));
           return { data: tasks as typeTask[] };
         } catch (err: any) {
-          return { error: { status: "CUSTOM_ERROR", error: err.message } };
+          const errorMessage =
+            err instanceof Error ? err.message : "Unknown error";
+          return { error: { status: "CUSTOM_ERROR", error: errorMessage } };
         }
       },
       providesTags: ["Task"],
@@ -43,13 +45,32 @@ export const taskApi = api.injectEndpoints({
             }
           );
         } catch (err: any) {
-          return { error: { status: "CUSTOM_ERROR", error: err.message } };
+          const errorMessage =
+            err instanceof Error ? err.message : "Unknown error";
+          return { error: { status: "CUSTOM_ERROR", error: errorMessage } };
         }
       },
-      
+
+      invalidatesTags: ["Task"],
+    }),
+
+    deleteTask: build.mutation<void, string>({
+      queryFn: async (id: string) => {
+        try {
+          await databases.deleteDocument(DATABASE_ID, COLLECTIONS.TASKS, id);
+        } catch (err: any) {
+          const errorMessage =
+            err instanceof Error ? err.message : "Unknown error";
+          return { error: { status: "CUSTOM_ERROR", error: errorMessage } };
+        }
+      },
       invalidatesTags: ["Task"],
     }),
   }),
 });
 
-export const { useGetAllTasksQuery, useCreateTaskMutation } = taskApi;
+export const {
+  useGetAllTasksQuery,
+  useCreateTaskMutation,
+  useDeleteTaskMutation,
+} = taskApi;

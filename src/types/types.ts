@@ -6,7 +6,7 @@ export type typeSidebarTab = {
 };
 
 export type typeTask = {
-  id?: number;
+  id?: string;
   title: string;
   isCompleted: boolean;
   color: string;
@@ -14,7 +14,7 @@ export type typeTask = {
 };
 
 export type typeSubtask = {
-  id: number;
+  id: string;
   title: string;
   completed: boolean;
   priority: number;
@@ -22,13 +22,16 @@ export type typeSubtask = {
 };
 
 export type typeFolder = {
-  id: number | null;
+  id: string | null;
   title: string;
 };
 
 export type typeOption = {
-  value: string;
+  value?: string | number | null;
   label: string;
+  action?: (arg: any) => void;
+  modalContent?: string;
+
 };
 
 export type typeFolderWithTasks = {
@@ -52,7 +55,6 @@ export type typeUser = {
   email: string;
 };
 
-
 export type typeTheme = {
   isDarkMode: boolean;
-}
+};

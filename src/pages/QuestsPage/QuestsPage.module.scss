@@ -1,6 +1,7 @@
+@import "../../styles/variables.scss";
 
 .quests {
-  display: flex;  
+  display: flex;
 }
 
 .questsContentContainer {
@@ -8,12 +9,10 @@
   padding: 20px;
   .questsContent {
     display: block;
-    margin: 0 auto 0 auto;
+    margin: 0 auto;
     width: 700px;
     padding: 10px;
 
-    .subtaskInput{
-      width: 100%;
-    }
+   
   }
 }

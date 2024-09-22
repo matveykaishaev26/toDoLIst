@@ -1,0 +1,29 @@
+.inputWrapper {
+  .subtaskInput {
+    width: 100%;
+    font-size: 16px;
+    padding-right: 40px; // Отступ для иконки
+  }
+
+  .iconsWrapper {
+    display: flex;
+    justify-content: end;
+    gap: 5px;
+    .iconWrapper{
+        padding: 5px;
+        border-radius: 4px;
+        &:hover{
+            background-color: var(--color-hover-main);
+        }
+    }
+    .calendarIcon {
+      font-size: 22px;
+      color: var(--color-font-main);
+    }
+    .dropdownIcon {
+      font-size: 22px;
+
+      color: var(--color-font-main);    
+    }
+  }
+}

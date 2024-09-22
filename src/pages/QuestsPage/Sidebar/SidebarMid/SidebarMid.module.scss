@@ -6,6 +6,8 @@
   padding: 15px 5px 15px 5px;
   margin: 10px 0 10px 0%;
   user-select: none;
+
+
   .sidebarListBtn {
     cursor: pointer;
     color: var(--color-font-light);
@@ -40,8 +42,10 @@
   }
 
   .sidebarTasksList { 
-    max-height: 600px;
+    max-height: 500px;
+    overflow-x: none;
     overflow-y: auto;
+    
   }
   .sidebarListBtn:hover {
     background-color: var(--color-hover-main);

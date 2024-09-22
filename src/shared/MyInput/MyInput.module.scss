@@ -10,6 +10,7 @@
   color: var(--color-font-main);
   border: 1px solid var(--color-border-main);
   outline: none;
+  resize: none;
   // height: 30px;
   &:focus {
     border-color: $color-blue; /* Цвет границы при фокусе */

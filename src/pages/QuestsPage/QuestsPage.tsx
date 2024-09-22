@@ -4,8 +4,8 @@ import Sidebar from "./Sidebar/Sidebar";
 import Header from "./Header/Header";
 import { useState } from "react";
 import s from "./QuestsPage.module.scss";
-import { Routes, Route } from "react-router-dom";
-import MyInput from "../../shared/MyInput/MyInput";
+import { Routes, Route, useLocation } from "react-router-dom";
+import SubtaskInput from "./SubtaskInput/SubtaskInput";
 import {
   CiStickyNote,
   CiCalendarDate,
@@ -48,25 +48,37 @@ const QuestsPage = () => {
     setIsSidebarOpen((prev) => !prev);
   };
 
+  const location = useLocation();
+  const currentTab =
+    sidebarTabs.find((tab) => tab.link === location.pathname)?.value || "";
+
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
   return (
     <div className={s.quests}>
       <Sidebar isSidebarOpen={isSidebarOpen} sidebarTabs={sidebarTabs} />
       <div className={s.questsContentContainer}>
-        <Header toggleSidebarOpen={toggleSidebarOpen}></Header>
+        <Header
+          pageName={currentTab}
+          toggleSidebarOpen={toggleSidebarOpen}
+        ></Header>
 
         <div
           className={`${s.questsContent} ${
             isSidebarOpen ? s.contentOpen : s.contentClose
           }`}
         >
-          <MyInput placeholder="Добавить задачу" className={ s.subtaskInput} />
+        <SubtaskInput />  
           <Routes>
             {sidebarTabs.map((tab) => (
               <Route
                 key={tab.value}
                 path={tab.link}
-                element={<div>{tab.value}</div>}
+                element={
+                  <Header
+                    toggleSidebarOpen={toggleSidebarOpen}
+                    pageName={tab.value}
+                  />
+                }
               />
             ))}
           </Routes>

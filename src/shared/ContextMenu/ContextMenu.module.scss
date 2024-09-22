@@ -1,0 +1,33 @@
+@import "../../styles/variables.scss";
+
+.dropdownMenu {
+  position: fixed;
+  // transform: translateX(210%);
+  width: 200px;
+  background-color: var(--color-main);
+  border: 1px solid var(--color-border-main);
+  border-radius: 4px;
+  margin-top: 3px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.dropdownOption {
+  padding: 10px;
+  font-size: 12px;
+  height: 30px;
+  white-space: nowrap; /* Предотвращает перенос текста */
+  overflow: hidden; /* Скрывает текст при недостатке места */
+  text-overflow: ellipsis; /* Добавляет многоточие при переполнении */
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: var(--color-font-main);
+  &.active {
+    color: $color-blue;
+  }
+  &:hover {
+    background-color: var(--color-hover-main);
+  }
+}

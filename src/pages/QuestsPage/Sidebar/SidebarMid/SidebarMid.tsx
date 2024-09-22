@@ -3,7 +3,7 @@ import s from "./SidebarMid.module.scss";
 import { FaChevronDown } from "react-icons/fa";
 import { GoPlus } from "react-icons/go";
 import { typeTask, typeFolderWithTasks } from "../../../../types/types";
-
+import { typeOption } from "../../../../types/types";
 import ModalCreateTask from "../../../../shared/Modal/ModalCreateTask/ModalCreateTask";
 import MyPortal from "../../../../shared/MyPortal/MyPortal";
 import { typeDropdownState } from "../../../../types/types";
@@ -29,8 +29,6 @@ const SidebarMid: React.FC = () => {
     data: allFolders,
   } = useGetAllFoldersQuery();
 
-  
-
   const foldersOptions: typeOption[] = [
     { value: null, label: "Нет" },
     ...(allFolders
@@ -49,11 +47,6 @@ const SidebarMid: React.FC = () => {
 
   useEffect(() => {
     if (allFolders && allTasks) {
-      const dropdownsState: typeDropdownState = allFolders.reduce(
-        (acc, item) => ({ ...acc, [item.id]: false }),
-        {}
-      );
-      setDropdownState(dropdownsState);
       const foldersWithTasksResult = allFolders.map((item) => ({
         folder: item,
         tasks: allTasks.filter((task) => task.folder_id === item.id),
@@ -63,6 +56,16 @@ const SidebarMid: React.FC = () => {
       setRemainingTasks(allTasks.filter((item) => item.folder_id === null));
     }
   }, [allFolders, allTasks]);
+
+  useEffect(() => {
+    if (allFolders && allTasks) {
+      const foldersWithTasksResult = allFolders.map((item) => ({
+        folder: item,
+        tasks: allTasks.filter((task) => task.folder_id === item.id),
+      }));
+      setFoldersWithTasks(foldersWithTasksResult as typeFolderWithTasks[]);
+    }
+  }, []);
 
   const toggleDropdown = (index: number) => {
     setDropdownState((prev) =>
@@ -115,7 +118,11 @@ const SidebarMid: React.FC = () => {
                 <SidebarFolderList
                   key={item.folder.id}
                   folderWithTasks={item}
-                  isOpen={dropdownState[item.folder.id] || false}
+                  isOpen={
+                    (item.folder.id !== null &&
+                      dropdownState[item.folder.id]) ||
+                    false
+                  }
                   onOpenFolder={() => toggleDropdown(item.folder.id)}
                 />
               );

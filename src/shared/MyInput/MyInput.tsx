@@ -1,5 +1,6 @@
 import React from "react";
 import s from "./MyInput.module.scss";
+import TextareaAutosize from "react-textarea-autosize";
 type Props = {
   placeholder: string;
   className?: string;
@@ -7,7 +8,8 @@ type Props = {
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
-  autoComplete?: string;  
+  autoComplete?: string;
+  isAutosize?: boolean;
 };
 
 function MyInput({
@@ -17,19 +19,33 @@ function MyInput({
   value,
   onChange,
   disabled,
+  isAutosize = false,
   autoComplete,
 }: Props) {
-  return (
-    <input
-      className={`${s.myInput} ${className ? className : ""}`}
-      type={type}
-      value={value}
-      placeholder={placeholder}
-      onChange={onChange}
-      disabled={disabled}
-      autoComplete={autoComplete}
-    />
-  );
+  if (isAutosize) {
+    return (
+      <TextareaAutosize
+        className={`${s.myInput} ${className ? className : ""}`}
+        type={type}
+        value={value}
+        placeholder={placeholder}
+        onChange={onChange}
+        disabled={disabled}
+        autoComplete={autoComplete}
+      />
+    );
+  } else {
+    return (
+      <input
+        className={`${s.myInput} ${className ? className : ""}`}
+        type={type}
+        value={value}
+        placeholder={placeholder}
+        onChange={onChange}
+        disabled={disabled}
+      />
+    );
+  }
 }
 
 export default MyInput;

@@ -11,7 +11,7 @@ type Props = {
 export default function Sidebar({ sidebarTabs, isSidebarOpen }: Props) {
   const sidebarRef = useRef<HTMLDivElement | null>(null);
   const [isResizing, setIsResizing] = useState(false);
-  const [sidebarWidth, setSidebarWidth] = useState(268);
+  const [sidebarWidth, setSidebarWidth] = useState(670);
 
   const startResizing = useCallback((e: React.MouseEvent) => {
     setIsResizing(true);

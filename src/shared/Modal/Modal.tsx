@@ -4,6 +4,7 @@ import { GrClose } from "react-icons/gr";
 type Props = {
   children?: React.ReactNode;
   onClose?: () => void;
+  isOpen?: boolean;
 };
 
 export default function Modal({ children, onClose }: Props) {

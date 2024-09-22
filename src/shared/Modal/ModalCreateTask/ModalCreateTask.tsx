@@ -49,7 +49,7 @@ const colors: color[] = [
 const ModalCreateTask = ({ onClose, allFolders }: Props) => {
   const [activeColor, setActiveColor] = useState<string>("white");
   const [taskName, setTaskName] = useState<string>("");
-  const [folder, setFolder] = useState<typeOption>(allFolders[0]);
+  const [folder, setFolder] = useState<typeOption | null>(allFolders[0]);
   const [createTask, { isLoading, error }] = useCreateTaskMutation();
   const { data: allTasks, refetch: refetchTasks } = useGetAllTasksQuery();
   const handleCreateTask = async () => {

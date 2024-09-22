@@ -4,20 +4,38 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 20px;
+  user-select: none;
   
-  .sidebarToggle,
-  .changeTheme {
-    font-size: 34px;
-    color: var(--color-font-main);
-    cursor: pointer;
+  .wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .iconWrapper {
     padding: 5px;
     border-radius: 4px;
   }
 
-  .sidebarToggle:hover {
-    background-color: var(--color-hover-main);
+  .pageName {
+    font-size: 24px;
+    color: var(--color-font-main);
+    padding: 5px 10px 5px 10px;
   }
-  .changeTheme:hover {
+  .pageName:hover {
+    background-color: var(--color-hover-main);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .sidebarToggle,
+  .changeTheme {
+    font-size: 25px;
+    color: var(--color-font-main);
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .iconWrapper:hover {
     background-color: var(--color-hover-main);
   }
 }
