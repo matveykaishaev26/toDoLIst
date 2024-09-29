@@ -5,7 +5,6 @@ import { GoPlus } from "react-icons/go";
 import { typeTask, typeFolderWithTasks } from "../../../../types/types";
 import { typeOption } from "../../../../types/types";
 import ModalCreateTask from "../../../../shared/Modal/ModalCreateTask/ModalCreateTask";
-import MyPortal from "../../../../shared/MyPortal/MyPortal";
 import { typeDropdownState } from "../../../../types/types";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
 import SidebarFolderList from "./SidebarFolderList/SidebarFolderList";
@@ -139,14 +138,11 @@ const SidebarMid: React.FC = () => {
         )
       )}
 
-      {isCreateListModalOpen && (
-        <MyPortal>
-          <ModalCreateTask
-            allFolders={foldersOptions}
-            onClose={() => setIsCreateListModalOpen((prev) => !prev)}
-          />
-        </MyPortal>
-      )}
+      <ModalCreateTask
+        isOpen={isCreateListModalOpen}
+        allFolders={foldersOptions}
+        onClose={() => setIsCreateListModalOpen((prev) => !prev)}
+      />
     </div>
   );
 };

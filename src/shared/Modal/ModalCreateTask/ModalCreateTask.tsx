@@ -5,11 +5,12 @@ import MyDropdown from "../../MyDropdown/MyDropdown";
 import "react-dropdown/style.css";
 import MyButton from "../../MyButton/MyButton";
 import { typeOption } from "../../../types/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import c from "../../../styles/taskTypesColors.module.scss";
 import { useCreateTaskMutation } from "../../../store/api/taskApi";
 import { useGetAllTasksQuery } from "../../../store/api/taskApi";
 type Props = {
+  isOpen: boolean;
   onClose?: () => void;
   allFolders: typeOption[];
 };
@@ -46,7 +47,7 @@ const colors: color[] = [
   },
 ];
 
-const ModalCreateTask = ({ onClose, allFolders }: Props) => {
+const ModalCreateTask = ({ onClose, allFolders, isOpen }: Props) => {
   const [activeColor, setActiveColor] = useState<string>("white");
   const [taskName, setTaskName] = useState<string>("");
   const [folder, setFolder] = useState<typeOption | null>(allFolders[0]);
@@ -61,16 +62,35 @@ const ModalCreateTask = ({ onClose, allFolders }: Props) => {
         folder_id: folder.value,
       });
       onClose();
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
     }
-    
-    refetchTasks();
+
+    // refetchTasks();
   };
 
+
+  useEffect(() => {
+    setFolder(allFolders[0]); 
+    setActiveColor(colors[0].color);
+  }, [isOpen]);
+
   return (
-    <Modal onClose={onClose}>
+    <Modal
+      acceptBtn={{
+        children: "Добавить",
+        color: "blue",
+        disabled: isLoading ? true : false,
+        onClick: handleCreateTask,
+      }}
+      rejectBtn={{
+        children: "Отмена",
+        onClick: onClose,
+        disabled: isLoading ? true : false,
+      }}
+      isOpen={isOpen}
+      onClose={onClose}
+    >
       <div className={s.modalCreateTask}>
         <div className={s.modalCreateTaskTitle}>Создать список</div>
         <MyInput
@@ -104,16 +124,6 @@ const ModalCreateTask = ({ onClose, allFolders }: Props) => {
               options={allFolders}
             />{" "}
           </div>
-        </div>
-
-        <div className={s.btnContainer}>
-          <MyButton disabled= {isLoading ? true : false}onClick={onClose} children={"Отмена"} />
-          <MyButton
-            disabled= {isLoading ? true : false}
-            onClick={handleCreateTask}
-            color={"blue"}
-            children={"Добавить"}
-          />
         </div>
       </div>
     </Modal>

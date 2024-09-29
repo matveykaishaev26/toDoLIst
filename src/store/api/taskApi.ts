@@ -22,18 +22,26 @@ export const taskApi = api.injectEndpoints({
           }));
           return { data: tasks as typeTask[] };
         } catch (err: any) {
+          console.log(err);
+
           const errorMessage =
             err instanceof Error ? err.message : "Unknown error";
           return { error: { status: "CUSTOM_ERROR", error: errorMessage } };
         }
       },
-      providesTags: ["Task"],
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: "Task" as const, id: id })),
+              "Task",
+            ]
+          : ["Task"],
     }),
 
     createTask: build.mutation<void, typeTask>({
       queryFn: async (task: typeTask) => {
         try {
-          await databases.createDocument(
+          const newTask = await databases.createDocument(
             DATABASE_ID,
             COLLECTIONS.TASKS,
             ID.unique(),
@@ -44,14 +52,20 @@ export const taskApi = api.injectEndpoints({
               folder_id: task.folder_id,
             }
           );
+            console.log("Задача создана: ", newTask);
+            
+          // Возвращаем созданное задание
+          return { data: newTask }; // Убедитесь, что у вас есть необходимый формат
         } catch (err: any) {
+          console.log(err);
+
           const errorMessage =
             err instanceof Error ? err.message : "Unknown error";
           return { error: { status: "CUSTOM_ERROR", error: errorMessage } };
         }
       },
-
-      invalidatesTags: ["Task"],
+      invalidatesTags: (result) =>
+        result ? [{ type: "Task", id: result.id }] : [],
     }),
 
     deleteTask: build.mutation<void, string>({
@@ -59,13 +73,13 @@ export const taskApi = api.injectEndpoints({
         try {
           await databases.deleteDocument(DATABASE_ID, COLLECTIONS.TASKS, id);
         } catch (err: any) {
-          const errorMessage =
-            err instanceof Error ? err.message : "Unknown error";
+          const errorMessage = err instanceof Error ? err.message : "Unknown error";
           return { error: { status: "CUSTOM_ERROR", error: errorMessage } };
         }
       },
-      invalidatesTags: ["Task"],
+      invalidatesTags: (result, error, id) => [{ type: "Task", id: id }],
     }),
+    
   }),
 });
 

@@ -9,33 +9,31 @@ import s from "./ContextMenu.module.scss";
 export type typeContextMenuItem = {
   id: string;
   caption: string;
+  onClick?: () => void;
 };
 
 type Props = {
   id?: string;
-  items: ContextMenuItem[];
-  onItemClicked: (item: ContextMenuItem) => void;
+  isVisible: boolean;
+  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  items: typeContextMenuItem[];
   defaultPosition?: {
     x: number;
     y: number;
   };
 };
 
-export type ContextMenuItem = {
-  id: string;
-  caption: string;
-};
-
 const ContextMenuMain = (props: PropsWithChildren<Props>) => {
-  const { items, children, onItemClicked, defaultPosition } = props;
+  const { items, children, defaultPosition, isVisible, setIsVisible, id } =
+    props;
 
-  const [isVisible, setIsVisible] = useState(false);
   const [position, setPosition] = useState<{ x: number; y: number }>({
     x: 0,
     y: 0,
   });
 
   const ref = useRef<HTMLDivElement>(null);
+  const parentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (defaultPosition?.x !== 0 || defaultPosition?.y !== 0) {
@@ -48,26 +46,18 @@ const ContextMenuMain = (props: PropsWithChildren<Props>) => {
   }, [defaultPosition]);
 
   const contextMenuHandler = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setPosition({ x: e.clientX, y: e.clientY });
+    if (parentRef.current?.contains(e.target as Node)) {
+      e.preventDefault();
+      setPosition({ x: e.clientX, y: e.clientY });
 
-    setIsVisible(true);
+      setIsVisible(true);
+    }
   };
 
   const clickHandler = useCallback(
     (e: MouseEvent) => {
-      if (isVisible) {
-        const rect = ref.current?.getBoundingClientRect();
-        if (rect) {
-          if (
-            e.clientX < rect.left ||
-            e.clientX > rect.right ||
-            e.clientY > rect.top ||
-            e.clientY < rect.bottom
-          ) {
-            setIsVisible(false);
-          }
-        }
+      if (isVisible && !ref.current?.contains(e.target as Node)) {
+        setIsVisible(false);
       }
     },
     [isVisible]
@@ -97,16 +87,19 @@ const ContextMenuMain = (props: PropsWithChildren<Props>) => {
     document.addEventListener("wheel", clickHandler);
     document.addEventListener("keydown", keyDownHandler);
 
+
     return () => {
       document.removeEventListener("mousedown", clickHandler);
       document.removeEventListener("wheel", clickHandler);
-      document.addEventListener("keydown", keyDownHandler);
+      document.removeEventListener("keydown", keyDownHandler);
     };
   }, [clickHandler, keyDownHandler]);
 
   return (
     <>
-      <div onContextMenu={contextMenuHandler}>{children}</div>
+      <div ref={parentRef} onContextMenu={contextMenuHandler}>
+        {children}
+      </div>
       {isVisible && (
         <div
           className={s.dropdownMenu}
@@ -117,9 +110,7 @@ const ContextMenuMain = (props: PropsWithChildren<Props>) => {
             <div
               className={s.dropdownOption}
               key={item.id}
-              onClick={() => {
-                onItemClicked(item);
-              }}
+              onClick={item.onClick}
             >
               {item.caption}
             </div>

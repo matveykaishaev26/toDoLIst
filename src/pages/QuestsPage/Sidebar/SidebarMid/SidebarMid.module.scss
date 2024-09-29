@@ -7,7 +7,6 @@
   margin: 10px 0 10px 0%;
   user-select: none;
 
-
   .sidebarListBtn {
     cursor: pointer;
     color: var(--color-font-light);
@@ -42,7 +41,7 @@
   }
 
   .sidebarTasksList { 
-    max-height: 500px;
+    max-height: 350px;
     overflow-x: none;
     overflow-y: auto;
     

@@ -12,6 +12,9 @@
   outline: none;
   resize: none;
   // height: 30px;
+  &::placeholder {
+    user-select: none;
+  }
   &:focus {
     border-color: $color-blue; /* Цвет границы при фокусе */
   }

@@ -2,7 +2,7 @@ import React from "react";
 import s from "./MyButton.module.scss";
 
 type ButtonColor = "white" | "blue" | "tertiary"; // Пример возможных значений
-type Props = {
+export type buttonProps = {
   children?: string | JSX.Element | JSX.Element[];
   className?: string;
   color?: ButtonColor;
@@ -16,7 +16,7 @@ export default function MyButton({
   onClick,
   color,
   disabled,
-}: Props) {
+}: buttonProps) {
   const colorClass = color && s[color];
 
   return (

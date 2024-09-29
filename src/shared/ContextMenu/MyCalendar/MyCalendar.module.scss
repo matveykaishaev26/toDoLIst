@@ -1,0 +1,147 @@
+@import "../../../styles/variables.scss";
+.calendar {
+  position: absolute;
+  max-width: 250px;
+  margin: 0 auto;
+  transform: translateX(220%);
+  text-align: center;
+  background-color: var(--color-main);
+  border: 1px solid var(--color-border-main);
+  border-radius: 4px;
+  padding: 5px;
+  user-select: none;
+  font-size: 14px;
+  border-radius: 4px;
+  color: var(--color-font-main);
+  box-shadow: 0 2px 8px rgba(0, 0, 10, 0.1);
+}
+.types {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  position: relative;
+  .typeName {
+    display: none;
+    background-color: var(--color-main);
+    padding: 5px;
+    border-radius: 4px;
+    z-index: 1000;
+    font-size: 12px;
+    position: absolute;
+    transform: translateY(150%);
+    width: 100px;
+    color: var(--color-font-main);
+    box-shadow: 0 2px 8px rgba(0, 0, 10, 0.1);
+  }
+  .typeIconWrapper {
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .typeIcon {
+      font-size: 25px;
+      cursor: pointer;
+      color: var(--color-font-light);
+    }
+    &:hover {
+      background-color: var(--color-hover-main);
+      .typeName {
+        display: block;
+      }
+    }
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  .navIcon {
+    color: var(--color-font-light);
+    cursor: pointer;
+    font-size: 15px;
+  }
+  .currentDateCurcle {
+    font-size: 10px;
+    color: var(--color-font-light);
+    cursor: pointer;
+  }
+  .monthNav {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    .iconWrapper {
+      padding: 5px;
+      cursor: pointer;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &.left {
+        transform: rotate(90deg);
+      }
+      &.right {
+        transform: rotate(-90deg);
+      }
+      &:hover {
+        background-color: var(--color-hover-main);
+      }
+    }
+  }
+  .currentDateHeader {
+    font-size: 14px;
+    padding: 5px;
+    border-radius: 4px;
+    color: var(--color-font-main);
+    cursor: pointer;
+    &:hover {
+      background-color: var(--color-hover-main);
+    }
+  }
+}
+
+.daysGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  place-items: center;
+}
+
+.day {
+  font-size: 12px;
+  color: var(--color-font-main);
+  cursor: pointer;
+  border-radius: 50%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  &:hover {
+    background-color: var(--color-hover-main);
+  }
+  &.currentDay {
+    color: $color-blue;
+    font-weight: bold;
+  }
+  &.active {
+    background-color: $color-blue;
+    color: white;
+    font-weight: bold;
+  }
+}
+.dayOfWeek {
+  color: var(--color-font-light);
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+.hidden {
+  font-size: 12px;
+
+  color: var(--color-font-light);
+}

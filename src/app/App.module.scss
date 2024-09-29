@@ -5,6 +5,7 @@
   transition: background-color $transition-duration $transition-timing-function,
     box-shadow $transition-duration $transition-timing-function,
     transform $transition-duration $transition-timing-function;
+    height: 100%;
 
     
   .appContentContainer {

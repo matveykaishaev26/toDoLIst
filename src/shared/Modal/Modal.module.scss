@@ -1,7 +1,7 @@
 @import "../../styles/variables.scss";
 .modal {
   position: fixed; /* Stay in place */
-  z-index: 9999; /* Sit on top */
+  z-index: 99999; /* Sit on top */
   padding-top: 100px; /* Location of the box */
   left: 0;
   top: 0;
@@ -9,10 +9,24 @@
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  display: flex;
+  
+}
+
+
+.btnContainer {
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+  width: 100%;
+  align-items: center;
+  margin-top: 20px;
+  font-size: 14px;
 }
 
 /* Modal Content */
 .modalContent {
+
   border-radius: 10px;
   background-color: var(--color-main);
   padding: 20px;

@@ -3,7 +3,7 @@
 ///////////////////////////////////////////////////////////////////////
 $color-blue: #439eff;
 $color-hover-blue: #1485fe;
-
+$color-light-blue: #e1efff;
 $transition-duration: 0.1s;
 $transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -12,7 +12,7 @@ html[data-theme="light"] {
   --color-main: #ffffff;
   --color-border-main: #dddddd;
   --color-font-main: rgb(57, 57, 57);
-  --color-font-light: rgb(129, 129, 129);
+  --color-font-light: rgb(162, 162, 162);
   --color-font-hover-light: rgb(85, 85, 85);
   --color-sidebar: rgb(240, 240, 240);
   --color-hover-main: #f1f1f1;
