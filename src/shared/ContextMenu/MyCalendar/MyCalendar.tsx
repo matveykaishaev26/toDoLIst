@@ -7,6 +7,7 @@ import s from "./MyCalendar.module.scss";
 import { IoCalendarClearOutline } from "react-icons/io5";
 import { IoMoonOutline } from "react-icons/io5";
 import { useClickOutside } from "../../../hooks/useClickOutside";
+import MyButton from "../../MyButton/MyButton";
 
 import { useState } from "react";
 import { useRef } from "react";
@@ -54,25 +55,25 @@ const MyCalendar: React.FC<calendarProps> = ({
       currentDate.getMonth() + 1,
       1
     );
-    console.log(nextDate);
 
     setCurrentDate(nextDate);
   };
 
-  const setActiveDate = (date: string) => {
-    const [day, month, year] = date.split("-");
-    const [currentDay, currentMonth, currentYear] = currentDate.toJSON().slice(0, 10).split("-");
-
-    if (month !== currentMonth || year !== currentYear) { 
-      setCurrentDate(new Date(year, day, currentMonth - 1,));
-      setActiveDate(date);
-    }
-    else {
+  const setActiveDate = (date: Date) => {
+    if (
+      currentDate.getMonth() !== date.getMonth() ||
+      currentDate.getFullYear() !== date.getFullYear()
+    ) {
+      setCurrentDate(date);
+      setSelectedDate(date);
+    } else {
       setSelectedDate(date);
     }
-
   };
 
+  const dateToJSON = (date: Date | null) => {
+    return date?.toJSON().slice(0, 10);
+  };
   // Генерация дней для текущего месяца
   const generateDays = () => {
     const daysInMonth = getDaysInMonth(currentDate);
@@ -85,16 +86,21 @@ const MyCalendar: React.FC<calendarProps> = ({
     // Пустые дни для выравнивания первого дня месяца
     const days: JSX.Element[] = [];
     for (let i = prev - firstDayOfMonth + 1; i <= prev; i++) {
-      const key = `${i}-${previousMonth.getMonth()}-${previousMonth.getFullYear()}`;
+      const prevDate = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth() - 1,
+        i
+      );
+
       days.push(
         <div
-          key={key}
+          key={`prev-${i}`}
           className={
-            selectedDate === key
+            dateToJSON(prevDate) === dateToJSON(selectedDate)
               ? `${s.day} ${s.active}`
               : `${s.day} ${s.hidden}`
           }
-          onClick={() => setActiveDate(key)}
+          onClick={() => setActiveDate(prevDate)}
         >
           {i}
         </div>
@@ -109,23 +115,30 @@ const MyCalendar: React.FC<calendarProps> = ({
         today.getFullYear() === currentDate.getFullYear() &&
         today.getMonth() === currentDate.getMonth() &&
         i === today.getDate();
-      const key = `${i}-${currentDate.getMonth()}-${currentDate.getFullYear()}`;
-      console.log(key);
+      const key = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        i
+      );
 
       days.push(
         isCurrentDay ? (
           <div
-            key={i}
+            key={`curr-${i}`}
             className={`${s.day} ${s.currentDay}`}
-            onClick={() => setSelectedDate(key)}
+            onClick={() => setActiveDate(key)}
           >
             {i}
           </div>
         ) : (
           <div
-            key={i}
-            className={key === selectedDate ? `${s.day} ${s.active}` : s.day}
-            onClick={() => setSelectedDate(key)}
+            key={`curr-${i}`}
+            className={
+              dateToJSON(key) === dateToJSON(selectedDate)
+                ? `${s.day} ${s.active}`
+                : s.day
+            }
+            onClick={() => setActiveDate(key)}
           >
             {i}
           </div>
@@ -134,20 +147,20 @@ const MyCalendar: React.FC<calendarProps> = ({
     }
 
     for (let i = 1; i <= 42 - daysInMonth - firstDayOfMonth; i++) {
-      const key = `${i}-${
-        currentDate.getMonth() + 1
-      }-${currentDate.getFullYear()}`;
+      const key = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth() + 1,
+        i
+      );
       days.push(
         <div
-          key={`${i}-${
-            currentDate.getMonth() + 1
-          }-${currentDate.getFullYear()}`}
+          key={`next-${i}`}
           className={
-            key === selectedDate
+            dateToJSON(key) === dateToJSON(selectedDate)
               ? `${s.day} ${s.active}`
               : `${s.day} ${s.hidden}`
           }
-          onClick={() => setSelectedDate(key)}
+          onClick={() => setActiveDate(key)}
         >
           {i}
         </div>
@@ -214,6 +227,20 @@ const MyCalendar: React.FC<calendarProps> = ({
       </div>
 
       <div className={s.daysGrid}>{generateDays()}</div>
+
+      <div className={s.btnWrapper}>
+        <MyButton className={s.btn}>Очистить</MyButton>
+        <MyButton
+          color={"blue"}
+          className={s.btn}
+          onClick={() => {
+            setSelectedDate(currentDate);
+            setIsOpen(false);
+          }}
+        >
+          ОК
+        </MyButton>
+      </div>
     </div>
   );
 };

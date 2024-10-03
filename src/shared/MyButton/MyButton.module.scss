@@ -20,6 +20,7 @@
   padding: 6px 16px;
   height: 40px;
   width: 100%;
+  box-sizing  : border-box;
 
   &:hover {
     background-color: var(--color-hover-main);

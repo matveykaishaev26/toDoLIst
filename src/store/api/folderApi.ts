@@ -4,6 +4,7 @@ import { DATABASE_ID } from "../../config/database";
 import { COLLECTIONS } from "../../config/database.ts";
 import { databases } from "./appwrite";
 import { ID } from "./appwrite";
+import { Models } from "appwrite";
 export const folderApi = api.injectEndpoints({
   endpoints: (build) => ({
     getAllFolders: build.query<typeFolder[], void>({
@@ -14,33 +15,51 @@ export const folderApi = api.injectEndpoints({
             COLLECTIONS.FOLDERS
           );
           const folders: typeFolder[] = response.documents.map(
-            (document: any) => ({
+            (document: Models.Document) => ({
               id: document.$id,
               title: document.title,
             })
           );
           return { data: folders as typeFolder[] };
         } catch (err) {
-          return { error: { status: "CUSTOM_ERROR", error: err.message } };
+          const errorMessage =
+            err instanceof Error ? err.message : "Unknown error";
+          return { error: { status: "CUSTOM_ERROR", error: errorMessage } };
         }
       },
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: "Folder" as const, id: id })),
+              "Folder",
+            ]
+          : ["Folder"],
     }),
-    // createFolder: build.mutation<void, typeFolder>({
-    //   queryFn: async (folder: typeFolder) => {
-    //     try {
-    //       const promise = databases.createDocument(
-    //         "<DATABASE_ID>",
-    //         "[COLLECTION_ID]",
-    //         ID.unique(),
-    //         {
-    //           title: folder.title,
+    createFolder: build.mutation<Models.Document, typeFolder>({
+      queryFn: async (folder: typeFolder) => {
+        try {
+          const newFolder = await databases.createDocument(
+            DATABASE_ID,
+            COLLECTIONS.FOLDERS,
+            ID.unique(),
+            {
+              title: folder.title,
+            }
+          );
+          console.log("Папка создана: ", newFolder);
+          return { data: newFolder };
+        } catch (err) {
+          console.log(err);
 
-    //         }
-    //       );
-    //     } catch (err) {}
-    //   },
-    // }),
+          const errorMessage =
+            err instanceof Error ? err.message : "Unknown error";
+          return { error: { status: "CUSTOM_ERROR", error: errorMessage } };
+        }
+      },
+      invalidatesTags: (result) =>
+        result ? [{ type: "Folder", id: result.id }] : [],
+    }),
   }),
 });
 
-export const { useGetAllFoldersQuery } = folderApi;
+export const { useGetAllFoldersQuery, useCreateFolderMutation } = folderApi;

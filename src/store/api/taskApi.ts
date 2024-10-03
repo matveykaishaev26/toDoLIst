@@ -4,6 +4,7 @@ import { COLLECTIONS } from "../../config/database.ts";
 import { databases } from "./appwrite";
 import { typeTask } from "../../types/types";
 import { ID } from "./appwrite";
+import { Models } from "appwrite";
 export const taskApi = api.injectEndpoints({
   endpoints: (build) => ({
     getAllTasks: build.query<typeTask[], void>({
@@ -38,7 +39,7 @@ export const taskApi = api.injectEndpoints({
           : ["Task"],
     }),
 
-    createTask: build.mutation<void, typeTask>({
+    createTask: build.mutation<Models.Document, typeTask>({
       queryFn: async (task: typeTask) => {
         try {
           const newTask = await databases.createDocument(
@@ -52,11 +53,11 @@ export const taskApi = api.injectEndpoints({
               folder_id: task.folder_id,
             }
           );
-            console.log("Задача создана: ", newTask);
-            
+          console.log("Задача создана: ", newTask);
+
           // Возвращаем созданное задание
           return { data: newTask }; // Убедитесь, что у вас есть необходимый формат
-        } catch (err: any) {
+        } catch (err) {
           console.log(err);
 
           const errorMessage =
@@ -68,18 +69,24 @@ export const taskApi = api.injectEndpoints({
         result ? [{ type: "Task", id: result.id }] : [],
     }),
 
-    deleteTask: build.mutation<void, string>({
+    deleteTask: build.mutation<Models.Document, string>({
       queryFn: async (id: string) => {
         try {
-          await databases.deleteDocument(DATABASE_ID, COLLECTIONS.TASKS, id);
-        } catch (err: any) {
-          const errorMessage = err instanceof Error ? err.message : "Unknown error";
+          const data = await databases.deleteDocument(
+            DATABASE_ID,
+            COLLECTIONS.TASKS,
+            id
+          );
+          return { data: data };
+        } catch (err) {
+          const errorMessage =
+            err instanceof Error ? err.message : "Unknown error";
           return { error: { status: "CUSTOM_ERROR", error: errorMessage } };
         }
       },
-      invalidatesTags: (result, error, id) => [{ type: "Task", id: id }],
+      invalidatesTags: (result, error, id) =>
+        result ? [{ type: "Task", id: result.id }] : [],
     }),
-    
   }),
 });
 

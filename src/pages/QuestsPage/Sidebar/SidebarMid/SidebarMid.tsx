@@ -12,9 +12,15 @@ import { useGetAllTasksQuery } from "../../../../store/api/taskApi";
 import { useGetAllFoldersQuery } from "../../../../store/api/folderApi";
 import SidebarMidTask from "./SidebarMidTabs/SidebarMidTask";
 import SkeletonList from "./SkeletonList/SkeletonList";
+import Modal from "../../../../shared/Modal/Modal";
+import MyInput from "../../../../shared/MyInput/MyInput";
+import { useCreateFolderMutation } from "../../../../store/api/folderApi";
+import { typeFolder } from "../../../../types/types";
 const SidebarMid: React.FC = () => {
   const [isTasksListOpen, setTasksListOpen] = useState<boolean>(true);
   const [isCreateListModalOpen, setIsCreateListModalOpen] =
+    useState<boolean>(false);
+  const [isCreateFolderModalOpen, setIsCreateFolderModalOpen] =
     useState<boolean>(false);
   const [foldersWithTasks, setFoldersWithTasks] = useState<
     typeFolderWithTasks[]
@@ -28,21 +34,18 @@ const SidebarMid: React.FC = () => {
     data: allFolders,
   } = useGetAllFoldersQuery();
 
-  const foldersOptions: typeOption[] = [
-    { value: null, label: "Нет" },
-    ...(allFolders
-      ? allFolders.map((folder) => ({
-          value: folder.id,
-          label: folder.title,
-        }))
-      : []),
-  ];
+  const [
+    createFolder,
+    { isLoading: newFolderIsLoading, error: createFolderError },
+  ] = useCreateFolderMutation();
 
   const {
     isLoading: tasksIsLoading,
     error: tasksError,
     data: allTasks,
   } = useGetAllTasksQuery();
+
+  const [newFolder, setNewFolder] = useState<typeFolder | null>({ title: "" });
 
   useEffect(() => {
     if (allFolders && allTasks) {
@@ -77,17 +80,24 @@ const SidebarMid: React.FC = () => {
     setIsCreateListModalOpen((prev) => !prev);
   };
 
-  const toggleTasksList = () => {
-    setTasksListOpen((prev) => !prev);
+  const createNewFolder = async () => {
+    try {
+      await createFolder(newFolder!);
+      setIsCreateFolderModalOpen((prev) => !prev);
+      setNewFolder({ title: "" });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const toggleCreateFolderModal = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsCreateFolderModalOpen((prev) => !prev);
   };
 
-  if (foldersError) {
-    return <div>err</div>;
-  }
-
-  if (tasksError) {
-    return <div>err</div>;
-  }
+  const toggleTasksList = () => {
+    setTasksListOpen((prev) => !prev);
+    console.log(isTasksListOpen);
+  };
 
   return (
     <div className={s.sidebarMid}>
@@ -99,7 +109,10 @@ const SidebarMid: React.FC = () => {
           Список
         </div>
         <div className={s.sidebarIconWrapper}>
-          <MdOutlineCreateNewFolder className={s.plusIcon} />
+          <MdOutlineCreateNewFolder
+            onClick={toggleCreateFolderModal}
+            className={s.plusIcon}
+          />
           <GoPlus onClick={toggleCreateListModal} className={s.plusIcon} />
         </div>
       </div>
@@ -137,11 +150,42 @@ const SidebarMid: React.FC = () => {
           </div>
         )
       )}
+      {foldersError ? <div>err</div> : null}
+
+      {tasksError ? <div>err</div> : null}
 
       <ModalCreateTask
         isOpen={isCreateListModalOpen}
-        allFolders={foldersOptions}
         onClose={() => setIsCreateListModalOpen((prev) => !prev)}
+      />
+      <Modal
+        title={"Новая папка"}
+        onClose={() => setIsCreateFolderModalOpen((prev) => !prev)}
+        children={
+          <>
+            <MyInput
+              value={newFolder?.title}
+              onChange={(e) =>
+                setNewFolder((prev) => ({ ...prev, title: e.target.value }))
+              }
+              placeholder={"Имя"}
+            />
+            {createFolderError ? <div>err</div> : null}
+          </>
+        }
+        isOpen={isCreateFolderModalOpen}
+        acceptBtn={{
+          children: "Добавить",
+          color: "blue",
+          onClick: createNewFolder,
+          disabled: newFolderIsLoading,
+        }}
+        rejectBtn={{
+          children: "Отмена",
+          disabled: newFolderIsLoading,
+
+          onClick: () => setIsCreateFolderModalOpen((prev) => !prev),
+        }}
       />
     </div>
   );

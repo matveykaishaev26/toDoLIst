@@ -10,9 +10,11 @@ type Props = {
   children?: React.ReactNode;
   onClose?: () => void;
   isOpen: boolean;
+  title?: string;
 };
 
 export default function Modal({
+  title,
   children,
   onClose,
   isOpen,
@@ -28,7 +30,7 @@ export default function Modal({
             <div className={s.closeWrapper}>
               <GrClose onClick={onClose} className={s.close} />
             </div>
-
+            <div className={s.modalTitle}>{title}</div>
             <div className={s.modalBody}>{children}</div>
             <div className={s.btnContainer}>
               {rejectBtn && <MyButton {...rejectBtn} />}

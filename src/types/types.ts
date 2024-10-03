@@ -22,7 +22,7 @@ export type typeSubtask = {
 };
 
 export type typeFolder = {
-  id: string | null;
+  id?: string;
   title: string;
 };
 
