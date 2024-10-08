@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import s from "./MyDropdown.module.scss";
-import { typeOption as Option } from "../../types/types";
+import { typeDropdownOption as Option } from "../../types/typeDropdownOption";
 
 type Props = {
   options: Option[];

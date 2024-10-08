@@ -9,7 +9,7 @@ import s from "./ContextMenu.module.scss";
 export type typeContextMenuItem = {
   id: string;
   caption: string;
-  onClick?: () => void;
+  onClick?: (e?: React.MouseEvent) => void;
 };
 
 type Props = {
@@ -24,8 +24,7 @@ type Props = {
 };
 
 const ContextMenuMain = (props: PropsWithChildren<Props>) => {
-  const { items, children, defaultPosition, isVisible, setIsVisible, id } =
-    props;
+  const { items, children, defaultPosition, isVisible, setIsVisible } = props;
 
   const [position, setPosition] = useState<{ x: number; y: number }>({
     x: 0,
@@ -86,7 +85,6 @@ const ContextMenuMain = (props: PropsWithChildren<Props>) => {
     document.addEventListener("mousedown", clickHandler);
     document.addEventListener("wheel", clickHandler);
     document.addEventListener("keydown", keyDownHandler);
-
 
     return () => {
       document.removeEventListener("mousedown", clickHandler);

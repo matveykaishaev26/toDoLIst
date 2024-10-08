@@ -2,6 +2,7 @@ import s from "./Sidebar.module.scss";
 import { typeSidebarTab } from "../../../types/types";
 import SidebarTab from "./SidebarTab";
 import SidebarMid from "./SidebarMid/SidebarMid";
+import { PiSidebarSimpleThin } from "react-icons/pi";
 import { useState, useRef, useEffect, useCallback } from "react";
 type Props = {
   sidebarTabs: typeSidebarTab[];
@@ -49,6 +50,8 @@ export default function Sidebar({ sidebarTabs, isSidebarOpen }: Props) {
         isResizing ? s.resizing : ""
       }`}
     >
+    
+    
       <div className={s.resizer} onMouseDown={startResizing}></div>
       <div className={s.sidebarTabs}>
         {sidebarTabs.slice(0, sidebarTabs.length / 2).map((tab) => (

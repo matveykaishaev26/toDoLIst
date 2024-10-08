@@ -1,26 +1,25 @@
 import React from "react";
-import { SlOptions } from "react-icons/sl";
-import { typeFolder } from "../../../../../types/types";
+import { typeFolder } from "../../../../../types/typeFolder";
 import s from "./SidebarMidTask.module.scss";
-import { FaRegFolder } from "react-icons/fa";
-import { FaRegFolderOpen } from "react-icons/fa";
+
 import ContextMenuMain from "../../../../../shared/ContextMenu/СontextMenuMain";
 import { useContextMenu } from "../../../../../hooks/useContextMenu";
 import { useState } from "react";
 import ModalCreateTask from "../../../../../shared/Modal/ModalCreateTask/ModalCreateTask";
+import { IconsService } from "../../../../../assets/icons/IconsService";
 type Props = {
   folder: typeFolder;
-  onOpenFolder: (id: number) => void;
+  onOpenFolder: (id: string) => void;
   isOpen?: boolean;
 };
 
 const SidebarMidFolder = ({ folder, onOpenFolder, isOpen }: Props) => {
-  const { position, setPosition, isVisible, setIsVisible, handleClickOption } =
+  const { position, isVisible, setIsVisible, handleClickOption } =
     useContextMenu();
   const [isModalCreateListOpen, setIsModalCreateListOpen] =
     useState<boolean>(false);
 
-  const handleCreateTask = (e) => {
+  const handleCreateTask = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsModalCreateListOpen((prev) => !prev);
     setIsVisible(false);
@@ -39,7 +38,7 @@ const SidebarMidFolder = ({ folder, onOpenFolder, isOpen }: Props) => {
     {
       id: "add",
       caption: "Добавить задачу",
-      onClick: (e) => handleCreateTask(e),
+      onClick: (e?: React.MouseEvent) => handleCreateTask(e as React.MouseEvent),
     },
   ];
 
@@ -52,20 +51,21 @@ const SidebarMidFolder = ({ folder, onOpenFolder, isOpen }: Props) => {
       id={folder.title}
     >
       <div
-        onClick={() => onOpenFolder(folder.id)}
+        onClick={() => folder.id && onOpenFolder(folder.id) }
         className={s.tab}
         key={folder.id}
       >
         <div className={s.iconWrapper}>
           {isOpen ? (
-            <FaRegFolderOpen className={s.tabIcon} />
+            <IconsService iconName="folder_open" className={s.tabIcon} />
           ) : (
-            <FaRegFolder className={s.tabIcon} />
+            <IconsService iconName="folder_open" className={s.tabIcon} />
           )}
           <div className={s.taskTitle}>{folder.title} </div>
         </div>
-        <SlOptions
-          onClick={(e: React.MouseEvent) => handleClickOption(e)}
+        <IconsService
+          iconName="options"
+          onClick={(e?: React.MouseEvent) => handleClickOption(e as React.MouseEvent)}
           className={s.sidebarTasksOptions}
         />
         {isModalCreateListOpen && (

@@ -13,19 +13,19 @@ export const useClickOutside = (
     },
     [isVisible]
   );
-//   useEffect(() => {
-//     const handleVisibilityChange = () => {
-//       if (document.hidden) {
-//         setIsVisible(false); // Закрываем меню, если вкладка не активна
-//       }
-//     };
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        setIsVisible(false); // Закрываем меню, если вкладка не активна
+      }
+    };
 
-//     document.addEventListener("visibilitychange", handleVisibilityChange);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
-//     return () => {
-//       document.removeEventListener("visibilitychange", handleVisibilityChange);
-//     };
-//   }, []);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
 
   const keyDownHandler = (e: KeyboardEvent) => {
     if (e.code == "Escape") {

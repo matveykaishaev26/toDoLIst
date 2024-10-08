@@ -5,19 +5,19 @@ export const useContextMenu = () => {
     x: 0,
     y: 0,
   });
-    const [isVisible, setIsVisible] = useState(false);
-    
-    const handleClickOption = (e: React.MouseEvent<HTMLElement>) => {
-        setPosition({
-          x: e.clientX,
-          y: e.clientY,
-        });
-      };
+  const [isVisible, setIsVisible] = useState(false);
+
+  const handleClickOption = (e: React.MouseEvent) => {
+    setPosition({
+      x: e.clientX,
+      y: e.clientY,
+    });
+  };
 
   return {
     position,
     setPosition,
-      isVisible,
+    isVisible,
     handleClickOption,
     setIsVisible,
   };

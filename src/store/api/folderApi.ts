@@ -1,5 +1,5 @@
 import { api } from "./api";
-import { typeFolder } from "../../types/types";
+import { typeFolder } from "../../types/typeFolder";
 import { DATABASE_ID } from "../../config/database";
 import { COLLECTIONS } from "../../config/database.ts";
 import { databases } from "./appwrite";
@@ -20,6 +20,9 @@ export const folderApi = api.injectEndpoints({
               title: document.title,
             })
           );
+          // const foldersObj = folders.reduce((acc, folder) => {
+          //   acc[folder.id] = folder.title;
+          // });
           return { data: folders as typeFolder[] };
         } catch (err) {
           const errorMessage =

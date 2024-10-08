@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import s from "./SidebarMid.module.scss";
 import { FaChevronDown } from "react-icons/fa";
 import { GoPlus } from "react-icons/go";
-import { typeTask, typeFolderWithTasks } from "../../../../types/types";
-import { typeOption } from "../../../../types/types";
+import { typeTask } from "../../../../types/typeTask";
+import { typeFolderWithTasks } from "../../../../types/typeFolderWithTasks";
 import ModalCreateTask from "../../../../shared/Modal/ModalCreateTask/ModalCreateTask";
-import { typeDropdownState } from "../../../../types/types";
+import { typeDropdownState } from "../../../../types/typeDropdownState";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
 import SidebarFolderList from "./SidebarFolderList/SidebarFolderList";
 import { useGetAllTasksQuery } from "../../../../store/api/taskApi";
@@ -15,7 +15,8 @@ import SkeletonList from "./SkeletonList/SkeletonList";
 import Modal from "../../../../shared/Modal/Modal";
 import MyInput from "../../../../shared/MyInput/MyInput";
 import { useCreateFolderMutation } from "../../../../store/api/folderApi";
-import { typeFolder } from "../../../../types/types";
+import { typeFolder } from "../../../../types/typeFolder";
+
 const SidebarMid: React.FC = () => {
   const [isTasksListOpen, setTasksListOpen] = useState<boolean>(true);
   const [isCreateListModalOpen, setIsCreateListModalOpen] =
@@ -69,8 +70,8 @@ const SidebarMid: React.FC = () => {
     }
   }, []);
 
-  const toggleDropdown = (index: number) => {
-    setDropdownState((prev) =>
+  const toggleDropdown = (index: string) => {
+    setDropdownState((prev: typeDropdownState) =>
       prev[index] ? { ...prev, [index]: false } : { ...prev, [index]: true }
     );
   };
@@ -132,10 +133,10 @@ const SidebarMid: React.FC = () => {
                   folderWithTasks={item}
                   isOpen={
                     (item.folder.id !== null &&
-                      dropdownState[item.folder.id]) ||
+                      dropdownState[item.folder.id ?? ""]) ||
                     false
                   }
-                  onOpenFolder={() => toggleDropdown(item.folder.id)}
+                  onOpenFolder={() => toggleDropdown(item.folder.id ?? "")}
                 />
               );
             })}

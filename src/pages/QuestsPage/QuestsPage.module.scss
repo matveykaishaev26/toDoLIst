@@ -3,15 +3,18 @@
 .quests {
   display: flex;
   height: 100%;
+  position: relative;
 }
 
 .questsContentContainer {
+
+
   flex-grow: 1;
   padding: 20px;
   .questsContent {
     display: block;
     margin: 0 auto;
-    width: 700px;
+    width: 100%;
     padding: 10px;
 
    

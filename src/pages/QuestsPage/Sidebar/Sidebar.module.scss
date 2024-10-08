@@ -12,17 +12,48 @@
   position: relative;
   z-index: 0;
   overflow: visible;
-
-  max-width: 650px;
-  min-width: 450px;
+  flex-direction: column;
+  max-width: 450px;
+  min-width: 300px;
+  max-height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 .sidebar.resizing {
   pointer-events: none; /* Отключаем все взаимодействия */
   cursor: ew-resize; /* Устанавливаем курсор изменения размера */
- 
+}
+.sidebarTop {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 10px;
 }
 
+.iconWrapper {
+  padding: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.icon {
+  font-size: 25px;
+  color: var(--color-font-main);
+  cursor: pointer;
+  border-radius: 4px;
+}
+.icon {
+    font-size: 25px;
+    color: var(--color-font-main);
+    cursor: pointer;
+    border-radius: 4px;
+  }
 
+  .iconWrapper:hover {
+    background-color: var(--color-hover-main);
+  }
 .resizer {
   width: 4px; /* Ширина зоны для перетаскивания */
   height: 100vh;
@@ -78,4 +109,21 @@
 
 .sidebarTab.active {
   background-color: var(--color-active-main);
+}
+
+
+
+
+@media screen and (max-width: 900px) {
+  .sidebar {
+    max-width: 200px;
+    min-width: 200px;
+  }
+}
+@media screen and (max-width: 620px) {
+  .sidebar {
+    position: absolute;
+    max-width: 350px;
+    min-width: 350px;
+  }
 }

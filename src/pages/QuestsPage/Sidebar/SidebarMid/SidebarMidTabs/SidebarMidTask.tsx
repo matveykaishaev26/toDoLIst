@@ -1,6 +1,4 @@
-import { LuMenu } from "react-icons/lu";
-import { SlOptions } from "react-icons/sl";
-import { typeTask } from "../../../../../types/types";
+import { typeTask } from "../../../../../types/typeTask";
 import s from "./SidebarMidTask.module.scss";
 import c from "../../../../../styles/taskTypesColors.module.scss";
 import ContextMenuMain from "../../../../../shared/ContextMenu/СontextMenuMain";
@@ -8,26 +6,18 @@ import { typeContextMenuItem } from "../../../../../shared/ContextMenu/СontextM
 import { useState } from "react";
 import Modal from "../../../../../shared/Modal/Modal";
 import { useDeleteTaskMutation } from "../../../../../store/api/taskApi";
-
+import { IconsService } from "../../../../../assets/icons/IconsService";
+import { useContextMenu } from "../../../../../hooks/useContextMenu";
 type Props = {
   task: typeTask;
 };
 
 const SidebarMidTask = ({ task }: Props) => {
-  const [position, setPosition] = useState<{ x: number; y: number }>({
-    x: 0,
-    y: 0,
-  });
-  const [modal, setModal] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const [deleteTask, { isLoading }] = useDeleteTaskMutation();
+  const { position, isVisible, handleClickOption, setIsVisible } =
+    useContextMenu();
 
-  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    setPosition({
-      x: e.clientX,
-      y: e.clientY,
-    });
-  };
+  const [modal, setModal] = useState(false);
+  const [deleteTask, { isLoading }] = useDeleteTaskMutation();
 
   const deleteHandler = () => {
     setIsVisible(false);
@@ -36,18 +26,17 @@ const SidebarMidTask = ({ task }: Props) => {
 
   const deleteItem = async () => {
     console.log(task.id); // Убедитесь, что task.id выводится корректно
-  
+
     try {
-      // Добавляем await для ожидания выполнения deleteTask
-      await deleteTask(task.id).unwrap(); // Используем unwrap для обработки ошибок
+      if (task.id) {
+        await deleteTask(task.id).unwrap();
+      }
       console.log("Задача успешно удалена");
     } catch (err) {
       console.error("Ошибка при удалении задачи:", err);
     }
     setModal(false);
-
   };
-  
 
   const contextMenuItems: typeContextMenuItem[] = [
     {
@@ -72,16 +61,19 @@ const SidebarMidTask = ({ task }: Props) => {
     >
       <div className={s.tab} key={task.id}>
         <div className={s.iconWrapper}>
-          <LuMenu className={s.tabIcon} />
+          <IconsService className={s.tabIcon} iconName={"task"} />
           <div className={s.taskTitle}>{task.title} </div>
         </div>
         <div className={s.iconWrapper}>
           {task.color !== "white" && (
             <div className={`${s.taskColor} ${c[task.color]}`}></div>
           )}
-          <SlOptions
-            onClick={(e: React.MouseEvent) => handleClick(e)}
+          <IconsService
+            iconName={"options"}
             className={s.sidebarTasksOptions}
+            onClick={(e?: React.MouseEvent) =>
+              e && handleClickOption(e as React.MouseEvent)
+            }
           />
         </div>
       </div>

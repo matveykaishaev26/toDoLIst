@@ -1,12 +1,12 @@
 import React from "react";
-import { typeFolderWithTasks } from "../../../../../types/types"
+import { typeFolderWithTasks } from "../../../../../types/typeFolderWithTasks";
 import SidebarMidFolder from "../SidebarMidTabs/SidebarMidFolder";
 import SidebarMidTask from "../SidebarMidTabs/SidebarMidTask";
-import { typeTask } from "../../../../../types/types"
+import { typeTask } from "../../../../../types/typeTask"
 import s from "./SidebarFolderList.module.scss";
 type Props = {
   folderWithTasks: typeFolderWithTasks;
-  onOpenFolder: (folderId: number) => void;
+  onOpenFolder: (folderId: string) => void;
   isOpen: boolean;
 };
 

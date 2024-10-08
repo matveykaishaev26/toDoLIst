@@ -55,7 +55,7 @@ const QuestsPage = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
   return (
     <div className={s.quests}>
-      <Sidebar isSidebarOpen={isSidebarOpen} sidebarTabs={sidebarTabs} />
+      <Sidebar  isSidebarOpen={isSidebarOpen} sidebarTabs={sidebarTabs} />
       <div className={s.questsContentContainer}>
         <Header
           pageName={currentTab}

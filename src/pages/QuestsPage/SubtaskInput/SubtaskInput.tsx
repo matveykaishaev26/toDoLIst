@@ -13,7 +13,7 @@ type Props = {};
 
 const SubtaskInput = (props: Props) => {
   const [openCalendar, setOpenCalendar] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);   
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   return (
     <div className={s.inputWrapper}>
       <MyInput
@@ -26,13 +26,30 @@ const SubtaskInput = (props: Props) => {
           onClick={() => setOpenCalendar(!openCalendar)}
           className={s.iconWrapper}
         >
-          {selectedDate ? <span>{selectedDate.toLocaleDateString("ru", { day: "numeric", month: "long", year: "numeric" })}</span> : <CiCalendar className={s.calendarIcon} />}
+          {openCalendar && (
+            <MyCalendar
+              isOpen={openCalendar}
+              setIsOpen={setOpenCalendar}
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+            />
+          )}
+          {selectedDate ? (
+            <span>
+              {selectedDate.toLocaleDateString("ru", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })}
+            </span>
+          ) : (
+            <CiCalendar className={s.calendarIcon} />
+          )}
         </div>
         <div className={s.iconWrapper}>
-           <RxDropdownMenu className={s.calendarIcon} />
+          <RxDropdownMenu className={s.calendarIcon} />
         </div>
       </div>
-      {openCalendar && <MyCalendar isOpen={openCalendar} setIsOpen={setOpenCalendar} selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>}
     </div>
   );
 };

@@ -1,7 +1,10 @@
 .inputWrapper {
+  width: 80%; /* Контейнер занимает 80% ширины родителя */
+  margin: 0 auto; /* Центрируем контейнер по горизонтали */
+
   .subtaskInput {
-    width: 100%;
     font-size: 16px;
+    width: 100%;
     padding-right: 40px; // Отступ для иконки
   }
 

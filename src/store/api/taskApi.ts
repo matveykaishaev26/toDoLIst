@@ -2,7 +2,7 @@ import { api } from "./api";
 import { DATABASE_ID } from "../../config/database";
 import { COLLECTIONS } from "../../config/database.ts";
 import { databases } from "./appwrite";
-import { typeTask } from "../../types/types";
+import { typeTask } from "../../types/typeTask";
 import { ID } from "./appwrite";
 import { Models } from "appwrite";
 export const taskApi = api.injectEndpoints({
@@ -14,7 +14,7 @@ export const taskApi = api.injectEndpoints({
             DATABASE_ID,
             COLLECTIONS.TASKS
           );
-          const tasks: typeTask[] = response.documents.map((document: any) => ({
+          const tasks: typeTask[] = response.documents.map((document: Models.Document) => ({
             id: document.$id,
             title: document.title,
             isCompleted: document.completed,
@@ -22,7 +22,7 @@ export const taskApi = api.injectEndpoints({
             folder_id: document.folder_id,
           }));
           return { data: tasks as typeTask[] };
-        } catch (err: any) {
+        } catch (err) {
           console.log(err);
 
           const errorMessage =
@@ -84,7 +84,7 @@ export const taskApi = api.injectEndpoints({
           return { error: { status: "CUSTOM_ERROR", error: errorMessage } };
         }
       },
-      invalidatesTags: (result, error, id) =>
+      invalidatesTags: (result) =>
         result ? [{ type: "Task", id: result.id }] : [],
     }),
   }),
