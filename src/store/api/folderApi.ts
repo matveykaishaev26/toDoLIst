@@ -20,9 +20,7 @@ export const folderApi = api.injectEndpoints({
               title: document.title,
             })
           );
-          // const foldersObj = folders.reduce((acc, folder) => {
-          //   acc[folder.id] = folder.title;
-          // });
+        
           return { data: folders as typeFolder[] };
         } catch (err) {
           const errorMessage =

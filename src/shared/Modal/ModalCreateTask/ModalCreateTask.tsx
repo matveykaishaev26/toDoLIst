@@ -64,18 +64,19 @@ const ModalCreateTask = ({ onClose, isOpen, defaultFolderId }: Props) => {
     [allFolders]
   );
 
-  const findFolder = (folderId: string) => {
+  const findFolder = (folderId?: string) => {
+    console.log(defaultFolderId);
+
     for (let i = 0; i < allFoldersOptions?.length; i++) {
       if (allFoldersOptions[i].value === folderId) {
+        console.log(i);
         return i;
       }
     }
-    return 0; // return a default index value if not found
+    return 0; 
   };
   const [folder, setFolder] = useState<typeDropdownOption | null>(
-    defaultFolderId
-      ? allFoldersOptions[findFolder(defaultFolderId)]
-      : allFoldersOptions[0] ?? null
+    allFoldersOptions[findFolder(defaultFolderId)]
   );
   useEffect(() => {
     if (allFolders && allFoldersOptions.length > 0) {
@@ -105,10 +106,6 @@ const ModalCreateTask = ({ onClose, isOpen, defaultFolderId }: Props) => {
     // refetchTasks();
   };
 
-  useEffect(() => {
-    setFolder(allFoldersOptions[0]);
-    setActiveColor(colors[0].color);
-  }, [isOpen]);
 
   return (
     <Modal
@@ -124,7 +121,6 @@ const ModalCreateTask = ({ onClose, isOpen, defaultFolderId }: Props) => {
         disabled: isLoading ? true : false,
       }}
       title="Создать список"
-      isOpen={isOpen}
       onClose={onClose}
     >
       <div className={s.modalCreateTask}>

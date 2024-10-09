@@ -25,6 +25,8 @@ export default function Dropdown({
   };
 
   useEffect(() => {
+
+    
     const handler = (e: MouseEvent) => {
       if (
         dropdownRef.current &&

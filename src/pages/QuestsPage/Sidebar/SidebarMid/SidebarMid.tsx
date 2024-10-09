@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import s from "./SidebarMid.module.scss";
-import { FaChevronDown } from "react-icons/fa";
-import { GoPlus } from "react-icons/go";
 import { typeTask } from "../../../../types/typeTask";
 import { typeFolderWithTasks } from "../../../../types/typeFolderWithTasks";
 import ModalCreateTask from "../../../../shared/Modal/ModalCreateTask/ModalCreateTask";
 import { typeDropdownState } from "../../../../types/typeDropdownState";
-import { MdOutlineCreateNewFolder } from "react-icons/md";
 import SidebarFolderList from "./SidebarFolderList/SidebarFolderList";
 import { useGetAllTasksQuery } from "../../../../store/api/taskApi";
 import { useGetAllFoldersQuery } from "../../../../store/api/folderApi";
@@ -16,6 +13,7 @@ import Modal from "../../../../shared/Modal/Modal";
 import MyInput from "../../../../shared/MyInput/MyInput";
 import { useCreateFolderMutation } from "../../../../store/api/folderApi";
 import { typeFolder } from "../../../../types/typeFolder";
+import { IconsService } from "../../../../assets/icons/IconsService";
 
 const SidebarMid: React.FC = () => {
   const [isTasksListOpen, setTasksListOpen] = useState<boolean>(true);
@@ -104,17 +102,23 @@ const SidebarMid: React.FC = () => {
     <div className={s.sidebarMid}>
       <div onClick={toggleTasksList} className={s.sidebarListBtn}>
         <div className={s.sidebarIconWrapper}>
-          <FaChevronDown
+          <IconsService
+            iconName="dropdown_icon"
             className={`${s.dropdownIcon} ${isTasksListOpen ? s.active : ""}`}
           />
           Список
         </div>
         <div className={s.sidebarIconWrapper}>
-          <MdOutlineCreateNewFolder
-            onClick={toggleCreateFolderModal}
+          <IconsService
+            iconName="create_new_folder"
+            onClick={(e?: React.MouseEvent) => e && toggleCreateFolderModal(e)}
             className={s.plusIcon}
           />
-          <GoPlus onClick={toggleCreateListModal} className={s.plusIcon} />
+          <IconsService
+            iconName="plus"
+            onClick={(e?: React.MouseEvent) => e && toggleCreateListModal(e)}
+            className={s.plusIcon}
+          />
         </div>
       </div>
       {tasksIsLoading || foldersIsLoading ? (
@@ -154,40 +158,43 @@ const SidebarMid: React.FC = () => {
       {foldersError ? <div>err</div> : null}
 
       {tasksError ? <div>err</div> : null}
+      {isCreateListModalOpen && (
+        <ModalCreateTask
+          isOpen={isCreateListModalOpen}
+          onClose={() => setIsCreateListModalOpen((prev) => !prev)}
+        />
+      )}
 
-      <ModalCreateTask
-        isOpen={isCreateListModalOpen}
-        onClose={() => setIsCreateListModalOpen((prev) => !prev)}
-      />
-      <Modal
-        title={"Новая папка"}
-        onClose={() => setIsCreateFolderModalOpen((prev) => !prev)}
-        children={
-          <>
-            <MyInput
-              value={newFolder?.title}
-              onChange={(e) =>
-                setNewFolder((prev) => ({ ...prev, title: e.target.value }))
-              }
-              placeholder={"Имя"}
-            />
-            {createFolderError ? <div>err</div> : null}
-          </>
-        }
-        isOpen={isCreateFolderModalOpen}
-        acceptBtn={{
-          children: "Добавить",
-          color: "blue",
-          onClick: createNewFolder,
-          disabled: newFolderIsLoading,
-        }}
-        rejectBtn={{
-          children: "Отмена",
-          disabled: newFolderIsLoading,
+      {isCreateFolderModalOpen && (
+        <Modal
+          title={"Новая папка"}
+          onClose={() => setIsCreateFolderModalOpen((prev) => !prev)}
+          children={
+            <>
+              <MyInput
+                value={newFolder?.title}
+                onChange={(e) =>
+                  setNewFolder((prev) => ({ ...prev, title: e.target.value }))
+                }
+                placeholder={"Имя"}
+              />
+              {createFolderError ? <div>err</div> : null}
+            </>
+          }
+          acceptBtn={{
+            children: "Добавить",
+            color: "blue",
+            onClick: createNewFolder,
+            disabled: newFolderIsLoading,
+          }}
+          rejectBtn={{
+            children: "Отмена",
+            disabled: newFolderIsLoading,
 
-          onClick: () => setIsCreateFolderModalOpen((prev) => !prev),
-        }}
-      />
+            onClick: () => setIsCreateFolderModalOpen((prev) => !prev),
+          }}
+        />
+      )}
     </div>
   );
 };

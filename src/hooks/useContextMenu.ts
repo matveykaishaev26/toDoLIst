@@ -8,6 +8,7 @@ export const useContextMenu = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   const handleClickOption = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setPosition({
       x: e.clientX,
       y: e.clientY,

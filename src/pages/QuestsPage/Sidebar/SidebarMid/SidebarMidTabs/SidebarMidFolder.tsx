@@ -38,7 +38,8 @@ const SidebarMidFolder = ({ folder, onOpenFolder, isOpen }: Props) => {
     {
       id: "add",
       caption: "Добавить задачу",
-      onClick: (e?: React.MouseEvent) => handleCreateTask(e as React.MouseEvent),
+      onClick: (e?: React.MouseEvent) =>
+        handleCreateTask(e as React.MouseEvent),
     },
   ];
 
@@ -51,7 +52,7 @@ const SidebarMidFolder = ({ folder, onOpenFolder, isOpen }: Props) => {
       id={folder.title}
     >
       <div
-        onClick={() => folder.id && onOpenFolder(folder.id) }
+        onClick={() => folder.id && onOpenFolder(folder.id)}
         className={s.tab}
         key={folder.id}
       >
@@ -59,24 +60,26 @@ const SidebarMidFolder = ({ folder, onOpenFolder, isOpen }: Props) => {
           {isOpen ? (
             <IconsService iconName="folder_open" className={s.tabIcon} />
           ) : (
-            <IconsService iconName="folder_open" className={s.tabIcon} />
+            <IconsService iconName="folder_close" className={s.tabIcon} />
           )}
           <div className={s.taskTitle}>{folder.title} </div>
         </div>
         <IconsService
           iconName="options"
-          onClick={(e?: React.MouseEvent) => handleClickOption(e as React.MouseEvent)}
+          onClick={(e?: React.MouseEvent) => e &&
+            handleClickOption(e)
+          }
           className={s.sidebarTasksOptions}
         />
-        {isModalCreateListOpen && (
-          <div className={s.modalCreateList}>sdfsdf</div>
-        )}
+       
       </div>
-      <ModalCreateTask
-        defaultFolderId={folder.id}
-        isOpen={isModalCreateListOpen}
-        onClose={() => setIsModalCreateListOpen(false)}
-      />
+      {isModalCreateListOpen && (
+        <ModalCreateTask
+          isOpen={isModalCreateListOpen}
+          defaultFolderId={folder.id}
+          onClose={() =>  setIsModalCreateListOpen((prev) => !prev)}
+        />
+      )}
     </ContextMenuMain>
   );
 };

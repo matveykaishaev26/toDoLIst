@@ -9,7 +9,7 @@ import s from "./ContextMenu.module.scss";
 export type typeContextMenuItem = {
   id: string;
   caption: string;
-  onClick?: (e?: React.MouseEvent) => void;
+  onClick?: () => void;
 };
 
 type Props = {

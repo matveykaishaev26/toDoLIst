@@ -77,22 +77,23 @@ const SidebarMidTask = ({ task }: Props) => {
           />
         </div>
       </div>
-      <Modal
-        rejectBtn={{
-          children: "Отмена",
-          onClick: () => setModal(false),
-          disabled: isLoading ? true : false,
-        }}
-        acceptBtn={{
-          children: "Удалить",
-          onClick: deleteItem,
-          color: "blue",
-          disabled: isLoading ? true : false,
-        }}
-        children={`Вы действительно хотите удалить список "${task.title}"?`}
-        isOpen={modal}
-        onClose={() => setModal(false)}
-      />
+      {modal && (
+        <Modal
+          rejectBtn={{
+            children: "Отмена",
+            onClick: () => setModal(false),
+            disabled: isLoading ? true : false,
+          }}
+          acceptBtn={{
+            children: "Удалить",
+            onClick: deleteItem,
+            color: "blue",
+            disabled: isLoading ? true : false,
+          }}
+          children={`Вы действительно хотите удалить список "${task.title}"?`}
+          onClose={() => setModal(false)}
+        />
+      )}
     </ContextMenuMain>
   );
 };

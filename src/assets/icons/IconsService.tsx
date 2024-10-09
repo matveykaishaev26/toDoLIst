@@ -2,6 +2,9 @@ import { SlOptions } from "react-icons/sl";
 import { FaRegFolder } from "react-icons/fa";
 import { FaRegFolderOpen } from "react-icons/fa";
 import { LuMenu } from "react-icons/lu";
+import { FaChevronDown } from "react-icons/fa";
+import { GoPlus } from "react-icons/go";
+import { MdOutlineCreateNewFolder } from "react-icons/md";
 // import { typeSidebarTab } from "../types/types";
 // import MainSidebar from "../shared/MainSidebar/MainSidebar";
 // import { BsCalendarDateFill } from "react-icons/bs";
@@ -28,6 +31,12 @@ export function IconsService({
     case "folder_close":
       return <FaRegFolder className={className} onClick={onClick}/>;
     case "task":
-      return <LuMenu className={className} onClick={onClick}/>;
+      return <LuMenu className={className} onClick={onClick} />;
+    case "plus":
+      return <GoPlus className={className} onClick={onClick} />;
+    case "dropdown_icon": 
+      return <FaChevronDown className={className} onClick={onClick} />;
+    case 'create_new_folder':
+      return <MdOutlineCreateNewFolder className={className} onClick={onClick}/>;
   }
 }
