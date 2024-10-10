@@ -4,7 +4,7 @@ import MyInput from "../../MyInput/MyInput";
 import MyDropdown from "../../MyDropdown/MyDropdown";
 import "react-dropdown/style.css";
 import { typeDropdownOption } from "../../../types/typeDropdownOption";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import c from "../../../styles/taskTypesColors.module.scss";
 import { useCreateTaskMutation } from "../../../store/api/taskApi";
 import { useGetAllFoldersQuery } from "../../../store/api/folderApi";
@@ -47,7 +47,7 @@ const colors: color[] = [
   },
 ];
 
-const ModalCreateTask = ({ onClose, isOpen, defaultFolderId }: Props) => {
+const ModalCreateTask = ({ onClose, defaultFolderId }: Props) => {
   const [activeColor, setActiveColor] = useState<string>("white");
   const [taskName, setTaskName] = useState<string>("");
   const [createTask, { isLoading }] = useCreateTaskMutation();
@@ -65,15 +65,12 @@ const ModalCreateTask = ({ onClose, isOpen, defaultFolderId }: Props) => {
   );
 
   const findFolder = (folderId?: string) => {
-    console.log(defaultFolderId);
-
     for (let i = 0; i < allFoldersOptions?.length; i++) {
       if (allFoldersOptions[i].value === folderId) {
-        console.log(i);
         return i;
       }
     }
-    return 0; 
+    return 0;
   };
   const [folder, setFolder] = useState<typeDropdownOption | null>(
     allFoldersOptions[findFolder(defaultFolderId)]
@@ -90,7 +87,7 @@ const ModalCreateTask = ({ onClose, isOpen, defaultFolderId }: Props) => {
     }
   }, [allFolders, defaultFolderId, allFoldersOptions]);
 
-  const handleCreateTask = async () => {
+  const handleCreateTask = useCallback(async () => {
     try {
       await createTask({
         title: taskName,
@@ -102,10 +99,7 @@ const ModalCreateTask = ({ onClose, isOpen, defaultFolderId }: Props) => {
     } catch (error) {
       console.log(error);
     }
-
-    // refetchTasks();
-  };
-
+  }, [activeColor, folder, onClose, createTask, taskName]);
 
   return (
     <Modal

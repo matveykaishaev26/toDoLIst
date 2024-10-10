@@ -14,17 +14,19 @@ import MyInput from "../../../../shared/MyInput/MyInput";
 import { useCreateFolderMutation } from "../../../../store/api/folderApi";
 import { typeFolder } from "../../../../types/typeFolder";
 import { IconsService } from "../../../../assets/icons/IconsService";
-
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../../store/store";
+import { openModal, closeModal } from "../../../../store/modalSlice";
 const SidebarMid: React.FC = () => {
   const [isTasksListOpen, setTasksListOpen] = useState<boolean>(true);
-  const [isCreateListModalOpen, setIsCreateListModalOpen] =
-    useState<boolean>(false);
-  const [isCreateFolderModalOpen, setIsCreateFolderModalOpen] =
-    useState<boolean>(false);
+
   const [foldersWithTasks, setFoldersWithTasks] = useState<
     typeFolderWithTasks[]
   >([]);
   const [dropdownState, setDropdownState] = useState<typeDropdownState>([]);
+
+  const dispatch = useDispatch();
+  const modals = useSelector((state: RootState) => state.modal.modals);
 
   const [remainingTasks, setRemainingTasks] = useState<typeTask[]>([]);
   const {
@@ -76,13 +78,14 @@ const SidebarMid: React.FC = () => {
 
   const toggleCreateListModal = (event: React.MouseEvent) => {
     event.stopPropagation();
-    setIsCreateListModalOpen((prev) => !prev);
+    dispatch(openModal("createList"));
   };
 
   const createNewFolder = async () => {
     try {
       await createFolder(newFolder!);
-      setIsCreateFolderModalOpen((prev) => !prev);
+      dispatch(closeModal("createFolder"));
+
       setNewFolder({ title: "" });
     } catch (error) {
       console.log(error);
@@ -90,7 +93,7 @@ const SidebarMid: React.FC = () => {
   };
   const toggleCreateFolderModal = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setIsCreateFolderModalOpen((prev) => !prev);
+    dispatch(openModal("createFolder"));
   };
 
   const toggleTasksList = () => {
@@ -158,17 +161,17 @@ const SidebarMid: React.FC = () => {
       {foldersError ? <div>err</div> : null}
 
       {tasksError ? <div>err</div> : null}
-      {isCreateListModalOpen && (
+      {modals.createList && (
         <ModalCreateTask
-          isOpen={isCreateListModalOpen}
-          onClose={() => setIsCreateListModalOpen((prev) => !prev)}
+          isOpen={modals.createList}
+          onClose={() => dispatch(closeModal("createList"))}
         />
       )}
 
-      {isCreateFolderModalOpen && (
+      {modals.createFolder && (
         <Modal
           title={"Новая папка"}
-          onClose={() => setIsCreateFolderModalOpen((prev) => !prev)}
+          onClose={() => dispatch(closeModal("createFolder"))}
           children={
             <>
               <MyInput
@@ -191,7 +194,7 @@ const SidebarMid: React.FC = () => {
             children: "Отмена",
             disabled: newFolderIsLoading,
 
-            onClick: () => setIsCreateFolderModalOpen((prev) => !prev),
+            onClick: () => dispatch(closeModal("createFolder")),
           }}
         />
       )}

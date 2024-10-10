@@ -14,13 +14,15 @@ export const taskApi = api.injectEndpoints({
             DATABASE_ID,
             COLLECTIONS.TASKS
           );
-          const tasks: typeTask[] = response.documents.map((document: Models.Document) => ({
-            id: document.$id,
-            title: document.title,
-            isCompleted: document.completed,
-            color: document.color,
-            folder_id: document.folder_id,
-          }));
+          const tasks: typeTask[] = response.documents.map(
+            (document: Models.Document) => ({
+              id: document.$id,
+              title: document.title,
+              isCompleted: document.completed,
+              color: document.color,
+              folder_id: document.folder_id,
+            })
+          );
           return { data: tasks as typeTask[] };
         } catch (err) {
           console.log(err);
@@ -72,12 +74,7 @@ export const taskApi = api.injectEndpoints({
     deleteTask: build.mutation<Models.Document, string>({
       queryFn: async (id: string) => {
         try {
-          const data = await databases.deleteDocument(
-            DATABASE_ID,
-            COLLECTIONS.TASKS,
-            id
-          );
-          return { data: data };
+          await databases.deleteDocument(DATABASE_ID, COLLECTIONS.TASKS, id);
         } catch (err) {
           const errorMessage =
             err instanceof Error ? err.message : "Unknown error";
