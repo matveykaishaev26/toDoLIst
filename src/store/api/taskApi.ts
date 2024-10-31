@@ -36,9 +36,9 @@ export const taskApi = api.injectEndpoints({
         result
           ? [
               ...result.map(({ id }) => ({ type: "Task" as const, id: id })),
-              "Task",
+              "TasksList",
             ]
-          : ["Task"],
+          : ["TasksList"],
     }),
 
     createTask: build.mutation<Models.Document, typeTask>({
@@ -67,11 +67,21 @@ export const taskApi = api.injectEndpoints({
           return { error: { status: "CUSTOM_ERROR", error: errorMessage } };
         }
       },
-      invalidatesTags: (result) =>
-        result ? [{ type: "Task", id: result.id }] : [],
+      onQueryStarted(newTask, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          api.util.updateQueryData(
+            "getAllTasks",
+            undefined,
+            (draft: typeTask[]) => {
+              draft.push(newTask);
+            }
+          )
+        );
+        queryFulfilled.catch(patchResult.undo);
+      },
     }),
 
-    deleteTask: build.mutation<Models.Document, string>({
+    deleteTask: build.mutation({
       queryFn: async (id: string) => {
         try {
           const result = await databases.deleteDocument(
@@ -79,7 +89,8 @@ export const taskApi = api.injectEndpoints({
             COLLECTIONS.TASKS,
             id
           );
-          return {data: result}
+
+          return { data: result };
         } catch (err) {
           const errorMessage =
             err instanceof Error ? err.message : "Unknown error";

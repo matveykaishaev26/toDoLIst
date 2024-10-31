@@ -41,12 +41,7 @@
     }
   }
 
-  .sidebarTasksList { 
-    max-height: 350px;
-    overflow-x: none;
-    overflow-y: auto;
-    
-  }
+  
   .sidebarListBtn:hover {
     background-color: var(--color-hover-main);
     .dropdownIcon,

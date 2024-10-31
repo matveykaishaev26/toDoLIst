@@ -27,6 +27,7 @@ export default function Modal({
             <GrClose onClick={onClose} className={s.close} />
           </div>
           <div className={s.modalTitle}>{title}</div>
+          
           <div className={s.modalBody}>{children}</div>
           <div className={s.btnContainer}>
             {rejectBtn && <MyButton {...rejectBtn} />}

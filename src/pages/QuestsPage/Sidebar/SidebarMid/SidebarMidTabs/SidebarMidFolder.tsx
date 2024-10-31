@@ -2,7 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { typeFolder } from "../../../../../types/typeFolder";
 import s from "./SidebarMidTask.module.scss";
 
-import ContextMenuMain from "../../../../../shared/ContextMenu/СontextMenuMain";
+import ContextMenuMain, {
+  typeContextMenuItem,
+} from "../../../../../shared/ContextMenu/СontextMenuMain";
 import { useContextMenu } from "../../../../../hooks/useContextMenu";
 import ModalCreateTask from "../../../../../shared/Modal/ModalCreateTask/ModalCreateTask";
 import { IconsService } from "../../../../../assets/icons/IconsService";
@@ -14,7 +16,6 @@ import { useDeleteFolderMutation } from "../../../../../store/api/folderApi";
 import MyInput from "../../../../../shared/MyInput/MyInput";
 import { useClickOutside } from "../../../../../hooks/useClickOutside";
 import { folderApi } from "../../../../../store/api/folderApi";
-import { Dispatch } from "react-redux";
 type Props = {
   folder: typeFolder;
   onOpenFolder: (id: string) => void;
@@ -85,13 +86,13 @@ const SidebarMidFolder = ({ folder, onOpenFolder, isOpen }: Props) => {
 
   useEffect(() => {
     try {
-      handleEditFolder(folder.id, newTitle);
+      handleEditFolder(folder.id as string, newTitle);
     } catch (err) {
       console.log(err);
     }
   }, [isEdit]);
 
-  const contextMenuItems = [
+  const contextMenuItems: typeContextMenuItem[] = [
     {
       id: "delete",
       caption: "Удалить",
@@ -142,19 +143,19 @@ const SidebarMidFolder = ({ folder, onOpenFolder, isOpen }: Props) => {
           />
         ) : (
           <>
-            <div className={s.iconWrapper}>
-              {isOpen ? (
-                <IconsService iconName="folder_open" className={s.tabIcon} />
-              ) : (
-                <IconsService iconName="folder_close" className={s.tabIcon} />
-              )}
-              <div className={s.taskTitle}>{folder.title} </div>
-            </div>
-            <IconsService
-              iconName="options"
-              onClick={(e?: React.MouseEvent) => e && handleClickOption(e)}
-              className={s.sidebarTasksOptions}
-            />
+              <div className={s.iconWrapper}>
+                {isOpen ? (
+                  <IconsService iconName="folder_open" className={s.tabIcon} />
+                ) : (
+                  <IconsService iconName="folder_close" className={s.tabIcon} />
+                )}
+                <div className={s.taskTitle}>{folder.title} </div>
+              </div>
+              <IconsService
+                iconName="options"
+                onClick={(e?: React.MouseEvent) => e && handleClickOption(e)}
+                className={s.sidebarTasksOptions}
+              />
           </>
         )}
       </div>

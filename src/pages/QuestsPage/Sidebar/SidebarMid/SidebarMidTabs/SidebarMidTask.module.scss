@@ -1,5 +1,3 @@
-@import "../../../../../styles/variables.scss";
-
 .tab {
   color: var(--color-font-main);
   font-size: 14px;
@@ -13,14 +11,24 @@
   align-items: center;
   box-sizing: border-box;
   position: relative;
-  overflow-x: visible;
+  overflow: hidden; /* Ограничивает видимость внутренних элементов */
   white-space: nowrap;
   height: 35px;
+  gap: 20px;
+  align-items: center;
+
+  .leftSide {
+    flex-shrink: 0;
+  }
 
   .iconWrapper {
+    /* Заполняет оставшееся пространство */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; /* Предотвращает перенос текста */
     display: flex;
+    gap: 10px;
     align-items: center;
-    line-height: 20px;
     line-height: normal;
   }
 
@@ -28,29 +36,30 @@
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    margin-right: 8px;
   }
+
   .taskTitle {
-    flex-grow: 1; /* Позволяет этому блоку занимать оставшееся пространство */
-    white-space: nowrap; /* Предотвращает перенос текста */
-    overflow: hidden; /* Скрывает текст при недостатке места */
-    text-overflow: ellipsis; /* Добавляет многоточие при переполнении */
-    margin-right: 10px;
-    max-width: 450px;
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%; /* Ограничивает ширину до доступного пространства */
   }
 
   .tabIcon {
+    flex-shrink: 0; /* Фиксирует размер, не позволяя изменяться */
     line-height: normal;
-    margin-right: 8px;
     font-size: 16px;
-
     color: var(--color-font-main);
   }
+
   .sidebarTasksOptions {
+    flex-shrink: 0; /* Не изменяет размер при сжатии */
     color: var(--color-main);
     font-size: 12px;
   }
 }
+
 .tab:hover {
   background-color: var(--color-hover-main);
 
@@ -58,6 +67,7 @@
     color: var(--color-font-light);
     cursor: pointer;
   }
+
   .sidebarTasksOptions:hover {
     color: var(--color-font-hover-light);
   }

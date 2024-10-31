@@ -55,7 +55,7 @@
     background-color: var(--color-hover-main);
   }
 .resizer {
-  width: 4px; /* Ширина зоны для перетаскивания */
+  width: 10px; /* Ширина зоны для перетаскивания */
   height: 100vh;
   position: absolute;
   cursor: ew-resize; /* Иконка изменения размера */

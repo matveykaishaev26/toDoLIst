@@ -1,0 +1,11 @@
+@import "../../../../../styles//variables.scss";
+
+ 
+
+  .sidebarTasksList {
+      height: 400px;
+      overflow-y: scroll;
+    .sidebarTasksListContainer {
+      padding-left: 25px;
+    }
+  }

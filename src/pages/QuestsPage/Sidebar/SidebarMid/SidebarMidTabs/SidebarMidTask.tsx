@@ -64,6 +64,7 @@ const SidebarMidTask = ({ task }: Props) => {
           <IconsService className={s.tabIcon} iconName={"task"} />
           <div className={s.taskTitle}>{task.title} </div>
         </div>
+        <div className={s.leftSide}>
         <div className={s.iconWrapper}>
           {task.color !== "white" && (
             <div className={`${s.taskColor} ${c[task.color]}`}></div>
@@ -76,6 +77,8 @@ const SidebarMidTask = ({ task }: Props) => {
             }
           />
         </div>
+          </div>
+        
       </div>
       {modal && (
         <Modal
