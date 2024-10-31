@@ -1,22 +1,32 @@
-import { useCallback, useEffect} from "react";
+import { useEffect } from "react";
 
-export const useClickOutside = (
-  ref: React.RefObject<HTMLElement>,
-  isVisible: boolean,
-  setIsVisible: (state: boolean) => void
-) => {
-  const clickHandler = useCallback(
-    (e: MouseEvent) => {
-      if (isVisible && !ref.current?.contains(e.target as Node)) {
-        setIsVisible(false);
-      }
-    },
-    [isVisible]
-  );
+type Props = {
+  ref: React.RefObject<HTMLElement>;
+  callback: () => void;
+};
+
+export const useClickOutside = ({ ref, callback }: Props) => {
+  const handleClick = (e: MouseEvent) => {
+    if (ref.current && !ref.current.contains(e.target as Node)) {
+      callback();
+    }
+  };
+
+  const keyDownHandler = (e: KeyboardEvent) => {
+    if (e.code == "Escape") {
+      callback();
+    }
+  };
+  const rightClickHandler = (e: KeyboardEvent) => {
+    e.preventDefault();
+    if (e.button === 2) {
+      callback();
+    }
+  };
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.hidden) {
-        setIsVisible(false); // Закрываем меню, если вкладка не активна
+        callback(); // Закрываем меню, если вкладка не активна
       }
     };
 
@@ -27,21 +37,16 @@ export const useClickOutside = (
     };
   }, []);
 
-  const keyDownHandler = (e: KeyboardEvent) => {
-    if (e.code == "Escape") {
-      setIsVisible(false);
-    }
-  };
-
   useEffect(() => {
-    document.addEventListener("mousedown", clickHandler);
-    document.addEventListener("wheel", clickHandler);
+    document.addEventListener("click", handleClick);
+    document.addEventListener("contextmenu", rightClickHandler);
+
     document.addEventListener("keydown", keyDownHandler);
 
     return () => {
-      document.removeEventListener("mousedown", clickHandler);
-      document.removeEventListener("wheel", clickHandler);
+      document.removeEventListener("click", handleClick);
       document.removeEventListener("keydown", keyDownHandler);
+      document.removeEventListener("contextmenu", rightClickHandler);
     };
-  }, [clickHandler, keyDownHandler]);
+  }, [ref, callback]);
 };

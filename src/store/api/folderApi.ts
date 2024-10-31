@@ -79,7 +79,7 @@ export const folderApi = api.injectEndpoints({
             );
             console.log(`Document with ID ${doc.$id} deleted`);
           }
-          
+
           const deleteFolder = await databases.deleteDocument(
             DATABASE_ID,
             COLLECTIONS.FOLDERS,
@@ -120,4 +120,9 @@ export const folderApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetAllFoldersQuery, useCreateFolderMutation, useDeleteFolderMutation } = folderApi;
+export const {
+  useGetAllFoldersQuery,
+  useCreateFolderMutation,
+  useDeleteFolderMutation,
+  useEditFolderMutation,
+} = folderApi;

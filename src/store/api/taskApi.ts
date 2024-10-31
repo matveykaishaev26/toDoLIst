@@ -74,7 +74,12 @@ export const taskApi = api.injectEndpoints({
     deleteTask: build.mutation<Models.Document, string>({
       queryFn: async (id: string) => {
         try {
-          await databases.deleteDocument(DATABASE_ID, COLLECTIONS.TASKS, id);
+          const result = await databases.deleteDocument(
+            DATABASE_ID,
+            COLLECTIONS.TASKS,
+            id
+          );
+          return {data: result}
         } catch (err) {
           const errorMessage =
             err instanceof Error ? err.message : "Unknown error";

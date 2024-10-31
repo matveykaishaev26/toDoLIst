@@ -13,17 +13,14 @@ export default function Header({ toggleSidebarOpen, pageName }: Props) {
   return (
     <header className={s.appHeader}>
       <div className={s.wrapper}>
-        <div className={s.iconWrapper}>
-          <PiSidebarSimpleThin
-            onClick={toggleSidebarOpen}
-            className={s.sidebarToggle}
-          />
+        <div onClick={toggleSidebarOpen} className={s.iconWrapper}>
+          <PiSidebarSimpleThin className={s.sidebarToggle} />
         </div>
         <div className={s.pageName}>{pageName}</div>
       </div>
       <div className={s.wrapper}>
-        <div className={s.iconWrapper}>
-          <CiLight onClick={toggleThemeMode} className={s.changeTheme} />
+        <div onClick={toggleThemeMode} className={s.iconWrapper}>
+          <CiLight className={s.changeTheme} />
         </div>
       </div>
     </header>
