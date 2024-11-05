@@ -8,6 +8,7 @@ import Modal from "../../../../../shared/Modal/Modal";
 import { useDeleteTaskMutation } from "../../../../../store/api/taskApi";
 import { IconsService } from "../../../../../assets/icons/IconsService";
 import { useContextMenu } from "../../../../../hooks/useContextMenu";
+import ModalCreateTask from "../../../../../shared/Modal/ModalCreateTask/ModalCreateTask";
 type Props = {
   task: typeTask;
 };
@@ -16,12 +17,17 @@ const SidebarMidTask = ({ task }: Props) => {
   const { position, isVisible, handleClickOption, setIsVisible } =
     useContextMenu();
 
-  const [modal, setModal] = useState(false);
-  const [deleteTask, { isLoading }] = useDeleteTaskMutation();
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteTask, { isLoading: deleteIsLoading }] = useDeleteTaskMutation();
+  const [updateModal, setUpdateModal] = useState(false);
 
   const deleteHandler = () => {
     setIsVisible(false);
-    setModal(true);
+    setDeleteModal(true);
+  };
+  const updateHandler = () => {
+    setIsVisible(false);
+    setUpdateModal(true);
   };
 
   const deleteItem = async () => {
@@ -34,20 +40,23 @@ const SidebarMidTask = ({ task }: Props) => {
       console.log("Задача успешно удалена");
     } catch (err) {
       console.error("Ошибка при удалении задачи:", err);
+    } finally {
+      setDeleteModal(false);
     }
-    setModal(false);
   };
 
   const contextMenuItems: typeContextMenuItem[] = [
     {
       id: "1",
       caption: "Редактировать",
+      onClick: updateHandler,
     },
 
     {
       id: "2",
       caption: "Удалить",
       onClick: deleteHandler,
+      hover: "red",
     },
   ];
 
@@ -65,36 +74,49 @@ const SidebarMidTask = ({ task }: Props) => {
           <div className={s.taskTitle}>{task.title} </div>
         </div>
         <div className={s.leftSide}>
-        <div className={s.iconWrapper}>
-          {task.color !== "white" && (
-            <div className={`${s.taskColor} ${c[task.color]}`}></div>
-          )}
-          <IconsService
-            iconName={"options"}
-            className={s.sidebarTasksOptions}
-            onClick={(e?: React.MouseEvent) =>
-              e && handleClickOption(e as React.MouseEvent)
-            }
-          />
-        </div>
+          <div className={s.iconWrapper}>
+            {task.color !== "white" && (
+              <div className={`${s.taskColor} ${c[task.color]}`}></div>
+            )}
+            <IconsService
+              iconName={"options"}
+              className={s.sidebarTasksOptions}
+              onClick={(e?: React.MouseEvent) =>
+                e && handleClickOption(e as React.MouseEvent)
+              }
+            />
           </div>
-        
+        </div>
       </div>
-      {modal && (
+      {deleteModal && (
         <Modal
+          title="Удаление списка"
           rejectBtn={{
             children: "Отмена",
-            onClick: () => setModal(false),
-            disabled: isLoading ? true : false,
+            onClick: () => setDeleteModal(false),
+            disabled: deleteIsLoading ? true : false,
           }}
           acceptBtn={{
-            children: "Удалить",
+            children: deleteIsLoading ? "Удаление..." : "Удалить",
             onClick: deleteItem,
             color: "blue",
-            disabled: isLoading ? true : false,
+            disabled: deleteIsLoading ? true : false,
           }}
           children={`Вы действительно хотите удалить список "${task.title}"?`}
-          onClose={() => setModal(false)}
+          onClose={() => setDeleteModal(false)}
+        />
+      )}
+
+      {updateModal && (
+        <ModalCreateTask
+          defaultTask={{
+            id: task.id,
+            title: task.title,
+            color: task.color,
+            isCompleted: task.isCompleted,
+            folder_id: task.folder_id,
+          }}
+          onClose={() => setUpdateModal(false)}
         />
       )}
     </ContextMenuMain>

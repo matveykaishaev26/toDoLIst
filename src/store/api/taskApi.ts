@@ -5,6 +5,7 @@ import { databases } from "./appwrite";
 import { typeTask } from "../../types/typeTask";
 import { ID } from "./appwrite";
 import { Models } from "appwrite";
+import { typeCreateTaskPayload } from "../../types/typeTask";
 export const taskApi = api.injectEndpoints({
   endpoints: (build) => ({
     getAllTasks: build.query<typeTask[], void>({
@@ -41,8 +42,8 @@ export const taskApi = api.injectEndpoints({
           : ["TasksList"],
     }),
 
-    createTask: build.mutation<Models.Document, typeTask>({
-      queryFn: async (task: typeTask) => {
+    createTask: build.mutation<Models.Document, typeCreateTaskPayload>({
+      queryFn: async (task: typeCreateTaskPayload) => {
         try {
           const newTask = await databases.createDocument(
             DATABASE_ID,
@@ -67,18 +68,20 @@ export const taskApi = api.injectEndpoints({
           return { error: { status: "CUSTOM_ERROR", error: errorMessage } };
         }
       },
-      onQueryStarted(newTask, { dispatch, queryFulfilled }) {
-        const patchResult = dispatch(
-          api.util.updateQueryData(
-            "getAllTasks",
-            undefined,
-            (draft: typeTask[]) => {
-              draft.push(newTask);
-            }
-          )
-        );
-        queryFulfilled.catch(patchResult.undo);
-      },
+      invalidatesTags: (result) =>
+        result ? [{ type: "Task", id: result.id }] : [],
+      // onQueryStarted(newTask, { dispatch, queryFulfilled }) {
+      //   const patchResult = dispatch(
+      //     api.util.updateQueryData(
+      //       "getAllTasks",
+      //       undefined,
+      //       (draft: typeTask[]) => {
+      //         draft.push(newTask);
+      //       }
+      //     )
+      //   );
+      //   queryFulfilled.catch(patchResult.undo);
+      // },
     }),
 
     deleteTask: build.mutation({
@@ -90,10 +93,38 @@ export const taskApi = api.injectEndpoints({
             id
           );
 
-          return { data: result };
+          return { data: result as Models.Document };
         } catch (err) {
           const errorMessage =
             err instanceof Error ? err.message : "Unknown error";
+          return { error: { status: "CUSTOM_ERROR", error: errorMessage } };
+        }
+      },
+      invalidatesTags: (result) =>
+        result ? [{ type: "Task", id: result.id }] : [],
+    }),
+
+    updateTask: build.mutation({
+      queryFn: async (task: Partial<typeTask>) => {
+        try {
+          const result = await databases.updateDocument(
+            DATABASE_ID,
+            COLLECTIONS.TASKS,
+            task.id!,
+            {
+              title: task.title,
+              color: task.color,
+              folder_id: task.folder_id,
+            }
+          );
+          console.log(result);
+
+          return { data: result as Models.Document };
+        } catch (err) {
+          const errorMessage =
+            err instanceof Error ? err.message : "Unknown error";
+          console.log(errorMessage);
+
           return { error: { status: "CUSTOM_ERROR", error: errorMessage } };
         }
       },
@@ -107,4 +138,5 @@ export const {
   useGetAllTasksQuery,
   useCreateTaskMutation,
   useDeleteTaskMutation,
+  useUpdateTaskMutation,
 } = taskApi;

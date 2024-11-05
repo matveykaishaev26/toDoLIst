@@ -6,10 +6,18 @@ import {
   useCallback,
 } from "react";
 import s from "./ContextMenu.module.scss";
+
+export type typeContextMenuItemHover =
+  | "red"
+  | "orange"
+  | "yellow"
+  | "green"
+  | "blue";
 export type typeContextMenuItem = {
   id: string;
   caption: string;
   onClick?: () => void;
+  hover?: typeContextMenuItemHover;
 };
 
 type Props = {
@@ -42,7 +50,7 @@ const ContextMenuMain = (props: PropsWithChildren<Props>) => {
         y: defaultPosition?.y || 0,
       });
     }
-  }, [defaultPosition]);
+  }, [defaultPosition, setIsVisible]);
 
   const contextMenuHandler = (e: React.MouseEvent) => {
     if (parentRef.current?.contains(e.target as Node)) {
@@ -106,7 +114,9 @@ const ContextMenuMain = (props: PropsWithChildren<Props>) => {
         >
           {items?.map((item) => (
             <div
-              className={s.dropdownOption}
+              className={
+                item.hover ? s.dropdownOption + " " + s[item.hover] : s.dropdownOption
+              }
               key={item.id}
               onClick={item.onClick}
             >

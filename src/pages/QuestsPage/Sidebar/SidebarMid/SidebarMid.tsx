@@ -10,6 +10,7 @@ import { IconsService } from "../../../../assets/icons/IconsService";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
 import { openModal, closeModal } from "../../../../store/modalSlice";
+
 import Modal from "../../../../shared/Modal/Modal";
 
 import TaskList from "./TaskList/TaskList";
@@ -75,10 +76,9 @@ const SidebarMid: React.FC = () => {
         </div>
       </div>
 
-      {isTasksListOpen && <TaskList />}
+      <TaskList isTasksListOpen = {isTasksListOpen} />
       {modals.createList && (
         <ModalCreateTask
-          isOpen={modals.createList}
           onClose={() => dispatch(closeModal("createList"))}
         />
       )}

@@ -3,8 +3,8 @@
  
 
   .sidebarTasksList {
-      height: 400px;
-      overflow-y: scroll;
+      max-height: 400px;
+      overflow-y: auto;
     .sidebarTasksListContainer {
       padding-left: 25px;
     }

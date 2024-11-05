@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useGetAllFoldersQuery } from "../../../../../store/api/folderApi";
 import { useGetAllTasksQuery } from "../../../../../store/api/taskApi";
 import SkeletonList from "../SkeletonList/SkeletonList";
@@ -8,7 +8,10 @@ import SidebarFolderList from "../SidebarFolderList/SidebarFolderList";
 import SidebarMidTask from "../SidebarMidTabs/SidebarMidTask";
 import s from "./TaskList.module.scss";
 
-const TaskList = () => {
+type Props = {
+  isTasksListOpen: boolean;
+};
+const TaskList = ({ isTasksListOpen }: Props) => {
   const [foldersWithTasks, setFoldersWithTasks] = useState<
     typeFolderWithTasks[]
   >([]);
@@ -32,20 +35,33 @@ const TaskList = () => {
     );
   };
 
-  useEffect(() => {
-    if (allFolders && allTasks) {
-      const foldersWithTasksResult = allFolders.map((item) => ({
+  const foldersWithTasksResult = useMemo(() => {
+    return allFolders?.map((item) => {
+      return {
         folder: item,
-        tasks: allTasks.filter((task) => task.folder_id === item.id),
-      }));
-      setFoldersWithTasks(foldersWithTasksResult as typeFolderWithTasks[]);
-
-      setRemainingTasks(allTasks.filter((item) => item.folder_id === null));
-    }
+        tasks: allTasks?.filter((task) => task.folder_id === item.id),
+      };
+    }) as typeFolderWithTasks[];
   }, [allFolders, allTasks]);
 
+  const remainingTasksResult = useMemo(() => {
+    return allTasks?.filter((item) => item.folder_id === null) as typeTask[];
+  }, [allTasks]);
+
+  useEffect(() => {
+    if (allFolders && allTasks) {
+      setFoldersWithTasks(foldersWithTasksResult);
+
+      setRemainingTasks(remainingTasksResult);
+    }
+  }, [foldersWithTasksResult, remainingTasksResult, allFolders, allTasks]);
+
+  if (!isTasksListOpen) {
+    return null;
+  }
+
   return (
-    <div>
+    <>
       {tasksIsLoading || foldersIsLoading ? (
         <div className={s.sidebarTasksList}>
           <SkeletonList />
@@ -82,7 +98,7 @@ const TaskList = () => {
       {foldersError ? <div>err</div> : null}
 
       {tasksError ? <div>err</div> : null}
-    </div>
+    </>
   );
 };
 

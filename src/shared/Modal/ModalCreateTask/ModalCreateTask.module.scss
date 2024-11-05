@@ -2,11 +2,11 @@
 
 .modalCreateTask {
   display: flex;
-  align-items: center;
   justify-content: center;
   flex-direction: column;
   width: 100%;
   user-select: none;
+  transition: transform 4s 1s;
 
   .btnContainer {
     display: flex;
@@ -25,9 +25,13 @@
     color: var(--color-font-main);
   }
   .modalCreateTaskInput {
-    margin-bottom: 30px;
     font-size: 14px;
     width: 100%;
+  }
+  .errorInput{
+    margin-top: 5px;
+    color: $color-red;
+    font-size: 14px;
   }
   .dropdownWrapper {
     display: flex;
@@ -39,6 +43,7 @@
     color: var(--color-font-light);
   }
   .colorWrapper {
+    margin-top: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;

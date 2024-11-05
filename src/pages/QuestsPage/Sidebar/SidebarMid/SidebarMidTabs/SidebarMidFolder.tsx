@@ -13,7 +13,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { closeModal, openModal } from "../../../../../store/modalSlice";
 import { RootState } from "../../../../../store/store";
 import { useDeleteFolderMutation } from "../../../../../store/api/folderApi";
-import MyInput from "../../../../../shared/MyInput/MyInput";
 import { useClickOutside } from "../../../../../hooks/useClickOutside";
 import { folderApi } from "../../../../../store/api/folderApi";
 type Props = {
@@ -58,21 +57,6 @@ const SidebarMidFolder = ({ folder, onOpenFolder, isOpen }: Props) => {
     dispatch(closeModal(`deleteFolder_${folder.id}`));
   };
 
-  // useEffect(() => {
-  //   try {
-  //     const updateFolderName = async () => {
-  //       const result = await editFolderMutation({
-  //         id: folder.id,
-  //         title: newTitle,
-  //       }).unwrap();
-  //     };
-  //     updateFolderName();
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  //   setNewTitle(folder.title);
-  // }, [isEdit]);
-
   const handleEditFolder = async (folderId: string, newTitle: string) => {
     dispatch(
       folderApi.util.updateQueryData("getAllFolders", undefined, (draft) => {
@@ -94,14 +78,8 @@ const SidebarMidFolder = ({ folder, onOpenFolder, isOpen }: Props) => {
 
   const contextMenuItems: typeContextMenuItem[] = [
     {
-      id: "delete",
-      caption: "Удалить",
-      onClick: (e: React.MouseEvent) =>
-        handleDeleteFolder(e as React.MouseEvent),
-    },
-    {
       id: "edit",
-      caption: "Переименовать",
+      caption: "Редактировать",
       onClick: (e?: React.MouseEvent) => {
         e?.stopPropagation();
         setIsEdit(true);
@@ -118,6 +96,13 @@ const SidebarMidFolder = ({ folder, onOpenFolder, isOpen }: Props) => {
       onClick: (e?: React.MouseEvent) =>
         handleCreateTask(e as React.MouseEvent),
     },
+    {
+      id: "delete",
+      caption: "Удалить",
+      onClick: (e: React.MouseEvent) =>
+        handleDeleteFolder(e as React.MouseEvent),
+      hover: "red",
+    },
   ];
 
   return (
@@ -133,31 +118,20 @@ const SidebarMidFolder = ({ folder, onOpenFolder, isOpen }: Props) => {
         className={s.tab}
         key={folder.id}
       >
-        {isEdit ? (
-          <MyInput
-            placeholder={""}
-            onChange={(e) => setNewTitle(e.target.value)}
-            value={newTitle}
-            ref={refInput}
-            onClick={(e) => e?.stopPropagation()}
-          />
-        ) : (
-          <>
-              <div className={s.iconWrapper}>
-                {isOpen ? (
-                  <IconsService iconName="folder_open" className={s.tabIcon} />
-                ) : (
-                  <IconsService iconName="folder_close" className={s.tabIcon} />
-                )}
-                <div className={s.taskTitle}>{folder.title} </div>
-              </div>
-              <IconsService
-                iconName="options"
-                onClick={(e?: React.MouseEvent) => e && handleClickOption(e)}
-                className={s.sidebarTasksOptions}
-              />
-          </>
-        )}
+        <div className={s.iconWrapper}>
+          {isOpen ? (
+            <IconsService iconName="folder_open" className={s.tabIcon} />
+          ) : (
+            <IconsService iconName="folder_close" className={s.tabIcon} />
+          )}
+
+          <div className={s.taskTitle}>{folder.title} </div>
+        </div>
+        <IconsService
+          iconName="options"
+          onClick={(e?: React.MouseEvent) => e && handleClickOption(e)}
+          className={s.sidebarTasksOptions}
+        />
       </div>
       {modals[`createFolder_${folder.id}`] && (
         <ModalCreateTask
@@ -168,6 +142,8 @@ const SidebarMidFolder = ({ folder, onOpenFolder, isOpen }: Props) => {
       )}
       {modals[`deleteFolder_${folder.id}`] && (
         <Modal
+          
+          title ="Удаление папки"
           rejectBtn={{
             children: "Отмена",
             onClick: () => dispatch(closeModal(`deleteFolder_${folder.id}`)),

@@ -4,15 +4,18 @@ import MyInput from "../../MyInput/MyInput";
 import MyDropdown from "../../MyDropdown/MyDropdown";
 import "react-dropdown/style.css";
 import { typeDropdownOption } from "../../../types/typeDropdownOption";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState, useMemo } from "react";
 import c from "../../../styles/taskTypesColors.module.scss";
 import { useCreateTaskMutation } from "../../../store/api/taskApi";
 import { useGetAllFoldersQuery } from "../../../store/api/folderApi";
-import { useMemo } from "react";
+import { useGetAllTasksQuery } from "../../../store/api/taskApi";
+import { typeTask } from "../../../types/typeTask";
+import { useUpdateTaskMutation } from "../../../store/api/taskApi";
+
 type Props = {
-  isOpen: boolean;
   onClose: () => void;
   defaultFolderId?: string;
+  defaultTask?: typeTask;
 };
 
 type color = {
@@ -47,12 +50,21 @@ const colors: color[] = [
   },
 ];
 
-const ModalCreateTask = ({ onClose, defaultFolderId }: Props) => {
-  const [activeColor, setActiveColor] = useState<string>("white");
-  const [taskName, setTaskName] = useState<string>("");
-  const [createTask, { isLoading }] = useCreateTaskMutation();
+const ModalCreateTask = ({ onClose, defaultFolderId, defaultTask }: Props) => {
+  const [activeColor, setActiveColor] = useState<string>(
+    defaultTask ? defaultTask.color : "white"
+  );
+  const [taskName, setTaskName] = useState<string>(
+    defaultTask ? defaultTask.title : ""
+  );
+  const [createTask, { isLoading: createIsLoading, error: createError }] =
+    useCreateTaskMutation();
   const { data: allFolders } = useGetAllFoldersQuery();
-
+  const [isInputEmpty, setIsInputEmpty] = useState(defaultTask ? false : true);
+  const { data: allTasks } = useGetAllTasksQuery();
+  const [isTaskNameExists, setIsTaskNameExists] = useState<string | null>(null);
+  const [updateTask, { isLoading: updateIsLoading, error: updateError }] =
+    useUpdateTaskMutation();
   const allFoldersOptions: typeDropdownOption[] = useMemo(
     () => [
       { value: null, label: "Нет" },
@@ -73,11 +85,20 @@ const ModalCreateTask = ({ onClose, defaultFolderId }: Props) => {
     return 0;
   };
   const [folder, setFolder] = useState<typeDropdownOption | null>(
-    allFoldersOptions[findFolder(defaultFolderId)]
+    allFoldersOptions[
+      findFolder(
+        defaultTask?.folder_id ? defaultTask?.folder_id : defaultFolderId
+      )
+    ]
   );
-  useEffect(() => {
+
+  useMemo(() => {
     if (allFolders && allFoldersOptions.length > 0) {
-      const folderIndex = defaultFolderId ? findFolder(defaultFolderId) : 0;
+      const folderIndex = defaultFolderId
+        ? findFolder(defaultFolderId)
+        : defaultTask?.folder_id
+        ? findFolder(defaultTask?.folder_id)
+        : 0;
       const initialFolder =
         folderIndex !== -1
           ? allFoldersOptions[folderIndex]
@@ -85,9 +106,29 @@ const ModalCreateTask = ({ onClose, defaultFolderId }: Props) => {
 
       setFolder(initialFolder);
     }
-  }, [allFolders, defaultFolderId, allFoldersOptions]);
+  }, [allFoldersOptions, allFolders, defaultFolderId, defaultTask]);
+
+  const handleTaskUpdate = async () => {
+    try {
+      await updateTask({
+        id: defaultTask?.id,
+        title: taskName,
+        color: activeColor,
+        folder_id: folder?.value,
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      onClose();
+    }
+  };
 
   const handleCreateTask = useCallback(async () => {
+    if (allTasks?.some((task) => task.title === taskName)) {
+      setIsTaskNameExists("Задача с таким названием уже существует");
+      return;
+    }
+
     try {
       await createTask({
         title: taskName,
@@ -99,30 +140,55 @@ const ModalCreateTask = ({ onClose, defaultFolderId }: Props) => {
     } catch (error) {
       console.log(error);
     }
-  }, [activeColor, folder, onClose, createTask, taskName]);
+  }, [activeColor, folder, onClose, createTask, taskName, allTasks]);
+
+  const inputOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsTaskNameExists(null);
+    if (e.target.value === "") {
+      setIsInputEmpty(true);
+    } else {
+      setIsInputEmpty(false);
+    }
+    setTaskName(e.target.value);
+  };
 
   return (
     <Modal
       acceptBtn={{
-        children: "Добавить",
+        children: createIsLoading
+          ? "Сохранение..."
+          : defaultTask
+          ? "Редактировать"
+          : "Добавить",
         color: "blue",
-        disabled: isLoading ? true : false,
-        onClick: handleCreateTask,
+        disabled:
+          createIsLoading || isInputEmpty
+            ? true
+            : updateIsLoading
+            ? true
+            : false,
+        onClick: defaultTask ? handleTaskUpdate : handleCreateTask,
       }}
       rejectBtn={{
         children: "Отмена",
         onClick: onClose,
-        disabled: isLoading ? true : false,
+        disabled: createIsLoading ? true : updateIsLoading ? true : false,
       }}
-      title="Создать список"
+      title={defaultTask ? "Изменить список" : "Новый список"}
       onClose={onClose}
     >
       <div className={s.modalCreateTask}>
         <MyInput
-          onChange={(e) => setTaskName(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            inputOnChange(e)
+          }
           className={s.modalCreateTaskInput}
           placeholder="Название"
+          value={taskName}
         />
+        {isTaskNameExists && (
+          <span className={s.errorInput}>{isTaskNameExists}</span>
+        )}
         <div className={s.colorWrapper}>
           Цвет
           <div className={s.colors}>
@@ -139,7 +205,12 @@ const ModalCreateTask = ({ onClose, defaultFolderId }: Props) => {
             ))}
           </div>
         </div>
-
+        {createError && (
+          <span className={s.errorInput}>{JSON.stringify(createError)}</span>
+        )}
+        {updateError && (
+          <span className={s.errorInput}>{JSON.stringify(updateError)}</span>
+        )}
         <div className={s.dropdownWrapper}>
           Папка
           <div className={s.dropdown}>
