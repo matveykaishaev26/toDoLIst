@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { typeFolder } from "../../../../../types/typeFolder";
 import s from "./SidebarMidTask.module.scss";
-
+import MyInput from "../../../../../shared/MyInput/MyInput";
 import ContextMenuMain, {
   typeContextMenuItem,
 } from "../../../../../shared/ContextMenu/СontextMenuMain";
@@ -9,12 +9,8 @@ import { useContextMenu } from "../../../../../hooks/useContextMenu";
 import ModalCreateTask from "../../../../../shared/Modal/ModalCreateTask/ModalCreateTask";
 import { IconsService } from "../../../../../assets/icons/IconsService";
 import Modal from "../../../../../shared/Modal/Modal";
-import { useSelector, useDispatch } from "react-redux";
-import { closeModal, openModal } from "../../../../../store/modalSlice";
-import { RootState } from "../../../../../store/store";
 import { useDeleteFolderMutation } from "../../../../../store/api/folderApi";
-import { useClickOutside } from "../../../../../hooks/useClickOutside";
-import { folderApi } from "../../../../../store/api/folderApi";
+import { useUpdateFolderMutation } from "../../../../../store/api/folderApi";
 type Props = {
   folder: typeFolder;
   onOpenFolder: (id: string) => void;
@@ -25,23 +21,24 @@ const SidebarMidFolder = ({ folder, onOpenFolder, isOpen }: Props) => {
   const { position, isVisible, setIsVisible, handleClickOption } =
     useContextMenu();
 
-  const dispatch: Dispatch = useDispatch();
-  const modals = useSelector((state: RootState) => state.modal.modals);
-  const [deleteFolder, { isLoading }] = useDeleteFolderMutation();
-  const [isEdit, setIsEdit] = useState(false);
-  const refInput = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
-  useClickOutside({ ref: refInput, callback: () => setIsEdit(false) });
+  const [deleteFolder, { isLoading: deleteIsLoading }] =
+    useDeleteFolderMutation();
+  const [updateFolder, { isLoading: updateIsLoading }] =
+    useUpdateFolderMutation();
 
   const [newTitle, setNewTitle] = useState(folder.title);
+  const [deleteFolderModal, setDeleteFolderModal] = useState(false);
+  const [updateFolderModal, setUpdateFolderModal] = useState(false);
+  const [createTaskModal, setCreateTaskModal] = useState(false);
   const handleCreateTask = (e: React.MouseEvent) => {
     e.stopPropagation();
-    dispatch(openModal(`createFolder_${folder.id}`));
+    setCreateTaskModal(true);
     setIsVisible(false);
   };
 
   const handleDeleteFolder = (e: React.MouseEvent) => {
     e.stopPropagation();
-    dispatch(openModal(`deleteFolder_${folder.id}`));
+    setDeleteFolderModal(true);
     setIsVisible(false);
   };
 
@@ -54,42 +51,22 @@ const SidebarMidFolder = ({ folder, onOpenFolder, isOpen }: Props) => {
     } catch (err) {
       console.error("Ошибка при удалении папки:", err);
     }
-    dispatch(closeModal(`deleteFolder_${folder.id}`));
   };
 
-  const handleEditFolder = async (folderId: string, newTitle: string) => {
-    dispatch(
-      folderApi.util.updateQueryData("getAllFolders", undefined, (draft) => {
-        const folder = draft.find((f) => f.id === folderId);
-        if (folder) {
-          folder.title = newTitle; // Обновляем название папки
-        }
-      })
-    );
-  };
-
-  useEffect(() => {
+  const updateItem = async () => {
     try {
-      handleEditFolder(folder.id as string, newTitle);
+      if (folder.id) {
+        await updateFolder({ id: folder.id, title: newTitle }).unwrap();
+      }
+      console.log("Папка успешно обновлена");
     } catch (err) {
-      console.log(err);
+      console.error("Ошибка при обновлении папки:", err);
+    } 
+    finally {
+      setUpdateFolderModal(false);
     }
-  }, [isEdit]);
-
+  };
   const contextMenuItems: typeContextMenuItem[] = [
-    {
-      id: "edit",
-      caption: "Редактировать",
-      onClick: (e?: React.MouseEvent) => {
-        e?.stopPropagation();
-        setIsEdit(true);
-        setIsVisible(false);
-      },
-    },
-    {
-      id: "reform",
-      caption: "Расформировать",
-    },
     {
       id: "add",
       caption: "Добавить задачу",
@@ -97,9 +74,23 @@ const SidebarMidFolder = ({ folder, onOpenFolder, isOpen }: Props) => {
         handleCreateTask(e as React.MouseEvent),
     },
     {
+      id: "edit",
+      caption: "Редактировать",
+      onClick: (e?: React.MouseEvent) => {
+        e?.stopPropagation();
+        setUpdateFolderModal(true);
+        setIsVisible(false);
+      },
+    },
+    {
+      id: "reform",
+      caption: "Расформировать",
+    },
+
+    {
       id: "delete",
       caption: "Удалить",
-      onClick: (e: React.MouseEvent) =>
+      onClick: (e?: React.MouseEvent) =>
         handleDeleteFolder(e as React.MouseEvent),
       hover: "red",
     },
@@ -133,30 +124,55 @@ const SidebarMidFolder = ({ folder, onOpenFolder, isOpen }: Props) => {
           className={s.sidebarTasksOptions}
         />
       </div>
-      {modals[`createFolder_${folder.id}`] && (
+      {createTaskModal && (
         <ModalCreateTask
-          isOpen={modals.createTask}
           defaultFolderId={folder.id}
-          onClose={() => dispatch(closeModal(`createFolder_${folder.id}`))}
+          onClose={() => setCreateTaskModal((state) => !state)}
         />
       )}
-      {modals[`deleteFolder_${folder.id}`] && (
+      {deleteFolderModal && (
         <Modal
-          
-          title ="Удаление папки"
+          title="Удаление папки"
           rejectBtn={{
             children: "Отмена",
-            onClick: () => dispatch(closeModal(`deleteFolder_${folder.id}`)),
-            disabled: isLoading ? true : false,
+            onClick: () => setDeleteFolderModal((state) => !state),
+            disabled: deleteIsLoading ? true : false,
           }}
           acceptBtn={{
             children: "Удалить",
             onClick: deleteItem,
             color: "blue",
-            disabled: isLoading ? true : false,
+            disabled: deleteIsLoading ? true : false,
           }}
           children={`Вы действительно хотите удалить папку "${folder.title}"? Все задания в этой папке будут тоже удалены.`}
-          onClose={() => dispatch(closeModal(`deleteFolder_${folder.id}`))}
+          onClose={() => setDeleteFolderModal((state) => !state)}
+        />
+      )}
+
+      {updateFolderModal && (
+        <Modal
+          title="Редактирование"
+          rejectBtn={{
+            children: "Отмена",
+            onClick: () => setUpdateFolderModal((state) => !state),
+            disabled: updateIsLoading ? true : false,
+          }}
+          acceptBtn={{
+            children: "Редактировать",
+            onClick: updateItem,
+            color: "blue",
+            disabled: updateIsLoading ? true : newTitle === "" ? true : false,
+          }}
+          children={
+            <>
+              <MyInput
+                value={newTitle}
+                onChange={(e) => setNewTitle(e.target.value)}
+                placeholder={"Название"}
+              />
+            </>
+          }
+          onClose={() => setUpdateFolderModal((state) => !state)}
         />
       )}
     </ContextMenuMain>

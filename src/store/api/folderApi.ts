@@ -5,6 +5,7 @@ import { COLLECTIONS } from "../../config/database.ts";
 import { databases } from "./appwrite";
 import { ID } from "./appwrite";
 import { Models } from "appwrite";
+import { typeCreateFolderPayload } from "../../types/typeFolder";
 export const folderApi = api.injectEndpoints({
   endpoints: (build) => ({
     getAllFolders: build.query<typeFolder[], void>({
@@ -36,8 +37,8 @@ export const folderApi = api.injectEndpoints({
             ]
           : ["Folder"],
     }),
-    createFolder: build.mutation<Models.Document, typeFolder>({
-      queryFn: async (folder: typeFolder) => {
+    createFolder: build.mutation<Models.Document,typeCreateFolderPayload >({
+      queryFn: async (folder: typeCreateFolderPayload ) => {
         try {
           const newFolder = await databases.createDocument(
             DATABASE_ID,
@@ -61,7 +62,7 @@ export const folderApi = api.injectEndpoints({
         result ? [{ type: "Folder", id: result.id }] : [],
     }),
 
-    deleteFolder: build.mutation<void, string>({
+    deleteFolder: build.mutation<typeFolder, string>({
       queryFn: async (folderId: string) => {
         try {
           const allTasks = await databases.listDocuments(
@@ -85,7 +86,7 @@ export const folderApi = api.injectEndpoints({
             COLLECTIONS.FOLDERS,
             folderId
           );
-          return { data: deleteFolder };
+          return { data: deleteFolder as typeFolder };
         } catch (err) {
           const errorMessage =
             err instanceof Error ? err.message : "Unknown error";
@@ -96,7 +97,7 @@ export const folderApi = api.injectEndpoints({
         result ? [{ type: "Folder", id: result.id }] : [],
     }),
 
-    editFolder: build.mutation<Models.Document, typeFolder>({
+    updateFolder: build.mutation<Models.Document, typeFolder>({
       queryFn: async (folder: typeFolder) => {
         try {
           const editFolder = await databases.updateDocument(
@@ -124,5 +125,5 @@ export const {
   useGetAllFoldersQuery,
   useCreateFolderMutation,
   useDeleteFolderMutation,
-  useEditFolderMutation,
+  useUpdateFolderMutation,
 } = folderApi;

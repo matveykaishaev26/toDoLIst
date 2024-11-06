@@ -5,12 +5,11 @@ import ModalCreateTask from "../../../../shared/Modal/ModalCreateTask/ModalCreat
 
 import MyInput from "../../../../shared/MyInput/MyInput";
 import { useCreateFolderMutation } from "../../../../store/api/folderApi";
-import { typeFolder } from "../../../../types/typeFolder";
 import { IconsService } from "../../../../assets/icons/IconsService";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
 import { openModal, closeModal } from "../../../../store/modalSlice";
-
+import { typeCreateFolderPayload } from "../../../../types/typeFolder";
 import Modal from "../../../../shared/Modal/Modal";
 
 import TaskList from "./TaskList/TaskList";
@@ -25,7 +24,9 @@ const SidebarMid: React.FC = () => {
     { isLoading: newFolderIsLoading, error: createFolderError },
   ] = useCreateFolderMutation();
 
-  const [newFolder, setNewFolder] = useState<typeFolder | null>({ title: "" });
+  const [newFolder, setNewFolder] = useState<typeCreateFolderPayload | null>({
+    title: "",
+  });
 
   const toggleCreateListModal = (event: React.MouseEvent) => {
     event.stopPropagation();
@@ -76,11 +77,9 @@ const SidebarMid: React.FC = () => {
         </div>
       </div>
 
-      <TaskList isTasksListOpen = {isTasksListOpen} />
+      <TaskList isTasksListOpen={isTasksListOpen} />
       {modals.createList && (
-        <ModalCreateTask
-          onClose={() => dispatch(closeModal("createList"))}
-        />
+        <ModalCreateTask onClose={() => dispatch(closeModal("createList"))} />
       )}
 
       {modals.createFolder && (
@@ -94,7 +93,7 @@ const SidebarMid: React.FC = () => {
                 onChange={(e) =>
                   setNewFolder((prev) => ({ ...prev, title: e.target.value }))
                 }
-                placeholder={"Имя"}
+                placeholder={"Название"}
               />
               {createFolderError ? <div>err</div> : null}
             </>
